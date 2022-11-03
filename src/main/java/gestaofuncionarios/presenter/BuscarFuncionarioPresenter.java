@@ -82,8 +82,6 @@ public class BuscarFuncionarioPresenter {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(view, ex.getMessage());
         }
-
-        // view.dispose();
     }
 
     private void criarTabela() {

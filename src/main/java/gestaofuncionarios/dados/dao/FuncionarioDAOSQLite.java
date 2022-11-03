@@ -14,13 +14,6 @@ public final class FuncionarioDAOSQLite implements FuncionarioDAO {
     private TreeSet<Funcionario> funcionarios = new TreeSet<>();
     private final SQLiteDB BD = new SQLiteDB();
 
-    public FuncionarioDAOSQLite() {
-        // if (this.funcionarios == null) {
-        // this.funcionarios = new TreeSet<>();
-        // }
-        // carregaFuncionarios();
-    }
-
     @Override
     public void carregaFuncionarios() {
         try {
