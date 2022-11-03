@@ -17,7 +17,7 @@ public final class FuncionarioDAOSQLite implements FuncionarioDAO {
         if (this.funcionarios == null) {
             this.funcionarios = new TreeSet<>();
         }
-        carregaFuncionarios();
+        carregaFuncionarios(); //Não faz sentindo. 
     }
 
     @Override

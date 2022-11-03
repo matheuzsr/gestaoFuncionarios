@@ -1,13 +1,15 @@
 package gestaofuncionarios.model;
 
+import java.util.Date;
+
 public class Bonus {
 
     private int idBonus;
     private final String tipo;
     private final double valor;
-    private final String data;
+    private final Date data;
 
-    public Bonus(String tipo, double valor, String data) {
+    public Bonus(String tipo, double valor, Date data) {
         this.tipo = tipo;
         this.valor = valor;
         this.data = data;
@@ -28,10 +30,11 @@ public class Bonus {
     public String getTipo() {
         return tipo;
     }
-
-    public String getData() {
-        return data;
+    
+    public Date getData(){
+        return data; 
     }
+
 
     @Override
     public String toString() {
