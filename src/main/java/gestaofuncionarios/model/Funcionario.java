@@ -1,5 +1,6 @@
 package gestaofuncionarios.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Funcionario implements Comparable<Funcionario> {
@@ -9,13 +10,16 @@ public class Funcionario implements Comparable<Funcionario> {
     private String cargo;
     private int faltas = -1;
     private double salario;
+    private LocalDate dataNascimento;
     private double salarioBase;
     private double distanciaDoTrabalho = -1;
+    private LocalDate dataAdmissao;
     private double totalBonus = 0;
     private ArrayList<Bonus> bonusRecebidos = new ArrayList<>();
 
-    public Funcionario(String nome, String cargo, double salarioBase) throws Exception {
+    public Funcionario(String nome, LocalDate dataNascimento, String cargo, double salarioBase) throws Exception {
         this.nome = nome;
+        this.dataNascimento = dataNascimento;
         this.cargo = cargo;
         this.salarioBase = salarioBase;
 
@@ -53,6 +57,25 @@ public class Funcionario implements Comparable<Funcionario> {
 
     public String getNome() {
         return nome;
+    }
+
+    public LocalDate getDataNascimento() {
+        return this.dataNascimento;
+    }
+
+    public void setDataAdmissao(LocalDate dataAdmissao) {
+        this.dataAdmissao = dataAdmissao;
+    }
+
+    public LocalDate getDataAdmissao() {
+        return this.dataAdmissao;
+    }
+
+    public int getIdade() {
+        int anoAtual = LocalDate.now().getYear();
+        int anoNascimento = this.dataNascimento.getYear();
+
+        return anoAtual - anoNascimento;
     }
 
     public String getCargo() {

@@ -1,10 +1,9 @@
 package gestaofuncionarios.presenter.funcionariopresenter.state;
 
-import java.awt.event.ActionEvent;
-import javax.swing.JOptionPane;
-
 import gestaofuncionarios.model.Funcionario;
 import gestaofuncionarios.presenter.funcionariopresenter.FuncionarioPresenter;
+import java.awt.event.ActionEvent;
+import javax.swing.JOptionPane;
 
 public class FuncionariosAddState extends FuncionarioPresenterState {
 
@@ -12,11 +11,10 @@ public class FuncionariosAddState extends FuncionarioPresenterState {
         super(presenter);
         presenter.getView().setTitle("Adicionar Funcionário");
         presenter.getView().getTxtCargo().setText("");
-        presenter.getView().getTxtDistancia().setText("");
+        presenter.getView().getTxtDistanciaTrabalho().setText("");
         presenter.getView().getTxtFaltas().setText("");
         presenter.getView().getTxtNome().setText("");
         presenter.getView().getTxtSalarioBase().setText("");
-        presenter.getView().getBtnVerBonus().setVisible(false);
         presenter.getView().getBtnExcluir().setVisible(false);
         presenter.getView().getBtnEditar().setVisible(false);
         presenter.getView().getBtnSalvar().setVisible(true);
