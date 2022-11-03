@@ -5,6 +5,6 @@ import java.util.Collection;
 
 public interface HistoricoBonusDAO {
  
-    public Collection<HistoricoBonus> getAllBonus() throws Exception;
+    public Collection<HistoricoBonus> getAllHistoricoBonus() throws Exception;
     
 }

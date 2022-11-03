@@ -1,15 +1,15 @@
 package gestaofuncionarios.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Bonus {
 
     private int idBonus;
     private final String tipo;
     private final double valor;
-    private final Date data;
+    private final LocalDate data;
 
-    public Bonus(String tipo, double valor, Date data) {
+    public Bonus(String tipo, double valor, LocalDate data) {
         this.tipo = tipo;
         this.valor = valor;
         this.data = data;
@@ -31,7 +31,7 @@ public class Bonus {
         return tipo;
     }
     
-    public Date getData(){
+    public LocalDate getData(){
         return data; 
     }
 

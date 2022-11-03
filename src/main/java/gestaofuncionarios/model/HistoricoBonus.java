@@ -1,16 +1,15 @@
 package gestaofuncionarios.model;
 
-
-import java.util.Date;
+import java.time.LocalDate;
 
 public class HistoricoBonus {
 
     private int idHistoricoBonus;
     private final int idFuncionario;
     private final int idBonus;
-    private final Date dataInclusao;
+    private final LocalDate dataInclusao;
 
-    public HistoricoBonus(int idFuncionario, int idBonus, Date dataInclusao) {
+    public HistoricoBonus(int idFuncionario, int idBonus, LocalDate dataInclusao) {
         this.idFuncionario = idFuncionario;
         this.idBonus = idBonus;
         this.dataInclusao = dataInclusao;
@@ -28,10 +27,11 @@ public class HistoricoBonus {
         return idBonus;
     }
 
-    public Date getDataInclusao() {
+    public LocalDate getDataInclusao() {
         return dataInclusao;
     }
-    
+
+
     public void setIdHistoricoBonus(int idHistoricoBonus){
          this.idHistoricoBonus = idHistoricoBonus;
     }

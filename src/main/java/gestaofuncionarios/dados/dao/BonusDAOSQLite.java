@@ -2,6 +2,8 @@ package gestaofuncionarios.dados.dao;
 
 import gestaofuncionarios.dados.ConexaoSQLite.SQLiteDB;
 import gestaofuncionarios.model.Bonus;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -26,7 +28,7 @@ public class BonusDAOSQLite implements BonusDAO {
        while (BD.getRs().next()) {
           int idBonus = BD.getRs().getInt("id");  
           String tipo = BD.getRs().getString("tipo");  
-          Date data = BD.getRs().getDate("data");
+          LocalDate data = LocalDate.parse(BD.getRs().getString("data"),DateTimeFormatter.ofPattern("yyyy-MM-dd"));
           Double valor = BD.getRs().getDouble("valor");
           bonus = new Bonus(tipo,valor,data);
           bonus.setIdBonus(idBonus);
@@ -49,7 +51,7 @@ public class BonusDAOSQLite implements BonusDAO {
        while (BD.getRs().next()) {
           int idBonus = BD.getRs().getInt("id");  
           String tipo = BD.getRs().getString("tipo");  
-          Date data = BD.getRs().getDate("data");
+          LocalDate data = LocalDate.parse(BD.getRs().getString("data"),DateTimeFormatter.ofPattern("yyyy-MM-dd"));
           Double valor = BD.getRs().getDouble("valor");
           Bonus bonus = new Bonus(tipo,valor,data);
           bonus.setIdBonus(idBonus);
