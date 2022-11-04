@@ -12,7 +12,6 @@ import javax.swing.table.DefaultTableModel;
 
 import gestaofuncionarios.dados.dao.FuncionarioDAO;
 import gestaofuncionarios.model.Funcionario;
-import gestaofuncionarios.presenter.funcionariopresenter.FuncionarioPresenter;
 import gestaofuncionarios.view.BuscarFuncionarioView;
 
 public class BuscarFuncionarioPresenter {

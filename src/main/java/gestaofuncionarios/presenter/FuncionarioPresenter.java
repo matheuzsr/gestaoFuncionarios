@@ -1,4 +1,4 @@
-package gestaofuncionarios.presenter.funcionariopresenter;
+package gestaofuncionarios.presenter;
 
 import gestaofuncionarios.dados.dao.FuncionarioDAO;
 import gestaofuncionarios.model.Funcionario;
