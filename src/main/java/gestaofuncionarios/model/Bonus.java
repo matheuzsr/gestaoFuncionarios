@@ -5,9 +5,9 @@ import java.time.LocalDate;
 public class Bonus {
 
     private int idBonus;
-    private final String tipo;
-    private final double valor;
-    private final LocalDate data;
+    private String tipo;
+    private double valor;
+    private LocalDate data;
 
     public Bonus(String tipo, double valor, LocalDate data) {
         this.tipo = tipo;
