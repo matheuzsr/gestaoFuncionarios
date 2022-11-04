@@ -118,6 +118,12 @@ public class BuscarFuncionarioPresenter {
         view.getTblAtributos().getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
     }
 
+    // TODO: colocar eles no change do select row table
+    private void handleEnableButtons() {
+        view.getBtnVisualizar().setEnabled(true);
+        view.getBtnHistoryBonus().setEnabled(true);
+    }
+
     public BuscarFuncionarioView getView() {
         return view;
     }
