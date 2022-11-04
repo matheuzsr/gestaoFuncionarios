@@ -32,7 +32,8 @@ public class GestaoFuncionariosView extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
@@ -46,6 +47,8 @@ public class GestaoFuncionariosView extends javax.swing.JFrame {
         buscarFuncionariosMenu = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         calcularSalarioMenu = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        showHistoricoBonusMenu = new javax.swing.JMenuItem();
 
         jLabel1.setText("jLabel1");
 
@@ -56,25 +59,26 @@ public class GestaoFuncionariosView extends javax.swing.JFrame {
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(588, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(lblTotal)
-                .addContainerGap())
-            .addComponent(desktop)
-        );
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap(588, Short.MAX_VALUE)
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblTotal)
+                                .addContainerGap())
+                        .addComponent(desktop));
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(desktop, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(desktop, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lblTotal, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap()));
 
         jMenu1.setText("Funcionario");
 
@@ -94,29 +98,46 @@ public class GestaoFuncionariosView extends javax.swing.JFrame {
         jMenu2.setText("Salario");
 
         calcularSalarioMenu.setText("Calcular salários");
+
         jMenu2.add(calcularSalarioMenu);
 
         jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Bonus");
+
+        showHistoricoBonusMenu.setText("Histórico de bônus");
+        showHistoricoBonusMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showHistoricoBonusMenuActionPerformed(evt);
+            }
+        });
+        jMenu3.add(showHistoricoBonusMenu);
+
+        jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buscarFuncionariosMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarFuncionariosMenuActionPerformed
+    private void buscarFuncionariosMenuActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_buscarFuncionariosMenuActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_buscarFuncionariosMenuActionPerformed
+    }// GEN-LAST:event_buscarFuncionariosMenuActionPerformed
+
+    private void showHistoricoBonusMenuActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_showHistoricoBonusMenuActionPerformed
+        // TODO add your handling code here:
+    }// GEN-LAST:event_showHistoricoBonusMenuActionPerformed
 
     private void menuCalcularBonusActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_menuCalcularBonusActionPerformed
         // TODO add your handling code here:
@@ -171,6 +192,10 @@ public class GestaoFuncionariosView extends javax.swing.JFrame {
         return buscarFuncionariosMenu;
     }
 
+    public JMenuItem getShowHistoricoBonusMenu() {
+        return showHistoricoBonusMenu;
+    }
+
     public static JDesktopPane getDesktop() {
         return desktop;
     }
@@ -188,8 +213,10 @@ public class GestaoFuncionariosView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblTotal;
+    private javax.swing.JMenuItem showHistoricoBonusMenu;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,4 +1,4 @@
-package gestaofuncionarios.presenter.verbonuspresenter;
+package gestaofuncionarios.presenter.funcionariopresenter;
 
 import gestaofuncionarios.view.VerBonusView;
 

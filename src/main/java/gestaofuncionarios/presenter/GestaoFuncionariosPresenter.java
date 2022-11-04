@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import gestaofuncionarios.dados.dao.FuncionarioDAO;
 import gestaofuncionarios.presenter.funcionariopresenter.FuncionarioPresenter;
+import gestaofuncionarios.presenter.funcionariopresenter.VerBonusPresenter;
 import gestaofuncionarios.view.GestaoFuncionariosView;
 
 /**
@@ -32,6 +33,15 @@ public class GestaoFuncionariosPresenter {
         this.view.getBuscarFuncionariosMenu().addActionListener((ActionEvent e) -> {
             try {
                 BuscarFuncionarioPresenter presenter = new BuscarFuncionarioPresenter(dao);
+                showPanel(presenter.getView(), false, false);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(view, ex.getMessage());
+            }
+        });
+
+        this.view.getShowHistoricoBonusMenu().addActionListener((ActionEvent e) -> {
+            try {
+                VerBonusPresenter presenter = new VerBonusPresenter();
                 showPanel(presenter.getView(), false, false);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(view, ex.getMessage());
