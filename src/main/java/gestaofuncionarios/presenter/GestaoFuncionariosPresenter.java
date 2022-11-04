@@ -46,6 +46,7 @@ public class GestaoFuncionariosPresenter {
     }
 
     public static void showPanel(JInternalFrame frame, Boolean maximize, Boolean closable) throws Exception {
+
         if (closable) {
             GestaoFuncionariosView.getDesktop().add(frame);
         } else {
