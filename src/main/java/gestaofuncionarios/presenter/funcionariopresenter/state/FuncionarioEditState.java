@@ -1,12 +1,11 @@
 package gestaofuncionarios.presenter.funcionariopresenter.state;
 
+import gestaofuncionarios.model.Funcionario;
+import gestaofuncionarios.presenter.funcionariopresenter.FuncionarioPresenter;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
-import gestaofuncionarios.model.Funcionario;
-import gestaofuncionarios.presenter.funcionariopresenter.FuncionarioPresenter;
 
 public class FuncionarioEditState extends FuncionarioPresenterState {
 
@@ -35,16 +34,12 @@ public class FuncionarioEditState extends FuncionarioPresenterState {
     }
 
     private void configurarTela() {
-        presenter.getView().getBtnVerBonus().setVisible(false);
         presenter.getView().getBtnExcluir().setVisible(false);
         presenter.getView().getBtnEditar().setVisible(false);
         presenter.getView().getBtnSalvar().setVisible(true);
 
         presenter.getView().getTxtNome().setEditable(true);
-        presenter.getView().getTxtCargo().setEditable(true);
-        presenter.getView().getTxtSalarioBase().setEditable(true);
-        presenter.getView().getTxtFaltas().setEditable(true);
-        presenter.getView().getTxtDistancia().setEditable(true);
+        presenter.getView().getTxtDistanciaTrabalho().setEditable(true);
     }
 
     @Override

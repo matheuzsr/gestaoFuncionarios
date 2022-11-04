@@ -29,6 +29,15 @@ public class GestaoFuncionariosPresenter {
             }
         });
 
+        this.view.getBuscarFuncionariosMenu().addActionListener((ActionEvent e) -> {
+            try {
+                BuscarFuncionarioPresenter presenter = new BuscarFuncionarioPresenter(dao);
+                showPanel(presenter.getView(), false, false);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(view, ex.getMessage());
+            }
+        });
+
         this.view.setVisible(true);
     }
 

@@ -19,6 +19,14 @@
                 <Property name="text" type="java.lang.String" value="Adicionar funcion&#xe1;rio"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="buscarFuncionariosMenu">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Buscar Funcionarios"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buscarFuncionariosMenuActionPerformed"/>
+              </Events>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu2">
@@ -26,12 +34,12 @@
             <Property name="text" type="java.lang.String" value="Salario"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="menuCalcularBonus">
+            <MenuItem class="javax.swing.JMenuItem" name="calcularSalarioMenu">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Calcular sal&#xe1;rios"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuCalcularBonusActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="calcularSalarioMenuActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

@@ -1,12 +1,9 @@
 package gestaofuncionarios.presenter.funcionariopresenter.state;
 
-import java.awt.event.ActionEvent;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-
 import gestaofuncionarios.model.Funcionario;
 import gestaofuncionarios.presenter.funcionariopresenter.FuncionarioPresenter;
+import java.awt.event.ActionEvent;
+import javax.swing.JOptionPane;
 
 public class FuncionarioVisualizacaoState extends FuncionarioPresenterState {
 
@@ -23,16 +20,20 @@ public class FuncionarioVisualizacaoState extends FuncionarioPresenterState {
 
     private void configurarTela(FuncionarioPresenter presenter) {
         presenter.getView().getTxtNome().setText(this.funcionario.getNome());
-        presenter.getView().getTxtNome().setEditable(false);
         presenter.getView().getTxtCargo().setText(this.funcionario.getCargo());
-        presenter.getView().getTxtCargo().setEditable(false);
         presenter.getView().getTxtSalarioBase()
                 .setText(String.valueOf(presenter.getFormat().format(this.funcionario.getSalarioBase())));
-        presenter.getView().getTxtSalarioBase().setEditable(false);
         presenter.getView().getTxtFaltas().setText(String.valueOf(this.funcionario.getFaltas()));
         presenter.getView().getTxtFaltas().setEditable(false);
-        presenter.getView().getTxtDistancia().setText(String.valueOf(this.funcionario.getDistanciaDoTrabalho()));
-        presenter.getView().getTxtDistancia().setEditable(false);
+        presenter.getView().getTxtDistanciaTrabalho().setText(String.valueOf(this.funcionario.getDistanciaDoTrabalho()));
+        presenter.getView().getTxtAdmissao().setText(String.valueOf(this.funcionario.getDistanciaDoTrabalho()));
+
+        presenter.getView().getTxtNome().setEditable(false);
+        presenter.getView().getTxtCargo().setEditable(false);
+        presenter.getView().getTxtSalarioBase().setEditable(false);
+        presenter.getView().getTxtDistanciaTrabalho().setEditable(false);
+        presenter.getView().getTxtDistanciaTrabalho().setEditable(false);
+        presenter.getView().getBtnSalvar().setVisible(false);
     }
 
     private void configurarListeners(FuncionarioPresenter presenter) {
@@ -45,13 +46,6 @@ public class FuncionarioVisualizacaoState extends FuncionarioPresenterState {
                 excluir();
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(presenter.getView(), ex.getMessage());
-            }
-        });
-        presenter.getView().getBtnVerBonus().addActionListener((ActionEvent ae) -> {
-            try {
-                // visualizarBonus();
-            } catch (Exception ex) {
-                Logger.getLogger(FuncionarioVisualizacaoState.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
 
@@ -77,11 +71,4 @@ public class FuncionarioVisualizacaoState extends FuncionarioPresenterState {
             presenter.getView().dispose();
         }
     }
-
-    // private void visualizarBonus() throws Exception {
-    // BonusRecebidosPresenter presenterBonus = new
-    // BonusRecebidosPresenter(this.funcionario);
-    // SistemaGestaoRHPresenter.activePanel(presenterBonus.getView(), false, false);
-    // }
-
 }

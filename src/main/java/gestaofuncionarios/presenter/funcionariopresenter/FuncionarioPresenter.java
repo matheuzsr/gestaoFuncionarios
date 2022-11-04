@@ -1,13 +1,12 @@
 package gestaofuncionarios.presenter.funcionariopresenter;
 
-import java.text.DecimalFormat;
-
 import gestaofuncionarios.dados.dao.FuncionarioDAO;
 import gestaofuncionarios.model.Funcionario;
-import gestaofuncionarios.presenter.funcionariopresenter.state.FuncionariosAddState;
-import gestaofuncionarios.presenter.funcionariopresenter.state.FuncionarioEditState;
 import gestaofuncionarios.presenter.funcionariopresenter.state.FuncionarioPresenterState;
+import gestaofuncionarios.presenter.funcionariopresenter.state.FuncionarioVisualizacaoState;
+import gestaofuncionarios.presenter.funcionariopresenter.state.FuncionariosAddState;
 import gestaofuncionarios.view.FuncionarioView;
+import java.text.DecimalFormat;
 
 public final class FuncionarioPresenter {
 
@@ -26,7 +25,7 @@ public final class FuncionarioPresenter {
         if (funcionario == null) {
             this.setEstado(new FuncionariosAddState(this));
         } else {
-            this.setEstado(new FuncionarioEditState(this));
+            this.setEstado(new FuncionarioVisualizacaoState(this));
         }
     }
 

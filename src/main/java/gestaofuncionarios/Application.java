@@ -15,10 +15,10 @@ import gestaofuncionarios.presenter.GestaoFuncionariosPresenter;
  */
 public class Application {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         try {
-        FuncionarioDAO funcionarioDAO = new FuncionarioDAOSQLite();
-        GestaoFuncionariosPresenter presenter = new GestaoFuncionariosPresenter(funcionarioDAO);
+            FuncionarioDAO funcionarioDAO = new FuncionarioDAOSQLite();
+            new GestaoFuncionariosPresenter(funcionarioDAO);
 
         } catch (Exception e) {
             e.printStackTrace();
