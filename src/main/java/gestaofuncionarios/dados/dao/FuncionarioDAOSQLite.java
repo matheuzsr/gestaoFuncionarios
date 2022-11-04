@@ -1,24 +1,18 @@
 package gestaofuncionarios.dados.dao;
 
+import gestaofuncionarios.dados.ConexaoSQLite.SQLiteDB;
+import gestaofuncionarios.model.Funcionario;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.TreeSet;
 import javax.swing.JOptionPane;
 
-import gestaofuncionarios.dados.ConexaoSQLite.SQLiteDB;
-import gestaofuncionarios.model.Funcionario;
-
 public final class FuncionarioDAOSQLite implements FuncionarioDAO {
 
-    private TreeSet<Funcionario> funcionarios = null;
+    private TreeSet<Funcionario> funcionarios = new TreeSet<>();
     private final SQLiteDB BD = new SQLiteDB();
-
-    public FuncionarioDAOSQLite() {
-        if (this.funcionarios == null) {
-            this.funcionarios = new TreeSet<>();
-        }
-        carregaFuncionarios(); 
-    }
 
     @Override
     public void carregaFuncionarios() {
@@ -27,22 +21,29 @@ public final class FuncionarioDAOSQLite implements FuncionarioDAO {
             BD.consultar("SELECT * FROM funcionario");
 
             while (BD.getRs().next()) {
-                int id = BD.getRs().getInt(1);
-                String nome = BD.getRs().getString(2);
-                String cargo = BD.getRs().getString(3);
-                double salarioBase = BD.getRs().getDouble(4);
+                int id = BD.getRs().getInt("id");
+                String nome = BD.getRs().getString("nome");
+                LocalDate dataNascimento = LocalDate.parse(BD.getRs().getString("data_nascimento"),
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                String cargo = BD.getRs().getString("cargo");
+                double salarioBase = BD.getRs().getDouble("salario_base");
 
-                Funcionario f = new Funcionario(nome, cargo, salarioBase);
+                Funcionario f = new Funcionario(nome, dataNascimento, cargo, salarioBase);
                 f.setIdFuncionario(id);
                 f.setFaltas(BD.getRs().getInt(6));
                 f.setDistanciaDoTrabalho(BD.getRs().getInt(7));
 
+                if (BD.getRs().getString("data_admissao") != "null") {
+                    f.setDataAdmissao(LocalDate.parse(BD.getRs().getString("data_nascimento"),
+                            DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
+                }
                 funcionarios.add(f);
             }
 
             BD.close();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao carregar funcionarios");
+            JOptionPane.showMessageDialog(null, ex.getStackTrace());
         }
     }
 
@@ -54,11 +55,13 @@ public final class FuncionarioDAOSQLite implements FuncionarioDAO {
 
             String sql = "INSERT INTO funcionario VALUES (?,'"
                     + funcionario.getNome() + "','"
+                    + funcionario.getDataNascimento() + "','"
                     + funcionario.getCargo() + "','"
                     + funcionario.getSalarioBase() + "','"
                     + funcionario.getSalario() + "','"
                     + funcionario.getFaltas() + "','"
-                    + funcionario.getDistanciaDoTrabalho() + "')";
+                    + funcionario.getDistanciaDoTrabalho() + "','"
+                    + funcionario.getDataAdmissao() + "')";
 
             BD.atualizar(sql);
             BD.close();
@@ -79,7 +82,7 @@ public final class FuncionarioDAOSQLite implements FuncionarioDAO {
 
         BD.conectar();
 
-        String sql = "DELETE FROM funcionario WHERE Nome='" + nome + "'";
+        String sql = "DELETE FROM funcionario WHERE mome='" + nome + "'";
         BD.atualizar(sql);
         BD.close();
         funcionarios = temp;
@@ -90,15 +93,17 @@ public final class FuncionarioDAOSQLite implements FuncionarioDAO {
     public Funcionario getFuncionarioByName(String nome) throws Exception {
         Funcionario f = null;
         BD.conectar();
-        BD.consultar("SELECT * FROM funcionario WHERE Nome='" + nome + "'");
+        BD.consultar("SELECT * FROM funcionario WHERE nome='" + nome + "'");
 
         while (BD.getRs().next()) {
             int id = BD.getRs().getInt(1);
             String nomeFuncionario = BD.getRs().getString(2);
-            String cargo = BD.getRs().getString(3);
-            double salarioBase = BD.getRs().getDouble(4);
+            LocalDate dataNascimento = LocalDate.parse(BD.getRs().getString("data_nascimento"),
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            String cargo = BD.getRs().getString(4);
+            double salarioBase = BD.getRs().getDouble(5);
 
-            f = new Funcionario(nomeFuncionario, cargo, salarioBase);
+            f = new Funcionario(nomeFuncionario, dataNascimento, cargo, salarioBase);
             f.setIdFuncionario(id);
             f.setFaltas(BD.getRs().getInt(6));
             f.setDistanciaDoTrabalho(BD.getRs().getInt(7));
@@ -114,6 +119,8 @@ public final class FuncionarioDAOSQLite implements FuncionarioDAO {
 
     @Override
     public Collection<Funcionario> getFuncionarios() {
+        carregaFuncionarios();
+
         return funcionarios;
     }
 }

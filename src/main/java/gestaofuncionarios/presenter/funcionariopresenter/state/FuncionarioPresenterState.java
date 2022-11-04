@@ -1,11 +1,11 @@
 package gestaofuncionarios.presenter.funcionariopresenter.state;
 
-import java.awt.Component;
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
-
 import gestaofuncionarios.model.Funcionario;
 import gestaofuncionarios.presenter.funcionariopresenter.FuncionarioPresenter;
+import java.awt.Component;
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import javax.swing.JButton;
 
 public abstract class FuncionarioPresenterState {
 
@@ -52,15 +52,21 @@ public abstract class FuncionarioPresenterState {
             salarioBase = Double.parseDouble(presenter.getView().getTxtSalarioBase().getText().replace(",", "."));
 
         }
-        Funcionario f = new Funcionario(nome, cargo, salarioBase);
+
+        int idade = 0;
+        if (!presenter.getView().getTxtIdade().getText().isEmpty()) {
+            idade = Integer.parseInt(presenter.getView().getTxtIdade().getText());
+        }
+
+        Funcionario f = new Funcionario(nome, LocalDate.now().minusYears(idade), cargo, salarioBase);
 
         if (!presenter.getView().getTxtFaltas().getText().isEmpty()) {
             int faltas = Integer.parseInt(presenter.getView().getTxtFaltas().getText());
             f.setFaltas(faltas);
         }
 
-        if (!presenter.getView().getTxtDistancia().getText().isEmpty()) {
-            double distancia = Double.parseDouble(presenter.getView().getTxtDistancia().getText());
+        if (!presenter.getView().getTxtDistanciaTrabalho().getText().isEmpty()) {
+            double distancia = Double.parseDouble(presenter.getView().getTxtDistanciaTrabalho().getText());
             f.setDistanciaDoTrabalho(distancia);
         }
 
