@@ -6,7 +6,6 @@ import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 
 import gestaofuncionarios.dados.dao.FuncionarioDAO;
-import gestaofuncionarios.presenter.funcionariopresenter.FuncionarioPresenter;
 import gestaofuncionarios.view.GestaoFuncionariosView;
 
 /**

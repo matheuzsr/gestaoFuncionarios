@@ -59,21 +59,8 @@ public class BuscarFuncionarioView extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tblAtributos);
 
         btnFechar.setText("Fechar");
-
         btnHistoryBonus.setText("Histórico de bônus");
-        btnHistoryBonus.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHistoryBonusActionPerformed(evt);
-            }
-        });
-
         btnAddFuncionario.setText("Novo funcionário");
-        btnAddFuncionario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddFuncionarioActionPerformed(evt);
-            }
-        });
-
         btnVisualizar.setText("Visualizar");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -164,6 +151,10 @@ public class BuscarFuncionarioView extends javax.swing.JInternalFrame {
 
     public JTable getTblAtributos() {
         return tblAtributos;
+    }
+
+    public JButton getBtnHistoryBonus() {
+        return btnHistoryBonus;
     }
 
     public JTextField getTxtValor() {

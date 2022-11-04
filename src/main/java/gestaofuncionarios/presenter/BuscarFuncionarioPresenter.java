@@ -12,7 +12,6 @@ import javax.swing.table.DefaultTableModel;
 
 import gestaofuncionarios.dados.dao.FuncionarioDAO;
 import gestaofuncionarios.model.Funcionario;
-import gestaofuncionarios.presenter.funcionariopresenter.FuncionarioPresenter;
 import gestaofuncionarios.view.BuscarFuncionarioView;
 
 public class BuscarFuncionarioPresenter {
@@ -117,6 +116,12 @@ public class BuscarFuncionarioPresenter {
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         view.getTblAtributos().getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+    }
+
+    // TODO: colocar eles no change do select row table
+    private void handleEnableButtons() {
+        view.getBtnVisualizar().setEnabled(true);
+        view.getBtnHistoryBonus().setEnabled(true);
     }
 
     public BuscarFuncionarioView getView() {

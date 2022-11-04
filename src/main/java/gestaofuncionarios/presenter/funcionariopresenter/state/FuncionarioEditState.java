@@ -1,7 +1,7 @@
 package gestaofuncionarios.presenter.funcionariopresenter.state;
 
 import gestaofuncionarios.model.Funcionario;
-import gestaofuncionarios.presenter.funcionariopresenter.FuncionarioPresenter;
+import gestaofuncionarios.presenter.FuncionarioPresenter;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
