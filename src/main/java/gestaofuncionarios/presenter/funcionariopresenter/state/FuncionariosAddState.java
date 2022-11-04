@@ -21,14 +21,14 @@ public class FuncionariosAddState extends FuncionarioPresenterState {
         presenter.getView().getBtnSalvar().addActionListener((ActionEvent ae) -> {
             try {
                 salvar();
-                fechar();
 
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(presenter.getView(), ex.getMessage());
             }
         });
+
         presenter.getView().getBtnFechar().addActionListener((ActionEvent ae) -> {
-            fechar();
+            this.fechar();
         });
 
         presenter.getView().setVisible(true);
@@ -39,10 +39,10 @@ public class FuncionariosAddState extends FuncionarioPresenterState {
         Funcionario funcionario = lerDados();
         if (presenter.getDao().add(funcionario)) {
             JOptionPane.showMessageDialog(presenter.getView(), "Funcionario " + funcionario.getNome() + " salvo com sucesso!");
+            this.fechar();
+        } else {
+            JOptionPane.showMessageDialog(presenter.getView(), "Erro ao salvar no banco de dados!");
         }
-
-        presenter.getView().setVisible(false);
-
     }
 
 }

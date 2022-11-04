@@ -2,11 +2,11 @@ package gestaofuncionarios.dados.dao;
 
 import gestaofuncionarios.dados.ConexaoSQLite.SQLiteDB;
 import gestaofuncionarios.model.Bonus;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 public class BonusDAOSQLite implements BonusDAO {

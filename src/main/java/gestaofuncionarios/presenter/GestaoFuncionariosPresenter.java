@@ -47,12 +47,12 @@ public class GestaoFuncionariosPresenter {
 
     public static void showPanel(JInternalFrame frame, Boolean maximize, Boolean closable) throws Exception {
 
-        // TODO: Voltar e Refatorar
         if (closable) {
             GestaoFuncionariosView.getDesktop().add(frame);
         } else {
             boolean isFrameShow = false;
             JInternalFrame[] allFrames = GestaoFuncionariosView.getDesktop().getAllFrames();
+
             for (JInternalFrame f : allFrames) {
                 if (f.getTitle().equals(frame.getTitle())) {
                     isFrameShow = true;
@@ -64,19 +64,5 @@ public class GestaoFuncionariosPresenter {
                 GestaoFuncionariosView.getDesktop().add(frame);
             }
         }
-
-        frame.setIconifiable(true);
-        frame.setIcon(true);
-        frame.setVisible(true);
-        frame.setClosable(closable);
-        frame.setMaximizable(true);
-        frame.setResizable(true);
-        if (!maximize) {
-            frame.setIcon(false);
-        } else {
-            frame.setMaximum(true);
-        }
-        frame.moveToFront();
-        frame.requestFocus();
     }
 }
