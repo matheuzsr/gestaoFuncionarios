@@ -7,8 +7,8 @@ import java.util.List;
 
 import gestaofuncionarios.business.calculaBonusFuncionario.handlers.AssiduidadeBonus;
 import gestaofuncionarios.business.calculaBonusFuncionario.handlers.BonusHandler;
-import gestaofuncionarios.business.calculaBonusFuncionario.handlers.DistanciaTrabalho;
 import gestaofuncionarios.business.calculaBonusFuncionario.handlers.FuncionarioMes;
+import gestaofuncionarios.business.calculaBonusFuncionario.handlers.TempoServicoHandler;
 import gestaofuncionarios.model.Bonus;
 import gestaofuncionarios.model.Funcionario;
 
@@ -18,7 +18,7 @@ public class CalculaBonusProcessor {
     public void run(Funcionario funcionario, LocalDate localDate) {
         List<BonusHandler> handlersList = new ArrayList<>(Arrays.asList(
                 new AssiduidadeBonus(),
-                new DistanciaTrabalho(),
+                new TempoServicoHandler(),
                 new FuncionarioMes()));
 
         for (BonusHandler handler : handlersList) {
@@ -39,7 +39,8 @@ public class CalculaBonusProcessor {
 
     private void salvarBonusFuncionario(Funcionario funcionario) {
         // TODO: pegar bonusAplicadosList e salvar nas tabelas,
-        // historico e bonus 
+        // Repository (f, b)
+        // historico e bonus
         // usar a repository com o join
     }
 

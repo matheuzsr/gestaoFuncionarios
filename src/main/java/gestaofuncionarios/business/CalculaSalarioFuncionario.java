@@ -6,17 +6,33 @@ import gestaofuncionarios.business.calculaBonusFuncionario.CalculaBonusProcessor
 import gestaofuncionarios.model.Funcionario;
 
 public class CalculaSalarioFuncionario {
-  public void calcular(Funcionario funcionario, LocalDate localDate) {
-    new CalculaBonusProcessor().run(funcionario, localDate);
-    double valorBonusCalculado = this.getValorBonusCalculado(funcionario, localDate);
+  LocalDate date = LocalDate.now();
+  Funcionario funcionario;
 
+  public CalculaSalarioFuncionario(Funcionario funcionario) {
+    if (funcionario == null) {
+      throw new RuntimeException("É necessário informar um funcionário para realizar o cálculo");
+    }
+
+    this.funcionario = funcionario;
+  }
+
+  public void calcular() {
+    this.calularBonus();
+
+    double valorBonusCalculado = this.getValorBonusCalculado(funcionario);
     funcionario.setSalario(funcionario.getSalarioBase() + valorBonusCalculado);
   }
 
-  private double getValorBonusCalculado(Funcionario funcionario, LocalDate localDate) {
+  private void calularBonus() {
+    new CalculaBonusProcessor().run(this.funcionario, this.date);
+    // TODO: Salvar no banco o bonus do funcionario
+  }
+
+  private double getValorBonusCalculado(Funcionario funcionario) {
     // TODO: Pegar da base o count do bonus desse cara guardados no periodo
     // especifico
-    // retorna o valor
+    // retorna o valor somatorio dos bonus
     return 0;
   }
 }
