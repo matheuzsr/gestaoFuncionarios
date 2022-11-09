@@ -19,12 +19,11 @@ public class Funcionario implements Comparable<Funcionario> {
     private boolean funcionarioMes;
     private ArrayList<Bonus> bonusRecebidos = new ArrayList<>();
 
-    public Funcionario(String nome, LocalDate dataNascimento, String cargo, double salarioBase) throws Exception {
+    public Funcionario(String nome, LocalDate dataNascimento, String cargo, double salarioBase) {
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.cargo = cargo;
         this.salarioBase = salarioBase;
-
     }
 
     public void addBonus(Bonus bonus) {
