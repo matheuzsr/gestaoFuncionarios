@@ -45,8 +45,9 @@ public class GestaoFuncionariosPresenter {
         this.view.getLblTotal().setText(qtd);
     }
 
-    public static void showPanel(JInternalFrame frame, Boolean maximize, Boolean closable) throws Exception {
+  public static void showPanel(JInternalFrame frame, Boolean maximize, Boolean closable) throws Exception {
 
+        // TODO: Voltar e Refatorar
         if (closable) {
             GestaoFuncionariosView.getDesktop().add(frame);
         } else {
@@ -64,5 +65,19 @@ public class GestaoFuncionariosPresenter {
                 GestaoFuncionariosView.getDesktop().add(frame);
             }
         }
-    }
+
+        frame.setIconifiable(true);
+        frame.setIcon(true);
+        frame.setVisible(true);
+        frame.setClosable(closable);
+        frame.setMaximizable(true);
+        frame.setResizable(true);
+        if (!maximize) {
+            frame.setIcon(false);
+        } else {
+            frame.setMaximum(true);
+        }
+        frame.moveToFront();
+        frame.requestFocus();
+    } 
 }

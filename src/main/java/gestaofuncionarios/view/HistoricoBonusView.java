@@ -7,10 +7,10 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 
-public class VerBonusView extends javax.swing.JInternalFrame {
+public class HistoricoBonusView extends javax.swing.JInternalFrame {
 
      
-        public VerBonusView() {
+        public HistoricoBonusView() {
                 initComponents();
         }
 
@@ -30,14 +30,15 @@ public class VerBonusView extends javax.swing.JInternalFrame {
         this.lblNome = lblNome;
     }
 
-    public JTable getTbHistorico() {
-        return tbHistorico;
+    public JTable getTblHistorico() {
+        return tblHistorico;
     }
 
-    public void setTbHistorico(JTable tbHistorico) {
-        this.tbHistorico = tbHistorico;
+    public void setTblHistorico(JTable tblHistorico) {
+        this.tblHistorico = tblHistorico;
     }
-        
+
+       
         
 
         
@@ -53,23 +54,20 @@ public class VerBonusView extends javax.swing.JInternalFrame {
         txtNome = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbHistorico = new javax.swing.JTable();
+        tblHistorico = new javax.swing.JTable();
         btnPesquisar = new javax.swing.JButton();
 
         lblNome.setText("Nome");
 
-        tbHistorico.setModel(new javax.swing.table.DefaultTableModel(
+        tblHistorico.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Data do Cálculo", "Cargo", "Tipo de Bônus", "Valor do Bônus"
             }
         ));
-        jScrollPane1.setViewportView(tbHistorico);
+        jScrollPane1.setViewportView(tblHistorico);
 
         btnPesquisar.setText("Pesquisar");
 
@@ -135,7 +133,7 @@ public class VerBonusView extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblNome;
-    private javax.swing.JTable tbHistorico;
+    private javax.swing.JTable tblHistorico;
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables
 }

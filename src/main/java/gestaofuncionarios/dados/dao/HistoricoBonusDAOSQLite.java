@@ -1,35 +1,40 @@
 package gestaofuncionarios.dados.dao;
 
 import gestaofuncionarios.dados.ConexaoSQLite.SQLiteDB;
+import gestaofuncionarios.dto.HistoricoBonusDTO;
 import gestaofuncionarios.model.HistoricoBonus;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 public class HistoricoBonusDAOSQLite implements HistoricoBonusDAO {
 
     private final SQLiteDB BD = new SQLiteDB();
 
-
     @Override
-    public Collection<HistoricoBonus> getAllHistoricoBonus() throws Exception {
-       ArrayList<HistoricoBonus> listHistoricoBonus =  new ArrayList<HistoricoBonus>();
+    public Collection<HistoricoBonusDTO> getHistoricoBonusByIdFuncionario(int idFuncionario) throws Exception {
+       ArrayList<HistoricoBonusDTO> listHistoricoBonus =  new ArrayList<>();
        StringBuilder str = new StringBuilder();
        
-       str.append(" SELECT * ");
+       str.append(" SELECT  ");
+       str.append(" hb.data_inclusao as data_inclusao, ");
+       str.append(" b.tipo as tipo , ");
+       str.append(" b.valor as valor , ");
+       str.append(" f.cargo as cargo  ");
        str.append(" FROM historico_bonus hb ");
+       str.append( " join bonus b on b.id = hb.id_bonus ");
+       str.append( " join funcionario f on f.id = hb.id_funcionario ");
+       str.append(" WHERE hb.id_funcionario = ").append(idFuncionario);
        BD.conectar();
        BD.consultar(str.toString());
     
        while (BD.getRs().next()) {
-          int id = BD.getRs().getInt("id");  
-          int idFuncionario = BD.getRs().getInt("id_funcionario");  
+          Double valor = BD.getRs().getDouble("valor");  
+          String cargo = BD.getRs().getString("cargo");  
           LocalDate data = LocalDate.parse(BD.getRs().getString("data_inclusao"),DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-          int idBonus = BD.getRs().getInt("id_bonus");  
-          HistoricoBonus historicoBonus = new HistoricoBonus(idFuncionario,idBonus, data);
-          historicoBonus.setIdHistoricoBonus(id);
+          String tipo = BD.getRs().getString("tipo");  
+          HistoricoBonusDTO historicoBonus = new HistoricoBonusDTO(tipo,valor,data,cargo);
           listHistoricoBonus.add(historicoBonus);
        }
        
@@ -37,5 +42,54 @@ public class HistoricoBonusDAOSQLite implements HistoricoBonusDAO {
        
        return listHistoricoBonus;
     }
+
+    @Override
+    public Collection<HistoricoBonusDTO> getHistoricoBonusByNameFuncionario(String NameFuncionario) throws Exception {
+       ArrayList<HistoricoBonusDTO> listHistoricoBonus =  new ArrayList<>();
+       StringBuilder str = new StringBuilder();
+       
+       str.append(" SELECT  ");
+       str.append(" hb.data_inclusao as data_inclusao, ");
+       str.append(" b.tipo as tipo , ");
+       str.append(" b.valor as valor , ");
+       str.append(" f.cargo as cargo  ");
+       str.append(" FROM historico_bonus hb ");
+       str.append(" join bonus b on b.id = hb.id_bonus ");
+       str.append(" join funcionario f on f.id = hb.id_funcionario ");
+       str.append(" WHERE b.tipo like ").append(" ' ").
+               append(NameFuncionario).append(" ' ");
+       BD.conectar();
+       BD.consultar(str.toString()); 
+    
+       while (BD.getRs().next()) {
+          Double valor = BD.getRs().getDouble("valor");  
+          String cargo = BD.getRs().getString("cargo");  
+          LocalDate data = LocalDate.parse(BD.getRs().getString("data_inclusao"),DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+          String tipo = BD.getRs().getString("tipo");  
+          HistoricoBonusDTO historicoBonus = new HistoricoBonusDTO(tipo,valor,data,cargo);
+          listHistoricoBonus.add(historicoBonus);
+       }
+       
+       BD.close();
+       
+       return listHistoricoBonus;
+    }
+    
+    @Override
+    public void add(HistoricoBonus historicoBonus) throws Exception{
+        StringBuilder str = new StringBuilder();
+   
+            BD.conectar();
+
+            str.append(" INSERT INTO historico_bonus (  " );
+            str.append(" data_inclusao, id_funcionario, id_bonus ").append(" ) ");
+            str.append(" Values ( ");
+            str.append(historicoBonus.getDataInclusao()).append(",");
+            str.append(historicoBonus.getIdFuncionario()).append(",");
+            str.append(historicoBonus.getIdBonus()).append(" )");
+            
+            BD.atualizar(str.toString());
+            BD.close();
+        }
     
 }
