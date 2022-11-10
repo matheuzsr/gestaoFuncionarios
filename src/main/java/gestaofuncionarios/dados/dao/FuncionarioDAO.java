@@ -23,9 +23,4 @@ public interface FuncionarioDAO {
     // public boolean altera(Funcionario funcionarioExistente, int IdAnterior)
     // throws Exception;
 
-    // TODO: Possivelmente iremos precisar
-    // public void addObserver(Observer observer);
-
-    // public void notifyObservers();
-
 }

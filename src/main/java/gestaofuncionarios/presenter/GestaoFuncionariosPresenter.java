@@ -2,22 +2,31 @@
 package gestaofuncionarios.presenter;
 
 import java.awt.event.ActionEvent;
+import java.util.List;
+
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 
-import gestaofuncionarios.dados.dao.FuncionarioDAO;
+import gestaofuncionarios.dados.dao.FuncionarioDAOSQLite;
+import gestaofuncionarios.model.Funcionario;
+import gestaofuncionarios.observer.Observer;
 import gestaofuncionarios.view.GestaoFuncionariosView;
 
 /**
  *
  * @author logcomex
  */
-public class GestaoFuncionariosPresenter {
+public class GestaoFuncionariosPresenter implements Observer {
     private GestaoFuncionariosView view;
+    private int totalFuncionarios;
+    private FuncionarioDAOSQLite dao;
 
-    public GestaoFuncionariosPresenter(FuncionarioDAO dao) {
+    public GestaoFuncionariosPresenter(FuncionarioDAOSQLite dao) {
         this.view = new GestaoFuncionariosView();
-        this.atualizarTotalFuncionarios(dao);
+        this.dao = dao;
+
+        this.getTotalFuncionarios();
+        this.atualizarTotalFuncionarios();
 
         this.view.getAddFuncionarioMenu().addActionListener((ActionEvent e) -> {
             try {
@@ -31,6 +40,19 @@ public class GestaoFuncionariosPresenter {
         this.view.getBuscarFuncionariosMenu().addActionListener((ActionEvent e) -> {
             try {
                 BuscarFuncionarioPresenter presenter = new BuscarFuncionarioPresenter(dao);
+
+                dao.addObserver(presenter);
+
+                showPanel(presenter.getView(), false, false);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(view, ex.getMessage());
+            }
+        });
+
+        this.view.getCalcularSalarioMenu().addActionListener((ActionEvent e) -> {
+            try {
+                CalculadoraSalarioPresenter presenter = new CalculadoraSalarioPresenter();
+
                 showPanel(presenter.getView(), false, false);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(view, ex.getMessage());
@@ -40,8 +62,13 @@ public class GestaoFuncionariosPresenter {
         this.view.setVisible(true);
     }
 
-    private void atualizarTotalFuncionarios(FuncionarioDAO dao) {
-        String qtd = String.valueOf(dao.getFuncionarios().size());
+    private void getTotalFuncionarios() {
+        this.totalFuncionarios = dao.getFuncionarios().size();
+    }
+
+    private void atualizarTotalFuncionarios() {
+        String qtd = String.valueOf(this.totalFuncionarios);
+
         this.view.getLblTotal().setText(qtd);
     }
 
@@ -79,5 +106,11 @@ public class GestaoFuncionariosPresenter {
         }
         frame.moveToFront();
         frame.requestFocus();
+    }
+
+    @Override
+    public void update(List<Funcionario> funcionarioList) {
+        this.totalFuncionarios = funcionarioList.size();
+        atualizarTotalFuncionarios();
     }
 }

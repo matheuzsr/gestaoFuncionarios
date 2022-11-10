@@ -26,15 +26,16 @@ public class FuncionarioVisualizacaoState extends FuncionarioPresenterState {
         presenter.getView().getTxtFaltas().setText(String.valueOf(this.funcionario.getFaltas()));
         presenter.getView().getTxtFaltas().setEditable(false);
         presenter.getView().getTxtDistanciaTrabalho().setText(String.valueOf(this.funcionario.getDistanciaDoTrabalho()));
-        // TODO: Corrigir erro abaixo
-        // presenter.getView().getSeletorDataAdmissao().setD
-        //         setText(String.valueOf(this.funcionario.getDistanciaDoTrabalho()));
 
-        presenter.getView().getTxtNome().setEditable(false);
         presenter.getView().getTxtCargo().setEditable(false);
+        presenter.getView().getTxtNome().setEditable(false);
+        presenter.getView().getTxtFaltas().setEditable(false);
+
+        presenter.getView().getTxtIdade().setEditable(false);
         presenter.getView().getTxtSalarioBase().setEditable(false);
         presenter.getView().getTxtDistanciaTrabalho().setEditable(false);
-        presenter.getView().getTxtDistanciaTrabalho().setEditable(false);
+        presenter.getView().getSeletorDataAdmissao().setEnabled(false);
+
         presenter.getView().getBtnSalvar().setVisible(false);
     }
 
