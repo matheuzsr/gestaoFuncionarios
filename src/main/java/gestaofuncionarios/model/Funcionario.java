@@ -26,6 +26,14 @@ public class Funcionario implements Comparable<Funcionario> {
         this.salarioBase = salarioBase;
     }
 
+    public Funcionario(int idFuncionario, String nome, LocalDate dataNascimento, String cargo, double salarioBase) {
+        this.idFuncionario = idFuncionario;
+        this.nome = nome;
+        this.dataNascimento = dataNascimento;
+        this.cargo = cargo;
+        this.salarioBase = salarioBase;
+    }
+
     public void addBonus(Bonus bonus) {
         if (bonus.getValor() != 0) {
             bonusRecebidos.add(bonus);
