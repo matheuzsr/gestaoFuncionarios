@@ -2,7 +2,11 @@ package gestaofuncionarios.presenter.funcionariopresenter.state;
 
 import gestaofuncionarios.model.Funcionario;
 import gestaofuncionarios.presenter.FuncionarioPresenter;
+import gestaofuncionarios.utils.DateUtils;
+
 import java.awt.event.ActionEvent;
+import java.time.LocalDate;
+
 import javax.swing.JOptionPane;
 
 public class FuncionariosAddState extends FuncionarioPresenterState {
@@ -15,6 +19,7 @@ public class FuncionariosAddState extends FuncionarioPresenterState {
         presenter.getView().getTxtFaltas().setText("");
         presenter.getView().getTxtNome().setText("");
         presenter.getView().getTxtSalarioBase().setText("");
+        presenter.getView().getSeletorDataAdmissao().setDate(DateUtils.asDate(LocalDate.now()));
         presenter.getView().getBtnExcluir().setVisible(false);
         presenter.getView().getBtnEditar().setVisible(false);
         presenter.getView().getBtnSalvar().setVisible(true);

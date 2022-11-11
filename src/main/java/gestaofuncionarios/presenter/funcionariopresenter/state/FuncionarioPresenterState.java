@@ -2,6 +2,8 @@ package gestaofuncionarios.presenter.funcionariopresenter.state;
 
 import gestaofuncionarios.model.Funcionario;
 import gestaofuncionarios.presenter.FuncionarioPresenter;
+import gestaofuncionarios.utils.DateUtils;
+
 import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
@@ -68,6 +70,11 @@ public abstract class FuncionarioPresenterState {
         if (!presenter.getView().getTxtDistanciaTrabalho().getText().isEmpty()) {
             double distancia = Double.parseDouble(presenter.getView().getTxtDistanciaTrabalho().getText());
             f.setDistanciaDoTrabalho(distancia);
+        }
+
+        if (presenter.getView().getSeletorDataAdmissao().getDate() != null) {
+            LocalDate dataAdmissao = DateUtils.asLocalDate(presenter.getView().getSeletorDataAdmissao().getDate());
+            f.setDataAdmissao(dataAdmissao);
         }
 
         return f;

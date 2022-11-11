@@ -77,6 +77,7 @@ public class Funcionario implements Comparable<Funcionario> {
     }
 
     public LocalDate getDataAdmissao() {
+        System.out.println(this.dataAdmissao);
         return this.dataAdmissao;
     }
 

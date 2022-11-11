@@ -40,6 +40,10 @@ public class GestaoFuncionariosView extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         desktop = new javax.swing.JDesktopPane();
         lblTotal = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        lblVersao = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        lblArmazenamento = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         addFuncionarioMenu = new javax.swing.JMenuItem();
@@ -53,12 +57,24 @@ public class GestaoFuncionariosView extends javax.swing.JFrame {
 
         jLabel2.setText("Total de funcionários cadastrados: ");
 
+        jLabel3.setText("Versão:");
+
+        jLabel5.setText("Armazenamento:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(588, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblVersao)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblArmazenamento)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 409, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(lblTotal)
@@ -71,7 +87,12 @@ public class GestaoFuncionariosView extends javax.swing.JFrame {
                 .addComponent(desktop, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addComponent(lblVersao)
+                        .addComponent(jLabel5)
+                        .addComponent(lblArmazenamento))
                     .addComponent(lblTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -179,6 +200,14 @@ public class GestaoFuncionariosView extends javax.swing.JFrame {
         return lblTotal;
     }
 
+    public JLabel getLblArmazenamento() {
+        return lblArmazenamento;
+    }
+
+    public JLabel getLblVersao() {
+        return lblVersao;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem addFuncionarioMenu;
     private javax.swing.JMenuItem buscarFuncionariosMenu;
@@ -186,10 +215,14 @@ public class GestaoFuncionariosView extends javax.swing.JFrame {
     private static javax.swing.JDesktopPane desktop;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblArmazenamento;
     private javax.swing.JLabel lblTotal;
+    private javax.swing.JLabel lblVersao;
     // End of variables declaration//GEN-END:variables
 }
