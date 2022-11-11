@@ -7,4 +7,4 @@
 //             CalculaSalarioFuncionario calculaSalarioFuncionario = new CalculaSalarioFuncionario(funcionario);
 
 //             calculaSalarioFuncionario.calcular();
-}
+// }
