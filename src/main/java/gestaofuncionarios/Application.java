@@ -4,9 +4,7 @@
  */
 package gestaofuncionarios;
 
-import gestaofuncionarios.dados.dao.FuncionarioDAO;
 import gestaofuncionarios.dados.dao.FuncionarioDAOSQLite;
-import gestaofuncionarios.model.Funcionario;
 import gestaofuncionarios.presenter.GestaoFuncionariosPresenter;
 
 /**
@@ -17,8 +15,10 @@ public class Application {
 
     public static void main(String[] args) throws Exception {
         try {
-            FuncionarioDAO funcionarioDAO = new FuncionarioDAOSQLite();
-            new GestaoFuncionariosPresenter(funcionarioDAO);
+            FuncionarioDAOSQLite funcionarioDAO = new FuncionarioDAOSQLite();
+            GestaoFuncionariosPresenter presenter = new GestaoFuncionariosPresenter(funcionarioDAO);
+
+            funcionarioDAO.addObserver(presenter);
 
         } catch (Exception e) {
             e.printStackTrace();

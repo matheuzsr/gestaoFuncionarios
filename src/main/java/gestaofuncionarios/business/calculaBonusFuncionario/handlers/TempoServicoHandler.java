@@ -6,10 +6,10 @@ import java.util.List;
 import gestaofuncionarios.model.Bonus;
 import gestaofuncionarios.model.Funcionario;
 
-public class DistanciaTrabalho extends BonusHandler {
+public class TempoServicoHandler extends BonusHandler {
 
-    public DistanciaTrabalho() {
-        super("bonus_distancia_trabalho");
+    public TempoServicoHandler() {
+        super("tempo_servico");
     }
 
     @Override
@@ -21,20 +21,20 @@ public class DistanciaTrabalho extends BonusHandler {
         bonusAplicadosList.add(new Bonus(this.tipo, valor, localDate));
     }
 
-    private double getBonusPercentage(int yearsOfService) {
-        if (yearsOfService >= 20) {
+    private double getBonusPercentage(int qtdAnosServico) {
+        if (qtdAnosServico >= 20) {
             return 0.15;
         }
-        if (yearsOfService >= 16) {
+        if (qtdAnosServico >= 16) {
             return 0.1;
         }
-        if (yearsOfService >= 11) {
+        if (qtdAnosServico >= 11) {
             return 0.08;
         }
-        if (yearsOfService >= 6) {
+        if (qtdAnosServico >= 6) {
             return 0.03;
         }
-        if (yearsOfService >= 1) {
+        if (qtdAnosServico >= 1) {
             return 0.02;
         }
 
