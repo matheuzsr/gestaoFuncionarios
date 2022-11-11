@@ -3,6 +3,7 @@ package gestaofuncionarios.presenter;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -69,19 +70,15 @@ public class BuscarFuncionarioPresenter implements Observer {
 
     private void buscar() throws Exception {
         String nome = view.getTxtValor().getText();
-        Iterator<Funcionario> it = dao.getFuncionarios().iterator();
+        Collection<Funcionario> listaFuncionarios = dao.getFuncionarios();
 
-        TreeSet<Funcionario> treeSet = new TreeSet<>();
-
-        while (it.hasNext()) {
-            Funcionario funcionario = it.next();
-
-            if (funcionario.getNome().toLowerCase().contains(nome.toLowerCase())) {
-                treeSet.add(funcionario);
-            }
+        List<Funcionario> listaFiltrada = new ArrayList<>();
+        for (Funcionario funcionario : listaFuncionarios) {
+            if (funcionario.getNome().toLowerCase().contains(nome.toLowerCase()))
+                listaFiltrada.add(funcionario);
         }
-        carregarTabela(treeSet);
 
+        carregarTabela(listaFiltrada);
     }
 
     private void visualizarFuncionario() {

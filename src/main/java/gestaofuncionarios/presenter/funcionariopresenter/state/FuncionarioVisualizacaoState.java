@@ -2,7 +2,11 @@ package gestaofuncionarios.presenter.funcionariopresenter.state;
 
 import gestaofuncionarios.model.Funcionario;
 import gestaofuncionarios.presenter.FuncionarioPresenter;
+import gestaofuncionarios.utils.DateUtils;
+
 import java.awt.event.ActionEvent;
+import java.time.LocalDate;
+
 import javax.swing.JOptionPane;
 
 public class FuncionarioVisualizacaoState extends FuncionarioPresenterState {
@@ -19,13 +23,15 @@ public class FuncionarioVisualizacaoState extends FuncionarioPresenterState {
     }
 
     private void configurarTela(FuncionarioPresenter presenter) {
-        presenter.getView().getTxtNome().setText(this.funcionario.getNome());
         presenter.getView().getTxtCargo().setText(this.funcionario.getCargo());
+        presenter.getView().getTxtNome().setText(this.funcionario.getNome());
+        presenter.getView().getTxtFaltas().setText(String.valueOf(this.funcionario.getFaltas()));
+        presenter.getView().getTxtIdade().setText(String.valueOf(this.funcionario.getIdade()));
         presenter.getView().getTxtSalarioBase()
                 .setText(String.valueOf(presenter.getFormat().format(this.funcionario.getSalarioBase())));
-        presenter.getView().getTxtFaltas().setText(String.valueOf(this.funcionario.getFaltas()));
-        presenter.getView().getTxtFaltas().setEditable(false);
-        presenter.getView().getTxtDistanciaTrabalho().setText(String.valueOf(this.funcionario.getDistanciaDoTrabalho()));
+        presenter.getView().getSeletorDataAdmissao().setDate(DateUtils.asDate(this.funcionario.getDataAdmissao()));
+        presenter.getView().getTxtDistanciaTrabalho()
+                .setText(String.valueOf(this.funcionario.getDistanciaDoTrabalho()));
 
         presenter.getView().getTxtCargo().setEditable(false);
         presenter.getView().getTxtNome().setEditable(false);

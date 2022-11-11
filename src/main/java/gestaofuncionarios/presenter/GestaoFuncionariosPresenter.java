@@ -11,6 +11,7 @@ import gestaofuncionarios.dados.dao.FuncionarioDAOSQLite;
 import gestaofuncionarios.model.Funcionario;
 import gestaofuncionarios.observer.Observer;
 import gestaofuncionarios.view.GestaoFuncionariosView;
+import io.github.cdimascio.dotenv.Dotenv;
 
 /**
  *
@@ -20,14 +21,19 @@ public class GestaoFuncionariosPresenter implements Observer {
     private GestaoFuncionariosView view;
     private int totalFuncionarios;
     private FuncionarioDAOSQLite dao;
+    private Dotenv dotenv;
 
-    public GestaoFuncionariosPresenter(FuncionarioDAOSQLite dao) {
+    public GestaoFuncionariosPresenter(FuncionarioDAOSQLite dao, Dotenv dotenv) {
         this.view = new GestaoFuncionariosView();
         this.dao = dao;
+        this.dotenv = dotenv;
 
         this.getTotalFuncionarios();
         this.atualizarTotalFuncionarios();
+        this.initListterns();
+    }
 
+    private void initListterns() {
         this.view.getAddFuncionarioMenu().addActionListener((ActionEvent e) -> {
             try {
                 FuncionarioPresenter presenter = new FuncionarioPresenter(dao, null);
@@ -59,9 +65,12 @@ public class GestaoFuncionariosPresenter implements Observer {
             }
         });
 
-        this.view.setVisible(true);
-    }
+            this.view.getLblVersao().setText(this.dotenv.get("VERSION"));
+            this.view.getLblArmazenamento().setText(this.dotenv.get("DB_NAME"));
 
+        this.view.setVisible(true);
+
+    }
     private void getTotalFuncionarios() {
         this.totalFuncionarios = dao.getFuncionarios().size();
     }

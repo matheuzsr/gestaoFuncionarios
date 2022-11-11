@@ -36,11 +36,11 @@ public final class FuncionarioDAOSQLite extends Observable implements Funcionari
 
                 Funcionario f = new Funcionario(id, nome, dataNascimento, cargo, salarioBase);
 
-                f.setFaltas(BD.getRs().getInt(6));
-                f.setDistanciaDoTrabalho(BD.getRs().getInt(7));
+                f.setFaltas(BD.getRs().getInt("faltas"));
+                f.setDistanciaDoTrabalho(BD.getRs().getInt("distancia_trabalho"));
 
                 if (BD.getRs().getString("data_admissao") != "null") {
-                    f.setDataAdmissao(LocalDate.parse(BD.getRs().getString("data_nascimento"),
+                    f.setDataAdmissao(LocalDate.parse(BD.getRs().getString("data_admissao"),
                             DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
                 }
@@ -108,16 +108,22 @@ public final class FuncionarioDAOSQLite extends Observable implements Funcionari
         BD.consultar("SELECT * FROM funcionario WHERE nome='" + nome + "'");
 
         while (BD.getRs().next()) {
-            int id = BD.getRs().getInt(1);
-            String nomeFuncionario = BD.getRs().getString(2);
+            int id = BD.getRs().getInt("id");
+            String nomeFuncionario = BD.getRs().getString("nome");
+
             LocalDate dataNascimento = LocalDate.parse(BD.getRs().getString("data_nascimento"),
                     DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            String cargo = BD.getRs().getString(4);
-            double salarioBase = BD.getRs().getDouble(5);
+            String cargo = BD.getRs().getString("cargo");
+
+            double salarioBase = BD.getRs().getDouble("salario_base");
+
+            LocalDate dataAdmissao = LocalDate.parse(BD.getRs().getString("data_admissao"),
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
             f = new Funcionario(id, nomeFuncionario, dataNascimento, cargo, salarioBase);
             f.setFaltas(BD.getRs().getInt(6));
             f.setDistanciaDoTrabalho(BD.getRs().getInt(7));
+            f.setDataAdmissao(dataAdmissao);
         }
         BD.close();
         return f;
