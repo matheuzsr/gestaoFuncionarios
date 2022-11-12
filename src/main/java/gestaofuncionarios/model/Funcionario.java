@@ -33,7 +33,9 @@ public class Funcionario implements Comparable<Funcionario> {
         this.cargo = cargo;
         this.salarioBase = salarioBase;
     }
-
+    
+    public Funcionario(){}
+   
     public void addBonus(Bonus bonus) {
         if (bonus.getValor() != 0) {
             bonusRecebidos.add(bonus);

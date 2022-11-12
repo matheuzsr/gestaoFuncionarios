@@ -5,7 +5,6 @@ import gestaofuncionarios.presenter.FuncionarioPresenter;
 import gestaofuncionarios.utils.DateUtils;
 
 import java.awt.event.ActionEvent;
-import java.time.LocalDate;
 
 import javax.swing.JOptionPane;
 

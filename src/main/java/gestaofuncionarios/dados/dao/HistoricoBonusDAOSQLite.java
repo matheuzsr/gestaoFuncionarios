@@ -56,8 +56,8 @@ public class HistoricoBonusDAOSQLite implements HistoricoBonusDAO {
        str.append(" FROM historico_bonus hb ");
        str.append(" join bonus b on b.id = hb.id_bonus ");
        str.append(" join funcionario f on f.id = hb.id_funcionario ");
-       str.append(" WHERE b.tipo like ").append(" ' ").
-               append(NameFuncionario).append(" ' ");
+       str.append(" WHERE b.tipo like ").append("'").
+               append(NameFuncionario).append("'");
        BD.conectar();
        BD.consultar(str.toString()); 
     

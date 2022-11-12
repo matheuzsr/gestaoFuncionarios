@@ -1,4 +1,3 @@
-
 package gestaofuncionarios.view;
 
 import javax.swing.JButton;
@@ -6,13 +5,15 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-
 public class HistoricoBonusView extends javax.swing.JInternalFrame {
 
-     
-        public HistoricoBonusView() {
-                initComponents();
-        }
+    public JButton getBtnFechar() {
+        return btnFechar;
+    }
+
+    public void setBtnFechar(JButton btnFechar) {
+        this.btnFechar = btnFechar;
+    }
 
     public JButton getBtnPesquisar() {
         return btnPesquisar;
@@ -26,10 +27,6 @@ public class HistoricoBonusView extends javax.swing.JInternalFrame {
         return lblNome;
     }
 
-    public void setLblNome(JLabel lblNome) {
-        this.lblNome = lblNome;
-    }
-
     public JTable getTblHistorico() {
         return tblHistorico;
     }
@@ -37,14 +34,14 @@ public class HistoricoBonusView extends javax.swing.JInternalFrame {
     public void setTblHistorico(JTable tblHistorico) {
         this.tblHistorico = tblHistorico;
     }
+    
+    
+    
+    public HistoricoBonusView() {
+        initComponents();
+    }
 
-       
-        
-
-        
-        
-        
-        @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -53,11 +50,14 @@ public class HistoricoBonusView extends javax.swing.JInternalFrame {
         lblNome = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
+        btnFechar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblHistorico = new javax.swing.JTable();
         btnPesquisar = new javax.swing.JButton();
 
         lblNome.setText("Nome");
+
+        btnFechar.setText("Fechar");
 
         tblHistorico.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -83,25 +83,30 @@ public class HistoricoBonusView extends javax.swing.JInternalFrame {
                         .addComponent(lblNome)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6))
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnFechar)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNome, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblNome)
-                        .addComponent(btnPesquisar)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPesquisar)
+                    .addComponent(lblNome))
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -123,11 +128,12 @@ public class HistoricoBonusView extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-        public JTextField getTxtNome() {
-                return txtNome;
-        }
+    public JTextField getTxtNome() {
+        return txtNome;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnFechar;
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
