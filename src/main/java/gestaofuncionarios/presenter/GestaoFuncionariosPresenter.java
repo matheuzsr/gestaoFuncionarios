@@ -80,4 +80,5 @@ public class GestaoFuncionariosPresenter {
         frame.moveToFront();
         frame.requestFocus();
     } 
+    
 }
