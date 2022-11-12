@@ -23,17 +23,15 @@ public class BuscarFuncionarioPresenter implements Observer {
     private final FuncionarioDAO dao;
     private BuscarFuncionarioView view;
     private DefaultTableModel tabela;
-    private List<Funcionario> funcionarioList;
-
     private final DecimalFormat format = new DecimalFormat("0.00");
 
-    public BuscarFuncionarioPresenter(FuncionarioDAO dao) {
+    public BuscarFuncionarioPresenter(FuncionarioDAO dao) throws Exception {
         view = new BuscarFuncionarioView();
         view.setTitle("Buscar Funcionario");
         this.dao = dao;
 
         criarTabela();
-        carregarTabela(dao.getFuncionarios());
+        carregarTabela(dao.getAll());
 
         view.getTblAtributos().setSelectionMode(0);
 
@@ -47,6 +45,10 @@ public class BuscarFuncionarioPresenter implements Observer {
 
         view.getBtnVisualizar().addActionListener((ActionEvent e) -> {
             visualizarFuncionario();
+        });
+
+        view.getBtnAddFuncionario().addActionListener((ActionEvent e) -> {
+            addFuncionario();
         });
 
         view.getBtnFechar().addActionListener((ActionEvent e) -> {
@@ -70,26 +72,29 @@ public class BuscarFuncionarioPresenter implements Observer {
 
     private void buscar() throws Exception {
         String nome = view.getTxtValor().getText();
-        Collection<Funcionario> listaFuncionarios = dao.getFuncionarios();
+        Collection<Funcionario> listaFuncionarios = dao.getFuncionariosByName(nome);
 
-        List<Funcionario> listaFiltrada = new ArrayList<>();
-        for (Funcionario funcionario : listaFuncionarios) {
-            if (funcionario.getNome().toLowerCase().contains(nome.toLowerCase()))
-                listaFiltrada.add(funcionario);
-        }
-
-        carregarTabela(listaFiltrada);
+        carregarTabela(listaFuncionarios);
     }
 
     private void visualizarFuncionario() {
         int row = view.getTblAtributos().getSelectedRow();
-        String nome = (String) view.getTblAtributos().getValueAt(row, 1);
+        int idFuncionario = (int) view.getTblAtributos().getValueAt(row, 0);
 
         Funcionario funcionario;
         try {
-            funcionario = this.dao.getFuncionarioByName(nome);
+            funcionario = this.dao.getById(idFuncionario);
             FuncionarioPresenter presenter = new FuncionarioPresenter(this.dao,
                     funcionario);
+            GestaoFuncionariosPresenter.showPanel(presenter.getView(), false, false);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(view, ex.getMessage());
+        }
+    }
+
+    private void addFuncionario() {
+        try {
+            FuncionarioPresenter presenter = new FuncionarioPresenter(this.dao, null);
             GestaoFuncionariosPresenter.showPanel(presenter.getView(), false, false);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(view, ex.getMessage());
@@ -132,7 +137,6 @@ public class BuscarFuncionarioPresenter implements Observer {
         view.getTblAtributos().getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
     }
 
-    // TODO: colocar eles no change do select row table
     private void handleEnableButtons() {
         view.getBtnVisualizar().setEnabled(true);
         view.getBtnHistoryBonus().setEnabled(true);

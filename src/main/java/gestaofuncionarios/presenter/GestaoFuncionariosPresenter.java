@@ -72,7 +72,7 @@ public class GestaoFuncionariosPresenter implements Observer {
 
     }
     private void getTotalFuncionarios() {
-        this.totalFuncionarios = dao.getFuncionarios().size();
+        this.totalFuncionarios = dao.getAll().size();
     }
 
     private void atualizarTotalFuncionarios() {

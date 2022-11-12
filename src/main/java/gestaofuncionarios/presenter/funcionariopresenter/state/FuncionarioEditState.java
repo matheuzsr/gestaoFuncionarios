@@ -9,17 +9,15 @@ import javax.swing.JOptionPane;
 
 public class FuncionarioEditState extends FuncionarioPresenterState {
 
-    Funcionario funcionarioTemp;
+    Funcionario funcionarioEdit;
 
-    public FuncionarioEditState(FuncionarioPresenter presenter) {
+    public FuncionarioEditState(FuncionarioPresenter presenter, Funcionario funcionario) {
         super(presenter);
         presenter.getView().setTitle("Editar Funcionario");
 
         configurarTela();
-        String nome = presenter.getView().getTxtNome().getText();
-
         try {
-            funcionarioTemp = presenter.getDao().getFuncionarioByName(nome);
+            this.funcionarioEdit = presenter.getDao().getById(funcionario.getIdFuncionario());
         } catch (Exception ex) {
             Logger.getLogger(FuncionarioEditState.class.getName()).log(Level.SEVERE, null, ex);
         }

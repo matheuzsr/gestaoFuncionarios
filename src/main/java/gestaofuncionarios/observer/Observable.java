@@ -3,6 +3,8 @@ package gestaofuncionarios.observer;
 import java.util.ArrayList;
 import java.util.List;
 
+import gestaofuncionarios.model.Funcionario;
+
 public abstract class Observable {
 
     protected List<Observer> observerList = new ArrayList<>();
@@ -18,5 +20,5 @@ public abstract class Observable {
         }
     }
 
-    protected abstract void notificarObservers();
+    protected abstract void notificarObservers(List<Funcionario> funcionarios);
 }
