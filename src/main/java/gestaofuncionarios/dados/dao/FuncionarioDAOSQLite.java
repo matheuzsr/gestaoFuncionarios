@@ -2,21 +2,27 @@ package gestaofuncionarios.dados.dao;
 
 import gestaofuncionarios.dados.ConexaoSQLite.SQLiteDB;
 import gestaofuncionarios.model.Funcionario;
+import gestaofuncionarios.observer.Observable;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.TreeSet;
+import java.util.List;
 import javax.swing.JOptionPane;
 
-public final class FuncionarioDAOSQLite implements FuncionarioDAO {
+public final class FuncionarioDAOSQLite extends Observable implements FuncionarioDAO {
+    private List<Funcionario> funcionarios = new ArrayList<>();
 
-    private TreeSet<Funcionario> funcionarios = new TreeSet<>();
     private final SQLiteDB BD = new SQLiteDB();
 
     @Override
     public void carregaFuncionarios() {
+        this.funcionarios = new ArrayList<>();
+
         try {
+
             BD.conectar();
             BD.consultar("SELECT * FROM funcionario");
 
@@ -28,8 +34,8 @@ public final class FuncionarioDAOSQLite implements FuncionarioDAO {
                 String cargo = BD.getRs().getString("cargo");
                 double salarioBase = BD.getRs().getDouble("salario_base");
 
-                Funcionario f = new Funcionario(nome, dataNascimento, cargo, salarioBase);
-                f.setIdFuncionario(id);
+                Funcionario f = new Funcionario(id, nome, dataNascimento, cargo, salarioBase);
+
                 f.setFaltas(BD.getRs().getInt(6));
                 f.setDistanciaDoTrabalho(BD.getRs().getInt(7));
 
@@ -66,13 +72,16 @@ public final class FuncionarioDAOSQLite implements FuncionarioDAO {
             BD.atualizar(sql);
             BD.close();
         }
+
+        this.notificarObservers();
         return add;
     }
 
     @Override
     public boolean remove(String nome) throws Exception {
+        List<Funcionario> temp = new ArrayList<>();
+
         Iterator it = funcionarios.iterator();
-        TreeSet<Funcionario> temp = new TreeSet<>();
         while (it.hasNext()) {
             Funcionario f = (Funcionario) it.next();
             if (!f.getNome().equals(nome)) {
@@ -82,10 +91,13 @@ public final class FuncionarioDAOSQLite implements FuncionarioDAO {
 
         BD.conectar();
 
-        String sql = "DELETE FROM funcionario WHERE mome='" + nome + "'";
+        String sql = "DELETE FROM funcionario WHERE nome='" + nome + "'";
         BD.atualizar(sql);
         BD.close();
         funcionarios = temp;
+
+        this.notificarObservers();
+
         return true;
     }
 
@@ -103,8 +115,7 @@ public final class FuncionarioDAOSQLite implements FuncionarioDAO {
             String cargo = BD.getRs().getString(4);
             double salarioBase = BD.getRs().getDouble(5);
 
-            f = new Funcionario(nomeFuncionario, dataNascimento, cargo, salarioBase);
-            f.setIdFuncionario(id);
+            f = new Funcionario(id, nomeFuncionario, dataNascimento, cargo, salarioBase);
             f.setFaltas(BD.getRs().getInt(6));
             f.setDistanciaDoTrabalho(BD.getRs().getInt(7));
         }
@@ -122,5 +133,15 @@ public final class FuncionarioDAOSQLite implements FuncionarioDAO {
         carregaFuncionarios();
 
         return funcionarios;
+    }
+
+    @Override
+    protected void notificarObservers() {
+        carregaFuncionarios();
+
+        observerList.forEach(observer -> {
+            observer.update(this.funcionarios);
+        });
+
     }
 }

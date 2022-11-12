@@ -39,7 +39,6 @@ public class FuncionarioEditState extends FuncionarioPresenterState {
         presenter.getView().getBtnSalvar().setVisible(true);
 
         presenter.getView().getTxtNome().setEditable(true);
-        presenter.getView().getTxtDistanciaTrabalho().setEditable(true);
     }
 
     @Override
