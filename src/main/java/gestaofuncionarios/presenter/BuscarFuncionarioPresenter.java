@@ -17,6 +17,8 @@ import gestaofuncionarios.dados.dao.FuncionarioDAO;
 import gestaofuncionarios.model.Funcionario;
 import gestaofuncionarios.observer.Observer;
 import gestaofuncionarios.view.BuscarFuncionarioView;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BuscarFuncionarioPresenter implements Observer {
 
@@ -47,6 +49,14 @@ public class BuscarFuncionarioPresenter implements Observer {
 
         view.getBtnVisualizar().addActionListener((ActionEvent e) -> {
             visualizarFuncionario();
+        });
+        
+        view.getBtnHistoryBonus().addActionListener((ActionEvent e) -> {
+            try {
+                verBonus();
+            } catch (Exception ex) {
+                Logger.getLogger(BuscarFuncionarioPresenter.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
 
         view.getBtnFechar().addActionListener((ActionEvent e) -> {
@@ -131,7 +141,15 @@ public class BuscarFuncionarioPresenter implements Observer {
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         view.getTblAtributos().getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
     }
-
+    
+    private void verBonus() throws Exception{
+        int row = view.getTblAtributos().getSelectedRow();
+        int id = (int) view.getTblAtributos().getValueAt(row, 0);
+        HistoricoBonusPresenter hb = new HistoricoBonusPresenter(id); 
+        GestaoFuncionariosPresenter.showPanel(hb.getView(), false, false);
+      
+    }
+    
     // TODO: colocar eles no change do select row table
     private void handleEnableButtons() {
         view.getBtnVisualizar().setEnabled(true);
