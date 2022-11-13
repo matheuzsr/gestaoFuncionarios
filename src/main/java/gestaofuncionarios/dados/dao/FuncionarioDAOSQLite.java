@@ -149,6 +149,30 @@ public final class FuncionarioDAOSQLite extends Observable implements Funcionari
 	}
 
 	@Override
+	public void update(Funcionario funcionario) throws Exception {
+		StringBuilder str = new StringBuilder();
+
+		BD.conectar();
+		
+		str.append(" UPDATE funcionario ");
+		str.append(" set ");
+		str.append(" nome = ").append("'").append(funcionario.getNome()).append("'").append(",");
+		str.append(" data_nascimento  = ").append("'").append(funcionario.getDataNascimento()).append("'").append(",");
+		str.append(" cargo  = ").append("'").append(funcionario.getCargo()).append("'").append(",");
+		str.append(" salario_base = ").append(funcionario.getSalarioBase()).append(",");
+		str.append(" data_admissao  = ").append("'").append(funcionario.getDataAdmissao()).append("'").append(",");
+		str.append(" faltas  = ").append(funcionario.getFaltas()).append(",");
+		str.append("distancia_trabalho = ").append(funcionario.getDistanciaDoTrabalho());
+		str.append(" Where id =").append(funcionario.getIdFuncionario());
+		
+		BD.atualizar(str.toString());
+		
+		BD.close();
+
+		this.notificarObservers(this.getAll());
+	}
+
+	@Override
 	public boolean contains(Funcionario funcionario) {
 		return this.funcionarios.contains(funcionario);
 	}
@@ -162,26 +186,4 @@ public final class FuncionarioDAOSQLite extends Observable implements Funcionari
 
 	}
 
-	@Override
-	public void update(Funcionario funcionario) throws Exception {
-		StringBuilder str = new StringBuilder();
-
-		BD.conectar();
-		
-		str.append(" UPDATE funcionario ");
-		str.append(" set ");
-		str.append(" nome = ").append("'").append(funcionario.getNome()).append("'").append(",");
-		str.append(" data_nascimento  = ").append("'").append(funcionario.getDataNascimento()).append("'").append(",");
-		str.append(" cargo  = ").append("'").append(funcionario.getCargo()).append("'").append(",");
-		str.append(" salario_base = ").append(funcionario.getSalarioBase()).append(",");
-		str.append(" data_admissao  = ").append("'").append(funcionario.getDataAdmissao()).append("'").append(",");
-		str.append(" funcionario_mes = ").append(funcionario.isFuncionarioMes() ? 0 : 1).append(",");
-		str.append(" faltas  = ").append(funcionario.getFaltas()).append(",");
-		str.append("distancia_trabalho = ").append(funcionario.getDistanciaDoTrabalho());
-		str.append(" Where id =").append(funcionario.getIdFuncionario());
-		
-		BD.atualizar(str.toString());
-		
-		BD.close();
-	}
 }
