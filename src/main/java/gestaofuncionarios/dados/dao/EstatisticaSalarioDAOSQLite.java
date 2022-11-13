@@ -45,7 +45,7 @@ public class EstatisticaSalarioDAOSQLite implements EstatisticaSalarioDAO {
        BD.close();
 
        if (estatisticaHistoricoSalariosMeses.isEmpty()) {
-          throw new Error("Nenhum dado disponível para calculo da estatística");
+          throw new Exception("Nenhum dado disponível para calculo da estatística.");
        }
 
        return estatisticaHistoricoSalariosMeses;

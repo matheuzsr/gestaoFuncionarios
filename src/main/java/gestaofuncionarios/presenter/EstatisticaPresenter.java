@@ -100,7 +100,7 @@ public class EstatisticaPresenter implements Observer {
     try {
       estatisticas.addAll(this.calculoEstatisticoSalario.calcular());
     } catch (Exception e) {
-      e.printStackTrace();
+      JOptionPane.showMessageDialog(view, e.getMessage().concat(" Realize o calculo do salario antes de vizualisar"));
     }
 
     return estatisticas;
