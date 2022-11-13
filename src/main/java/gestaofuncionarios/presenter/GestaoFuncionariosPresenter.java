@@ -1,17 +1,17 @@
-
 package gestaofuncionarios.presenter;
 
-import java.awt.event.ActionEvent;
-import java.util.List;
-
-import javax.swing.JInternalFrame;
-import javax.swing.JOptionPane;
-
+import gestaofuncionarios.business.calculoEstatistico.AbstractCalculoEstatisticoSalario;
+import gestaofuncionarios.business.calculoEstatistico.CalculoEstatisticoSalario;
+import gestaofuncionarios.dados.dao.EstatisticaSalarioDAO;
 import gestaofuncionarios.dados.dao.FuncionarioDAOSQLite;
 import gestaofuncionarios.model.Funcionario;
 import gestaofuncionarios.observer.Observer;
 import gestaofuncionarios.view.GestaoFuncionariosView;
 import io.github.cdimascio.dotenv.Dotenv;
+import java.awt.event.ActionEvent;
+import java.util.List;
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,17 +23,18 @@ public class GestaoFuncionariosPresenter implements Observer {
     private FuncionarioDAOSQLite dao;
     private Dotenv dotenv;
 
-    public GestaoFuncionariosPresenter(FuncionarioDAOSQLite dao, Dotenv dotenv) {
+    public GestaoFuncionariosPresenter(FuncionarioDAOSQLite dao, EstatisticaSalarioDAO estatisticaSalarioDAO,
+            Dotenv dotenv) {
         this.view = new GestaoFuncionariosView();
         this.dao = dao;
         this.dotenv = dotenv;
 
         this.getTotalFuncionarios();
         this.atualizarTotalFuncionarios();
-        this.initListterns();
+        this.initListterns(estatisticaSalarioDAO);
     }
 
-    private void initListterns() {
+    private void initListterns(EstatisticaSalarioDAO estatisticaSalarioDAO) {
         this.view.getAddFuncionarioMenu().addActionListener((ActionEvent e) -> {
             try {
                 FuncionarioPresenter presenter = new FuncionarioPresenter(dao, null);
@@ -46,7 +47,6 @@ public class GestaoFuncionariosPresenter implements Observer {
         this.view.getBuscarFuncionariosMenu().addActionListener((ActionEvent e) -> {
             try {
                 BuscarFuncionarioPresenter presenter = new BuscarFuncionarioPresenter(dao);
-
                 dao.addObserver(presenter);
 
                 showPanel(presenter.getView(), false, false);
@@ -65,12 +65,26 @@ public class GestaoFuncionariosPresenter implements Observer {
             }
         });
 
-            this.view.getLblVersao().setText(this.dotenv.get("VERSION"));
-            this.view.getLblArmazenamento().setText(this.dotenv.get("DB_NAME"));
+        this.view.getCalcularSalarioMenu1().addActionListener((ActionEvent e) -> {
+            try {
+
+                AbstractCalculoEstatisticoSalario calculoEstatisticoSalario = new CalculoEstatisticoSalario(
+                        estatisticaSalarioDAO);
+                EstatisticaPresenter presenter = new EstatisticaPresenter(calculoEstatisticoSalario);
+
+                showPanel(presenter.getView(), false, false);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(view, ex.getMessage());
+            }
+        });
+
+        this.view.getLblVersao().setText(this.dotenv.get("VERSION"));
+        this.view.getLblArmazenamento().setText(this.dotenv.get("DB_NAME"));
 
         this.view.setVisible(true);
 
     }
+
     private void getTotalFuncionarios() {
         this.totalFuncionarios = dao.getAll().size();
     }
