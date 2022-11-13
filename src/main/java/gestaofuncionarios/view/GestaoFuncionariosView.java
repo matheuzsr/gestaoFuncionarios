@@ -17,6 +17,7 @@ public class GestaoFuncionariosView extends javax.swing.JFrame {
 
     public GestaoFuncionariosView() {
         super("Gestão de funcionários");
+
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -50,6 +51,7 @@ public class GestaoFuncionariosView extends javax.swing.JFrame {
         buscarFuncionariosMenu = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         calcularSalarioMenu = new javax.swing.JMenuItem();
+        calcularSalarioMenu1 = new javax.swing.JMenuItem();
 
         jLabel1.setText("jLabel1");
 
@@ -117,6 +119,9 @@ public class GestaoFuncionariosView extends javax.swing.JFrame {
         calcularSalarioMenu.setText("Calcular salários");
         jMenu2.add(calcularSalarioMenu);
 
+        calcularSalarioMenu1.setText("Estatistica salário");
+        jMenu2.add(calcularSalarioMenu1);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -138,6 +143,10 @@ public class GestaoFuncionariosView extends javax.swing.JFrame {
     private void buscarFuncionariosMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarFuncionariosMenuActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_buscarFuncionariosMenuActionPerformed
+
+    private void calcularSalarioMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcularSalarioMenu1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_calcularSalarioMenu1ActionPerformed
 
     private void menuCalcularBonusActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_menuCalcularBonusActionPerformed
         // TODO add your handling code here:
@@ -184,6 +193,10 @@ public class GestaoFuncionariosView extends javax.swing.JFrame {
         return calcularSalarioMenu;
     }
 
+    public JMenuItem getCalcularSalarioMenu1() {
+        return calcularSalarioMenu1;
+    }
+
     public JMenuItem getAddFuncionarioMenu() {
         return addFuncionarioMenu;
     }
@@ -212,6 +225,7 @@ public class GestaoFuncionariosView extends javax.swing.JFrame {
     private javax.swing.JMenuItem addFuncionarioMenu;
     private javax.swing.JMenuItem buscarFuncionariosMenu;
     private javax.swing.JMenuItem calcularSalarioMenu;
+    private javax.swing.JMenuItem calcularSalarioMenu1;
     private static javax.swing.JDesktopPane desktop;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
