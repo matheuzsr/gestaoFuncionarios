@@ -18,4 +18,6 @@ public interface FuncionarioDAO {
     public Funcionario getById(int searchId) throws Exception;
 
     public Collection<Funcionario> getAll() throws Exception;
+    
+    public void update(Funcionario funcionario) throws Exception;
 }

@@ -1,24 +1,12 @@
 package gestaofuncionarios.business.calculaBonusFuncionario.handlers;
 
-import java.time.LocalDate;
-import java.util.List;
-
-import gestaofuncionarios.model.Bonus;
+import gestaofuncionarios.dados.dao.BonusDAOSQLite;
 import gestaofuncionarios.model.Funcionario;
 
-public class TempoServicoHandler extends BonusHandler {
+public class TempoServicoHandler extends TipoBonusHandler {
 
     public TempoServicoHandler() {
-        super("tempo_servico");
-    }
-
-    @Override
-    public void calcular(Funcionario funcionario, LocalDate localDate, List<Bonus> bonusAplicadosList)
-            throws Exception {
-        double bonusPercentage = getBonusPercentage(funcionario.getAnosTempoTrabalho());
-        double valor = funcionario.getSalarioBase() * bonusPercentage;
-
-        bonusAplicadosList.add(new Bonus(this.tipo, valor, localDate));
+        super("tempo_servico", new BonusDAOSQLite());
     }
 
     private double getBonusPercentage(int qtdAnosServico) {
@@ -41,4 +29,9 @@ public class TempoServicoHandler extends BonusHandler {
         return 0;
     }
 
+    @Override
+    public Double calcular(Funcionario funcionario) throws Exception {
+        double bonusPercentage = getBonusPercentage(funcionario.getAnosTempoTrabalho());
+        return funcionario.getSalarioBase() * bonusPercentage;
+    }
 }
