@@ -18,8 +18,8 @@ public final class FuncionarioDAOSQLite extends Observable implements Funcionari
     private final SQLiteDB BD = new SQLiteDB();
 
     @Override
-    public void carregaFuncionarios() {
-        this.funcionarios = new ArrayList<>();
+    public List<Funcionario> getAll() {
+        List<Funcionario> funcionarios = new ArrayList<>();
 
         try {
 
@@ -51,6 +51,8 @@ public final class FuncionarioDAOSQLite extends Observable implements Funcionari
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getStackTrace());
         }
+
+        return funcionarios;
     }
 
     @Override
@@ -73,39 +75,62 @@ public final class FuncionarioDAOSQLite extends Observable implements Funcionari
             BD.close();
         }
 
-        this.notificarObservers();
+        this.notificarObservers(this.getAll());
         return add;
     }
 
     @Override
-    public boolean remove(String nome) throws Exception {
+    public boolean remove(int idFuncionario) throws Exception {
+        // Esse cara tem que fazer um delete cascade
         List<Funcionario> temp = new ArrayList<>();
 
-        Iterator it = funcionarios.iterator();
-        while (it.hasNext()) {
-            Funcionario f = (Funcionario) it.next();
-            if (!f.getNome().equals(nome)) {
-                temp.add(f);
-            }
-        }
-
         BD.conectar();
-
-        String sql = "DELETE FROM funcionario WHERE nome='" + nome + "'";
+        
+        String sql = "DELETE FROM funcionario WHERE id='" + idFuncionario + "'";
         BD.atualizar(sql);
         BD.close();
         funcionarios = temp;
 
-        this.notificarObservers();
+        this.notificarObservers(this.getAll());
 
         return true;
     }
 
     @Override
-    public Funcionario getFuncionarioByName(String nome) throws Exception {
+    public List<Funcionario> getFuncionariosByName(String nome) throws Exception {
+        List<Funcionario> listaFuncionarios = new ArrayList<>();
+        BD.conectar();
+        BD.consultar("SELECT * FROM funcionario WHERE nome LIKE '%" + nome + "%'");
+
+        while (BD.getRs().next()) {
+            int id = BD.getRs().getInt("id");
+            String nomeFuncionario = BD.getRs().getString("nome");
+
+            LocalDate dataNascimento = LocalDate.parse(BD.getRs().getString("data_nascimento"),
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            String cargo = BD.getRs().getString("cargo");
+
+            double salarioBase = BD.getRs().getDouble("salario_base");
+
+            LocalDate dataAdmissao = LocalDate.parse(BD.getRs().getString("data_admissao"),
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+            Funcionario f = new Funcionario(id, nomeFuncionario, dataNascimento, cargo, salarioBase);
+            f.setFaltas(BD.getRs().getInt("faltas"));
+            f.setDistanciaDoTrabalho(BD.getRs().getInt("distancia_trabalho"));
+            f.setDataAdmissao(dataAdmissao);
+
+            listaFuncionarios.add(f);
+        }
+        BD.close();
+        return listaFuncionarios;
+    }
+
+    @Override
+    public Funcionario getById(int searchId) throws Exception {
         Funcionario f = null;
         BD.conectar();
-        BD.consultar("SELECT * FROM funcionario WHERE nome='" + nome + "'");
+        BD.consultar("SELECT * FROM funcionario WHERE id='" + searchId + "'");
 
         while (BD.getRs().next()) {
             int id = BD.getRs().getInt("id");
@@ -121,8 +146,8 @@ public final class FuncionarioDAOSQLite extends Observable implements Funcionari
                     DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
             f = new Funcionario(id, nomeFuncionario, dataNascimento, cargo, salarioBase);
-            f.setFaltas(BD.getRs().getInt(6));
-            f.setDistanciaDoTrabalho(BD.getRs().getInt(7));
+            f.setFaltas(BD.getRs().getInt("faltas"));
+            f.setDistanciaDoTrabalho(BD.getRs().getInt("distancia_trabalho"));
             f.setDataAdmissao(dataAdmissao);
         }
         BD.close();
@@ -135,18 +160,10 @@ public final class FuncionarioDAOSQLite extends Observable implements Funcionari
     }
 
     @Override
-    public Collection<Funcionario> getFuncionarios() {
-        carregaFuncionarios();
-
-        return funcionarios;
-    }
-
-    @Override
-    protected void notificarObservers() {
-        carregaFuncionarios();
+    protected void notificarObservers(List<Funcionario> funcionarios) {
 
         observerList.forEach(observer -> {
-            observer.update(this.funcionarios);
+            observer.update(funcionarios);
         });
 
     }

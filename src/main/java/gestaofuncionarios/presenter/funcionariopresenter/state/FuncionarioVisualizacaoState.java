@@ -65,18 +65,17 @@ public class FuncionarioVisualizacaoState extends FuncionarioPresenterState {
 
     @Override
     public void editar() {
-        presenter.setEstado(new FuncionarioEditState(presenter));
+        presenter.setEstado(new FuncionarioEditState(presenter, this.funcionario));
     }
 
     @Override
     public void excluir() throws Exception {
-        String nome = presenter.getView().getTxtNome().getText();
-
+        int idFuncionario = this.funcionario.getIdFuncionario();
         int showConfirmDialog = JOptionPane.showConfirmDialog(presenter.getView(), "Exluir");
 
         if (showConfirmDialog == 0) {
-            presenter.getDao().remove(nome);
-            JOptionPane.showMessageDialog(null, nome + " excluido");
+            presenter.getDao().remove(idFuncionario);
+            JOptionPane.showMessageDialog(null, this.funcionario.getNome() + " excluido");
             presenter.getView().dispose();
         }
     }
