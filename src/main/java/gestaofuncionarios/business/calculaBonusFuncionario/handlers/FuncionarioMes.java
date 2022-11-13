@@ -1,24 +1,16 @@
 package gestaofuncionarios.business.calculaBonusFuncionario.handlers;
 
-import java.time.LocalDate;
-import java.util.List;
-
-import gestaofuncionarios.model.Bonus;
+import gestaofuncionarios.dados.dao.BonusDAOSQLite;
 import gestaofuncionarios.model.Funcionario;
 
-public class FuncionarioMes extends BonusHandler {
+public class FuncionarioMes extends TipoBonusHandler {
 
     public FuncionarioMes() {
-        super("bonus_funcionario_mes");
+        super("funcionario_mes", new BonusDAOSQLite());
     }
 
     @Override
-    public void calcular(Funcionario funcionario, LocalDate localDate, List<Bonus> bonusAplicadosList)
-            throws Exception {
-        if (funcionario.isFuncionarioMes()) {
-            bonusAplicadosList.add(new Bonus(this.tipo, 500.00, localDate));
-
-        }
+    public Double calcular(Funcionario funcionario) throws Exception {
+       return funcionario.isFuncionarioMes() ? 500.00 : 0.0;
     }
-
 }

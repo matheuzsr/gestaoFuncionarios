@@ -33,23 +33,9 @@ public class Funcionario implements Comparable<Funcionario> {
         this.cargo = cargo;
         this.salarioBase = salarioBase;
     }
-
-    public void addBonus(Bonus bonus) {
-        if (bonus.getValor() != 0) {
-            bonusRecebidos.add(bonus);
-        }
-    }
-
-    public void calcularSalario() {
-        this.salario = this.salarioBase + this.calculaTotalBonus();
-    }
-
-    private double calculaTotalBonus() {
-        bonusRecebidos.forEach((Bonus bonus) -> {
-            totalBonus += bonus.getValor();
-        });
-        return totalBonus;
-    }
+    
+    public Funcionario(){}
+   
 
     @Override
     public int compareTo(Funcionario funcionario) {
@@ -128,10 +114,6 @@ public class Funcionario implements Comparable<Funcionario> {
         this.salarioBase = salarioBase;
     }
 
-    public ArrayList<Bonus> getBonusRecebidos() {
-        return bonusRecebidos;
-    }
-
     public double getTotalBonus() {
         return this.calculaTotalBonus();
     }
@@ -154,5 +136,9 @@ public class Funcionario implements Comparable<Funcionario> {
                 + this.distanciaDoTrabalho
                 + this.bonusRecebidos.toString().replace("[", "")
                         .replace("]", "").replace(" ", "").replace(",", "");
+    }
+
+    private Double calculaTotalBonus() {
+    	return this.salario - this.salarioBase;
     }
 }

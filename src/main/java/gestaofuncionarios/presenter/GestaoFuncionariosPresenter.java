@@ -95,7 +95,7 @@ public class GestaoFuncionariosPresenter implements Observer {
         this.view.getLblTotal().setText(qtd);
     }
 
-    public static void showPanel(JInternalFrame frame, Boolean maximize, Boolean closable) throws Exception {
+  public static void showPanel(JInternalFrame frame, Boolean maximize, Boolean closable) throws Exception {
 
         // TODO: Voltar e Refatorar
         if (closable) {
