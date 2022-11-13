@@ -71,7 +71,6 @@ public class HistoricoBonusPresenter {
         }
 
         view.getTblHistorico().setModel(tabelaBonus);
-        view.getTblHistorico().getColumnModel().getColumn(0).setMaxWidth(40);
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         view.getTblHistorico().getColumnModel().getColumn(0).setCellRenderer(centerRenderer);

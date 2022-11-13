@@ -20,7 +20,7 @@ public class HistoricoBonusDAOSQLite implements HistoricoBonusDAO {
        str.append(" SELECT  ");
        str.append(" hb.data_inclusao as data_inclusao, ");
        str.append(" b.tipo as tipo , ");
-       str.append(" b.valor as valor , ");
+       str.append(" hb.valor as valor , ");
        str.append(" f.cargo as cargo  ");
        str.append(" FROM historico_bonus hb ");
        str.append( " join bonus b on b.id = hb.id_bonus ");
@@ -51,7 +51,7 @@ public class HistoricoBonusDAOSQLite implements HistoricoBonusDAO {
        str.append(" SELECT  ");
        str.append(" hb.data_inclusao as data_inclusao, ");
        str.append(" b.tipo as tipo , ");
-       str.append(" b.valor as valor , ");
+       str.append(" hb.valor as valor , ");
        str.append(" f.cargo as cargo  ");
        str.append(" FROM historico_bonus hb ");
        str.append(" join bonus b on b.id = hb.id_bonus ");
@@ -82,11 +82,12 @@ public class HistoricoBonusDAOSQLite implements HistoricoBonusDAO {
             BD.conectar();
 
             str.append(" INSERT INTO historico_bonus (  " );
-            str.append(" data_inclusao, id_funcionario, id_bonus ").append(" ) ");
+            str.append(" data_inclusao, id_funcionario, id_bonus, valor ").append(" ) ");
             str.append(" Values ( ");
-            str.append(historicoBonus.getDataInclusao()).append(",");
+            str.append("'").append(historicoBonus.getDataInclusao()).append("'").append(",");
             str.append(historicoBonus.getIdFuncionario()).append(",");
-            str.append(historicoBonus.getIdBonus()).append(" )");
+            str.append(historicoBonus.getIdBonus()).append(",");
+            str.append(historicoBonus.getValorBonusRecebido()).append(")");
             
             BD.atualizar(str.toString());
             BD.close();

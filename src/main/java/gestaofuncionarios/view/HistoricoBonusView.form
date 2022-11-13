@@ -48,7 +48,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="lblNome" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="txtNome" min="-2" pref="348" max="-2" attributes="0"/>
+                          <Component id="txtNome" min="-2" pref="552" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnPesquisar" min="-2" pref="92" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>

@@ -1,38 +1,33 @@
 package gestaofuncionarios.business;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import gestaofuncionarios.business.calculaBonusFuncionario.CalculaBonusProcessor;
+import gestaofuncionarios.dados.dao.BonusDAOSQLite;
+import gestaofuncionarios.dados.dao.HistoricioSalarioDAOSQLite;
+import gestaofuncionarios.dados.dao.HistoricoBonusDAOSQLite;
 import gestaofuncionarios.model.Funcionario;
+import gestaofuncionarios.model.HistoricoSalario;
 
 public class CalculaSalarioFuncionario {
-  LocalDate date = LocalDate.now();
-  Funcionario funcionario;
 
-  public CalculaSalarioFuncionario(Funcionario funcionario) {
-    if (funcionario == null) {
-      throw new RuntimeException("É necessário informar um funcionário para realizar o cálculo");
+    private CalculaBonusProcessor calculoBonusProcessor;
+    private HistoricioSalarioDAOSQLite historicioSalarioDAO;
+    public CalculaSalarioFuncionario() {
+        this.calculoBonusProcessor = new CalculaBonusProcessor(new HistoricoBonusDAOSQLite(), new BonusDAOSQLite());
+        historicioSalarioDAO = new HistoricioSalarioDAOSQLite();
     }
-
-    this.funcionario = funcionario;
-  }
-
-  public void calcular() {
-    this.calularBonus();
-
-    double valorBonusCalculado = this.getValorBonusCalculado(funcionario);
-    funcionario.setSalario(funcionario.getSalarioBase() + valorBonusCalculado);
-  }
-
-  private void calularBonus() {
-    new CalculaBonusProcessor().run(this.funcionario, this.date);
-    // TODO: Salvar no banco o bonus do funcionario
-  }
-
-  private double getValorBonusCalculado(Funcionario funcionario) {
-    // TODO: Pegar da base o count do bonus desse cara guardados no periodo
-    // especifico
-    // retorna o valor somatorio dos bonus
-    return 0;
-  }
+    
+   
+    public void calcularSalario(List<Funcionario> listFuncionario, LocalDate date, Boolean isAtualizar) throws Exception{
+        for (Funcionario funcionario : listFuncionario) {
+          funcionario = this.calculoBonusProcessor.run(funcionario, date, isAtualizar);
+          insertHistoricoSalario(funcionario.getIdFuncionario(),funcionario.getTotalBonus(),funcionario.getSalario(),date);
+        }
+    }
+    public void insertHistoricoSalario(int idFuncionario, Double ValorTotalBonus, Double ValorTotalSalario, LocalDate date) throws Exception {
+    	historicioSalarioDAO.add(new HistoricoSalario(idFuncionario, ValorTotalBonus, ValorTotalSalario, date));
+    }	
+    
 }

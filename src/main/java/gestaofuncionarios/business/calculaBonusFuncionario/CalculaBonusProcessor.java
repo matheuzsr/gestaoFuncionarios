@@ -6,42 +6,56 @@ import java.util.Arrays;
 import java.util.List;
 
 import gestaofuncionarios.business.calculaBonusFuncionario.handlers.AssiduidadeBonus;
-import gestaofuncionarios.business.calculaBonusFuncionario.handlers.BonusHandler;
+import gestaofuncionarios.business.calculaBonusFuncionario.handlers.TipoBonusHandler;
 import gestaofuncionarios.business.calculaBonusFuncionario.handlers.FuncionarioMes;
 import gestaofuncionarios.business.calculaBonusFuncionario.handlers.TempoServicoHandler;
-import gestaofuncionarios.model.Bonus;
+import gestaofuncionarios.dados.dao.BonusDAOSQLite;
+import gestaofuncionarios.dados.dao.HistoricoBonusDAOSQLite;
 import gestaofuncionarios.model.Funcionario;
+import gestaofuncionarios.model.HistoricoBonus;
 
 public class CalculaBonusProcessor {
-    List<Bonus> bonusAplicadosList = new ArrayList<>();
 
-    public void run(Funcionario funcionario, LocalDate localDate) {
-        List<BonusHandler> handlersList = new ArrayList<>(Arrays.asList(
+    private HistoricoBonusDAOSQLite historicoBonusDAO;
+    private BonusDAOSQLite bonusDAO;
+    private Double ValorTotalRecebido;
+
+    public CalculaBonusProcessor(HistoricoBonusDAOSQLite historicoBonusDAO, BonusDAOSQLite bonusDAO) {
+        this.historicoBonusDAO = historicoBonusDAO;
+        this.bonusDAO = bonusDAO;
+    }
+
+    public Funcionario run(Funcionario funcionario, LocalDate localDate, Boolean isAtualizar) throws Exception {
+        List<String> TiposBonusList = new ArrayList<>();
+        Double valorTotalBonus = 0.0;
+        List<TipoBonusHandler> handlersList = new ArrayList<>(Arrays.asList(
                 new AssiduidadeBonus(),
                 new TempoServicoHandler(),
                 new FuncionarioMes()));
 
-        for (BonusHandler handler : handlersList) {
-            try {
-                handler.calcular(funcionario, localDate, this.bonusAplicadosList);
-
-            } catch (Exception e) {
-                // TODO: Criar array para armazenar os erros que foram levantados de dentro do
-                // calcular
-                // e levantar eles para cima como não checadas
-                throw new RuntimeException(e.getStackTrace().toString());
+        for (TipoBonusHandler handler : handlersList) {
+            Double valorBonus = handler.calcular(funcionario);
+            valorTotalBonus += valorBonus;
+            if (isAtualizar) {
+                InsertHistoricoBonus(funcionario.getIdFuncionario(), handler.getTipo(), localDate, handler.calcular(funcionario));
+            } else {
+                InsertHistoricoBonus(funcionario.getIdFuncionario(), handler.getTipo(), localDate, handler.calcular(funcionario));
             }
         }
-
-        this.salvarBonusFuncionario(funcionario);
-
+        funcionario.setSalario(funcionario.getSalarioBase() + valorTotalBonus);
+        return funcionario;
     }
 
-    private void salvarBonusFuncionario(Funcionario funcionario) {
-        // TODO: pegar bonusAplicadosList e salvar nas tabelas,
-        // Repository (f, b)
-        // historico e bonus
-        // usar a repository com o join
+    private void InsertHistoricoBonus(int idFuncionario, String tipoBonus, LocalDate localDate, Double valorBonus) throws Exception {
+        historicoBonusDAO.add(new HistoricoBonus(idFuncionario, getIdBonusByTipo(tipoBonus), localDate,valorBonus));
+    }
+
+    private void updateHistoricoBonus(int idFuncionario, String tipoBonus, LocalDate localDate, Double valorBonus) throws Exception {
+        historicoBonusDAO.add(new HistoricoBonus(idFuncionario, getIdBonusByTipo(tipoBonus), localDate,valorBonus));
+    }
+
+    private int getIdBonusByTipo(String tipoBouns) throws Exception {
+        return bonusDAO.getIdByNome(tipoBouns);
     }
 
 }
