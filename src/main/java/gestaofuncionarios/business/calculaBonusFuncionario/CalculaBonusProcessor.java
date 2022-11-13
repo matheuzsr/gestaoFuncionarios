@@ -50,10 +50,6 @@ public class CalculaBonusProcessor {
         historicoBonusDAO.add(new HistoricoBonus(idFuncionario, getIdBonusByTipo(tipoBonus), localDate,valorBonus));
     }
 
-    private void updateHistoricoBonus(int idFuncionario, String tipoBonus, LocalDate localDate, Double valorBonus) throws Exception {
-        historicoBonusDAO.add(new HistoricoBonus(idFuncionario, getIdBonusByTipo(tipoBonus), localDate,valorBonus));
-    }
-
     private int getIdBonusByTipo(String tipoBouns) throws Exception {
         return bonusDAO.getIdByNome(tipoBouns);
     }

@@ -5,7 +5,7 @@ import java.util.List;
 
 import gestaofuncionarios.business.calculaBonusFuncionario.CalculaBonusProcessor;
 import gestaofuncionarios.dados.dao.BonusDAOSQLite;
-import gestaofuncionarios.dados.dao.HistoricioSalarioDAOSQLite;
+import gestaofuncionarios.dados.dao.HistoricoSalarioDAOSQLite;
 import gestaofuncionarios.dados.dao.HistoricoBonusDAOSQLite;
 import gestaofuncionarios.model.Funcionario;
 import gestaofuncionarios.model.HistoricoSalario;
@@ -13,10 +13,10 @@ import gestaofuncionarios.model.HistoricoSalario;
 public class CalculaSalarioFuncionario {
 
     private CalculaBonusProcessor calculoBonusProcessor;
-    private HistoricioSalarioDAOSQLite historicioSalarioDAO;
+    private HistoricoSalarioDAOSQLite historicioSalarioDAO;
     public CalculaSalarioFuncionario() {
         this.calculoBonusProcessor = new CalculaBonusProcessor(new HistoricoBonusDAOSQLite(), new BonusDAOSQLite());
-        historicioSalarioDAO = new HistoricioSalarioDAOSQLite();
+        historicioSalarioDAO = new HistoricoSalarioDAOSQLite();
     }
     
    

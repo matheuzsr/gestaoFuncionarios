@@ -153,6 +153,10 @@ public class BuscarFuncionarioView extends javax.swing.JInternalFrame {
         return tblAtributos;
     }
 
+    public JButton getBtnAddFuncionario() {
+        return btnAddFuncionario;
+    }
+
     public JButton getBtnHistoryBonus() {
         return btnHistoryBonus;
     }

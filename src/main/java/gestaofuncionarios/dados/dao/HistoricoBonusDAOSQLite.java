@@ -1,31 +1,43 @@
 package gestaofuncionarios.dados.dao;
 
-import gestaofuncionarios.dados.ConexaoSQLite.SQLiteDB;
-import gestaofuncionarios.dto.HistoricoBonusDTO;
-import gestaofuncionarios.model.HistoricoBonus;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
+
+import gestaofuncionarios.dados.ConexaoSQLite.SQLiteDB;
+import gestaofuncionarios.dto.HistoricoBonusDTO;
+import gestaofuncionarios.dto.HistoricoBonusFilterDTO;
+import gestaofuncionarios.model.HistoricoBonus;
 
 public class HistoricoBonusDAOSQLite implements HistoricoBonusDAO {
 
     private final SQLiteDB BD = new SQLiteDB();
 
     @Override
-    public Collection<HistoricoBonusDTO> getHistoricoBonusByIdFuncionario(int idFuncionario) throws Exception {
+    public List<HistoricoBonusDTO> getSerachHistoricoBonus(HistoricoBonusFilterDTO historicoBonusFilterDTO) throws Exception {
        ArrayList<HistoricoBonusDTO> listHistoricoBonus =  new ArrayList<>();
        StringBuilder str = new StringBuilder();
        
-       str.append(" SELECT  ");
+       str.append(" SELECT distinct  ");
        str.append(" hb.data_inclusao as data_inclusao, ");
        str.append(" b.tipo as tipo , ");
        str.append(" hb.valor as valor , ");
        str.append(" f.cargo as cargo  ");
        str.append(" FROM historico_bonus hb ");
-       str.append( " join bonus b on b.id = hb.id_bonus ");
-       str.append( " join funcionario f on f.id = hb.id_funcionario ");
-       str.append(" WHERE hb.id_funcionario = ").append(idFuncionario);
+       str.append(" join bonus b on b.id = hb.id_bonus ");
+       str.append(" join funcionario f on f.id = hb.id_funcionario ");
+       str.append(" WHERE 1=1 ");
+       str.append(" and f.id = ").append(historicoBonusFilterDTO.getId());
+       
+       if(!historicoBonusFilterDTO.getNome().isEmpty()) {
+    	   str.append(" and b.tipo like ").append("'").append(historicoBonusFilterDTO.getNome()).append("'");
+       }
+       
+       if(historicoBonusFilterDTO.getDate() != null) {
+    	   str.append(" and hb.data_inclusao = ").append("'").append(historicoBonusFilterDTO.getDate()).append("'");
+       }
+       
        BD.conectar();
        BD.consultar(str.toString());
     
@@ -39,12 +51,13 @@ public class HistoricoBonusDAOSQLite implements HistoricoBonusDAO {
        }
        
        BD.close();
-       
+     
        return listHistoricoBonus;
     }
-
+    
+    
     @Override
-    public Collection<HistoricoBonusDTO> getHistoricoBonusByNameFuncionario(String NameFuncionario) throws Exception {
+    public List<HistoricoBonusDTO> getHistoricoBonusByIdFuncionario(int idFuncionario) throws Exception {
        ArrayList<HistoricoBonusDTO> listHistoricoBonus =  new ArrayList<>();
        StringBuilder str = new StringBuilder();
        
@@ -56,8 +69,8 @@ public class HistoricoBonusDAOSQLite implements HistoricoBonusDAO {
        str.append(" FROM historico_bonus hb ");
        str.append(" join bonus b on b.id = hb.id_bonus ");
        str.append(" join funcionario f on f.id = hb.id_funcionario ");
-       str.append(" WHERE b.tipo like ").append("'").
-               append(NameFuncionario).append("'");
+       str.append("Where f.id = ").append(idFuncionario);
+       
        BD.conectar();
        BD.consultar(str.toString()); 
     
@@ -78,7 +91,7 @@ public class HistoricoBonusDAOSQLite implements HistoricoBonusDAO {
     @Override
     public void add(HistoricoBonus historicoBonus) throws Exception{
         StringBuilder str = new StringBuilder();
-   
+        	
             BD.conectar();
 
             str.append(" INSERT INTO historico_bonus (  " );

@@ -13,141 +13,175 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 public final class FuncionarioDAOSQLite extends Observable implements FuncionarioDAO {
-    private List<Funcionario> funcionarios = new ArrayList<>();
+	private List<Funcionario> funcionarios = new ArrayList<>();
 
-    private final SQLiteDB BD = new SQLiteDB();
+	private final SQLiteDB BD = new SQLiteDB();
 
-    @Override
-    public void carregaFuncionarios() {
-        this.funcionarios = new ArrayList<>();
+	@Override
+	public List<Funcionario> getAll() {
+		List<Funcionario> funcionarios = new ArrayList<>();
 
-        try {
+		try {
 
-            BD.conectar();
-            BD.consultar("SELECT * FROM funcionario");
+			BD.conectar();
+			BD.consultar("SELECT * FROM funcionario");
 
-            while (BD.getRs().next()) {
-                int id = BD.getRs().getInt("id");
-                String nome = BD.getRs().getString("nome");
-                LocalDate dataNascimento = LocalDate.parse(BD.getRs().getString("data_nascimento"),
-                        DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                String cargo = BD.getRs().getString("cargo");
-                double salarioBase = BD.getRs().getDouble("salario_base");
+			while (BD.getRs().next()) {
+				int id = BD.getRs().getInt("id");
+				String nome = BD.getRs().getString("nome");
+				LocalDate dataNascimento = LocalDate.parse(BD.getRs().getString("data_nascimento"),
+						DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+				String cargo = BD.getRs().getString("cargo");
+				double salarioBase = BD.getRs().getDouble("salario_base");
 
-                Funcionario f = new Funcionario(id, nome, dataNascimento, cargo, salarioBase);
+				Funcionario f = new Funcionario(id, nome, dataNascimento, cargo, salarioBase);
 
-                f.setFaltas(BD.getRs().getInt("faltas"));
-                f.setDistanciaDoTrabalho(BD.getRs().getInt("distancia_trabalho"));
+				f.setFaltas(BD.getRs().getInt("faltas"));
+				f.setDistanciaDoTrabalho(BD.getRs().getInt("distancia_trabalho"));
 
-                if (BD.getRs().getString("data_admissao") != "null") {
-                    f.setDataAdmissao(LocalDate.parse(BD.getRs().getString("data_admissao"),
-                            DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+				if (BD.getRs().getString("data_admissao") != "null") {
+					f.setDataAdmissao(LocalDate.parse(BD.getRs().getString("data_admissao"),
+							DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
-                }
-                funcionarios.add(f);
-            }
+				}
+				funcionarios.add(f);
+			}
 
-            BD.close();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getStackTrace());
-        }
-    }
+			BD.close();
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, ex.getStackTrace());
+		}
 
-    @Override
-    public boolean add(Funcionario funcionario) throws Exception {
-        boolean add = funcionarios.add(funcionario);
-        if (add) {
-            BD.conectar();
+		return funcionarios;
+	}
 
-            String sql = "INSERT INTO funcionario VALUES (?,'"
-                    + funcionario.getNome() + "','"
-                    + funcionario.getDataNascimento() + "','"
-                    + funcionario.getCargo() + "','"
-                    + funcionario.getSalarioBase() + "','"
-                    + funcionario.getSalario() + "','"
-                    + funcionario.getFaltas() + "','"
-                    + funcionario.getDistanciaDoTrabalho() + "','"
-                    + funcionario.getDataAdmissao() + "')";
+	@Override
+	public boolean add(Funcionario funcionario) throws Exception {
+		boolean add = funcionarios.add(funcionario);
+		if (add) {
+			BD.conectar();
 
-            BD.atualizar(sql);
-            BD.close();
-        }
+			String sql = "INSERT INTO funcionario VALUES (?,'" + funcionario.getNome() + "','"
+					+ funcionario.getDataNascimento() + "','" + funcionario.getCargo() + "','"
+					+ funcionario.getSalarioBase() + "','" + funcionario.getSalario() + "','" + funcionario.getFaltas()
+					+ "','" + funcionario.getDistanciaDoTrabalho() + "','" + funcionario.getDataAdmissao() + "')";
 
-        this.notificarObservers();
-        return add;
-    }
+			BD.atualizar(sql);
+			BD.close();
+		}
 
-    @Override
-    public boolean remove(String nome) throws Exception {
-        List<Funcionario> temp = new ArrayList<>();
+		this.notificarObservers(this.getAll());
+		return add;
+	}
 
-        Iterator it = funcionarios.iterator();
-        while (it.hasNext()) {
-            Funcionario f = (Funcionario) it.next();
-            if (!f.getNome().equals(nome)) {
-                temp.add(f);
-            }
-        }
+	@Override
+	public boolean remove(int idFuncionario) throws Exception {
+		List<Funcionario> temp = new ArrayList<>();
 
-        BD.conectar();
+		BD.conectar();
 
-        String sql = "DELETE FROM funcionario WHERE nome='" + nome + "'";
-        BD.atualizar(sql);
-        BD.close();
-        funcionarios = temp;
+		String sql = "DELETE FROM funcionario WHERE id='" + idFuncionario + "'";
+		BD.atualizar(sql);
+		BD.close();
+		funcionarios = temp;
 
-        this.notificarObservers();
+		this.notificarObservers(this.getAll());
 
-        return true;
-    }
+		return true;
+	}
 
-    @Override
-    public Funcionario getFuncionarioByName(String nome) throws Exception {
-        Funcionario f = null;
-        BD.conectar();
-        BD.consultar("SELECT * FROM funcionario WHERE nome='" + nome + "'");
+	@Override
+	public List<Funcionario> getFuncionariosByName(String nome) throws Exception {
+		List<Funcionario> listaFuncionarios = new ArrayList<>();
+		BD.conectar();
+		BD.consultar("SELECT * FROM funcionario WHERE nome LIKE '%" + nome + "%'");
 
-        while (BD.getRs().next()) {
-            int id = BD.getRs().getInt("id");
-            String nomeFuncionario = BD.getRs().getString("nome");
+		while (BD.getRs().next()) {
+			int id = BD.getRs().getInt("id");
+			String nomeFuncionario = BD.getRs().getString("nome");
 
-            LocalDate dataNascimento = LocalDate.parse(BD.getRs().getString("data_nascimento"),
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            String cargo = BD.getRs().getString("cargo");
+			LocalDate dataNascimento = LocalDate.parse(BD.getRs().getString("data_nascimento"),
+					DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			String cargo = BD.getRs().getString("cargo");
 
-            double salarioBase = BD.getRs().getDouble("salario_base");
+			double salarioBase = BD.getRs().getDouble("salario_base");
 
-            LocalDate dataAdmissao = LocalDate.parse(BD.getRs().getString("data_admissao"),
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			LocalDate dataAdmissao = LocalDate.parse(BD.getRs().getString("data_admissao"),
+					DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
-            f = new Funcionario(id, nomeFuncionario, dataNascimento, cargo, salarioBase);
-            f.setFaltas(BD.getRs().getInt(6));
-            f.setDistanciaDoTrabalho(BD.getRs().getInt(7));
-            f.setDataAdmissao(dataAdmissao);
-        }
-        BD.close();
-        return f;
-    }
+			Funcionario f = new Funcionario(id, nomeFuncionario, dataNascimento, cargo, salarioBase);
+			f.setFaltas(BD.getRs().getInt("faltas"));
+			f.setDistanciaDoTrabalho(BD.getRs().getInt("distancia_trabalho"));
+			f.setDataAdmissao(dataAdmissao);
 
-    @Override
-    public boolean contains(Funcionario funcionario) {
-        return this.funcionarios.contains(funcionario);
-    }
+			listaFuncionarios.add(f);
+		}
+		BD.close();
+		return listaFuncionarios;
+	}
 
-    @Override
-    public Collection<Funcionario> getFuncionarios() {
-        carregaFuncionarios();
+	@Override
+	public Funcionario getById(int searchId) throws Exception {
+		Funcionario f = null;
+		BD.conectar();
+		BD.consultar("SELECT * FROM funcionario WHERE id='" + searchId + "'");
 
-        return funcionarios;
-    }
+		while (BD.getRs().next()) {
+			int id = BD.getRs().getInt("id");
+			String nomeFuncionario = BD.getRs().getString("nome");
 
-    @Override
-    protected void notificarObservers() {
-        carregaFuncionarios();
+			LocalDate dataNascimento = LocalDate.parse(BD.getRs().getString("data_nascimento"),
+					DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			String cargo = BD.getRs().getString("cargo");
 
-        observerList.forEach(observer -> {
-            observer.update(this.funcionarios);
-        });
+			double salarioBase = BD.getRs().getDouble("salario_base");
 
-    }
+			LocalDate dataAdmissao = LocalDate.parse(BD.getRs().getString("data_admissao"),
+					DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+			f = new Funcionario(id, nomeFuncionario, dataNascimento, cargo, salarioBase);
+			f.setFaltas(BD.getRs().getInt("faltas"));
+			f.setDistanciaDoTrabalho(BD.getRs().getInt("distancia_trabalho"));
+			f.setDataAdmissao(dataAdmissao);
+		}
+		BD.close();
+		return f;
+	}
+
+	@Override
+	public boolean contains(Funcionario funcionario) {
+		return this.funcionarios.contains(funcionario);
+	}
+
+	@Override
+	protected void notificarObservers(List<Funcionario> funcionarios) {
+
+		observerList.forEach(observer -> {
+			observer.update(funcionarios);
+		});
+
+	}
+
+	@Override
+	public void update(Funcionario funcionario) throws Exception {
+		StringBuilder str = new StringBuilder();
+
+		BD.conectar();
+		
+		str.append(" UPDATE funcionario ");
+		str.append(" set ");
+		str.append(" nome = ").append("'").append(funcionario.getNome()).append("'").append(",");
+		str.append(" data_nascimento  = ").append("'").append(funcionario.getDataNascimento()).append("'").append(",");
+		str.append(" cargo  = ").append("'").append(funcionario.getCargo()).append("'").append(",");
+		str.append(" salario_base = ").append(funcionario.getSalarioBase()).append(",");
+		str.append(" data_admissao  = ").append("'").append(funcionario.getDataAdmissao()).append("'").append(",");
+		str.append(" funcionario_mes = ").append(funcionario.isFuncionarioMes() ? 0 : 1).append(",");
+		str.append(" faltas  = ").append(funcionario.getFaltas()).append(",");
+		str.append("distancia_trabalho = ").append(funcionario.getDistanciaDoTrabalho());
+		str.append(" Where id =").append(funcionario.getIdFuncionario());
+		
+		BD.atualizar(str.toString());
+		
+		BD.close();
+	}
 }
