@@ -32,9 +32,10 @@ public class CalculadoraSalarioView extends javax.swing.JInternalFrame {
         btnListarTodos = new javax.swing.JButton();
         seletorDataCalculo = new com.toedter.calendar.JDateChooser();
         jLabel1 = new javax.swing.JLabel();
+        
+        this.setTitle("Calculo salário");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-
         btnBuscar.setText("Buscar");
 
         tblFuncionarios.setModel(new javax.swing.table.DefaultTableModel(

@@ -1,6 +1,7 @@
 package gestaofuncionarios.presenter;
 
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -37,15 +38,6 @@ public class HistoricoBonusPresenter {
 		}
 
 		initActrionListener();
-
-		this.view.setIconifiable(true);
-		this.view.setIcon(true);
-		this.view.setVisible(true);
-		this.view.setMaximizable(true);
-		this.view.setResizable(true);
-		this.view.moveToFront();
-		this.view.requestFocus();
-
 	}
 
 	private void initConstruirTabela() {

@@ -28,8 +28,7 @@ public class BuscarFuncionarioPresenter implements Observer {
 
     public BuscarFuncionarioPresenter(FuncionarioDAO dao) throws Exception {
         view = new BuscarFuncionarioView();
-        view.setTitle("Buscar Funcionario");
-        this.dao = dao; 
+        this.dao = dao;
 
         criarTabela();
         carregarTabela(dao.getAll());
@@ -45,7 +44,7 @@ public class BuscarFuncionarioPresenter implements Observer {
 
     }
 
-    private void buscar() throws Exception { 
+    private void buscar() throws Exception {
         String nome = view.getTxtValor().getText();
         Collection<Funcionario> listaFuncionarios = dao.getFuncionariosByName(nome);
         carregarTabela(listaFuncionarios);
@@ -53,8 +52,9 @@ public class BuscarFuncionarioPresenter implements Observer {
 
     private void visualizarFuncionario() {
         int row = view.getTblAtributos().getSelectedRow();
-        int idFuncionario = (int) view.getTblAtributos().getValueAt(row, 0);
+        this.showMessageIfNotSelectedList(row);
 
+        int idFuncionario = (int) view.getTblAtributos().getValueAt(row, 0);
         Funcionario funcionario;
         try {
             funcionario = this.dao.getById(idFuncionario);
@@ -77,9 +77,9 @@ public class BuscarFuncionarioPresenter implements Observer {
 
     private void criarTabela() {
         tabela = new DefaultTableModel(
-                new Object[][]{},
-                new String[]{
-                    "ID", "Nome", "Idade", "Função", "Salario base"
+                new Object[][] {},
+                new String[] {
+                        "ID", "Nome", "Idade", "Função", "Salario base"
                 }) {
             @Override
             public boolean isCellEditable(int row, int col) {
@@ -95,12 +95,12 @@ public class BuscarFuncionarioPresenter implements Observer {
         Iterator<?> it = c.iterator();
         while (it.hasNext()) {
             Funcionario funcionario = (Funcionario) it.next();
-            tabela.addRow(new Object[]{
-                funcionario.getIdFuncionario(),
-                funcionario.getNome(),
-                funcionario.getIdade(),
-                funcionario.getCargo(),
-                format.format(funcionario.getSalarioBase())
+            tabela.addRow(new Object[] {
+                    funcionario.getIdFuncionario(),
+                    funcionario.getNome(),
+                    funcionario.getIdade(),
+                    funcionario.getCargo(),
+                    format.format(funcionario.getSalarioBase())
             });
         }
 
@@ -113,13 +113,14 @@ public class BuscarFuncionarioPresenter implements Observer {
 
     private void verBonus() throws Exception {
         int row = view.getTblAtributos().getSelectedRow();
-        int id = (int) view.getTblAtributos().getValueAt(row, 0);
-        HistoricoBonusPresenter hb = new HistoricoBonusPresenter(id);
-        GestaoFuncionariosPresenter.showPanel(hb.getView(), false, false);
+        this.showMessageIfNotSelectedList(row);
 
+        int id = (int) view.getTblAtributos().getValueAt(row, 0);
+
+            HistoricoBonusPresenter hb = new HistoricoBonusPresenter(id);
+            GestaoFuncionariosPresenter.showPanel(hb.getView(), false, false);
     }
 
-    // TODO: colocar eles no change do select row table
     private void handleEnableButtons() {
         view.getBtnVisualizar().setEnabled(true);
         view.getBtnHistoryBonus().setEnabled(true);
@@ -134,12 +135,12 @@ public class BuscarFuncionarioPresenter implements Observer {
         limparTabelaFuncionarios();
 
         for (Funcionario funcionario : funcionarioList) {
-            tabela.addRow(new Object[]{
-                funcionario.getIdFuncionario(),
-                funcionario.getNome(),
-                funcionario.getIdade(),
-                funcionario.getCargo(),
-                format.format(funcionario.getSalarioBase())
+            tabela.addRow(new Object[] {
+                    funcionario.getIdFuncionario(),
+                    funcionario.getNome(),
+                    funcionario.getIdade(),
+                    funcionario.getCargo(),
+                    format.format(funcionario.getSalarioBase())
             });
         }
     }
@@ -170,7 +171,7 @@ public class BuscarFuncionarioPresenter implements Observer {
             try {
                 verBonus();
             } catch (Exception ex) {
-                Logger.getLogger(BuscarFuncionarioPresenter.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, ex.getStackTrace());
             }
         });
 
@@ -190,6 +191,13 @@ public class BuscarFuncionarioPresenter implements Observer {
         view.getBtnAddFuncionario().addActionListener((ActionEvent e) -> {
             addFuncionario();
         });
+    }
+
+    private void showMessageIfNotSelectedList(int row) {
+        if (row == -1) {
+            JOptionPane.showMessageDialog(view, "Você precisa selecionar uma LINHA da tabela!");
+            return;
+        }
     }
 
 }

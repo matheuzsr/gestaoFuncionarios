@@ -44,8 +44,8 @@ public class BuscarFuncionarioView extends javax.swing.JInternalFrame {
         btnAddFuncionario = new javax.swing.JButton();
         btnVisualizar = new javax.swing.JButton();
 
+        this.setTitle("Buscar Funcionario");
         lblValor.setText("Nome");
-
         btnBuscar.setText("Buscar");
 
         tblAtributos.setModel(new javax.swing.table.DefaultTableModel(

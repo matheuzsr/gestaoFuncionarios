@@ -6,10 +6,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -48,7 +47,7 @@ public class CalculadoraSalarioPresenter {
 				this.calcularSalrioFuncionario.calcularSalario(funcionarioDAO.getAll(), dataEscolhida, false);
 				carregarTabela(historicioSalarioDAOSQLite.getHistoricoSalarioByData(dataEscolhida));
 			} catch (Exception ex) {
-				Logger.getLogger(CalculadoraSalarioPresenter.class.getName()).log(Level.SEVERE, null, ex);
+				JOptionPane.showMessageDialog(null, ex.getMessage());
 			}
 		}
 	}
@@ -59,7 +58,7 @@ public class CalculadoraSalarioPresenter {
 			try {
 				carregarTabela(historicioSalarioDAOSQLite.getHistoricoSalarioByData(dataEscolhida));
 			} catch (Exception ex) {
-				Logger.getLogger(CalculadoraSalarioPresenter.class.getName()).log(Level.SEVERE, null, ex);
+				JOptionPane.showMessageDialog(null, ex.getMessage());
 			}
 		}
 	}
@@ -68,7 +67,7 @@ public class CalculadoraSalarioPresenter {
 		try {
 			carregarTabela(historicioSalarioDAOSQLite.getAllHistoricoSalario());
 		} catch (Exception ex) {
-			Logger.getLogger(CalculadoraSalarioPresenter.class.getName()).log(Level.SEVERE, null, ex);
+			JOptionPane.showMessageDialog(null, ex.getMessage());
 		}
 	}
 
