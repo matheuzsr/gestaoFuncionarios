@@ -1,11 +1,11 @@
-package gestaofuncionarios.observer;
+package gestaofuncionarios.observer.funcionario;
 
 
 import gestaofuncionarios.model.Funcionario;
 
 import java.util.List;
 
-public interface Observer {
+public interface ObserverFuncionario {
 
     public void update(List<Funcionario> funcionarioList);
 

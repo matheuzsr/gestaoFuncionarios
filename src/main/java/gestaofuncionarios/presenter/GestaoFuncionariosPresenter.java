@@ -5,7 +5,7 @@ import gestaofuncionarios.business.calculoEstatistico.CalculoEstatisticoSalario;
 import gestaofuncionarios.dados.dao.EstatisticaSalarioDAO;
 import gestaofuncionarios.dados.dao.FuncionarioDAOSQLite;
 import gestaofuncionarios.model.Funcionario;
-import gestaofuncionarios.observer.Observer;
+import gestaofuncionarios.observer.funcionario.ObserverFuncionario;
 import gestaofuncionarios.view.GestaoFuncionariosView;
 import io.github.cdimascio.dotenv.Dotenv;
 import java.awt.event.ActionEvent;
@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  *
  * @author logcomex
  */
-public class GestaoFuncionariosPresenter implements Observer {
+public class GestaoFuncionariosPresenter implements ObserverFuncionario {
     private GestaoFuncionariosView view;
     private int totalFuncionarios;
     private FuncionarioDAOSQLite dao;

@@ -2,7 +2,7 @@ package gestaofuncionarios.dados.dao;
 
 import gestaofuncionarios.dados.ConexaoSQLite.SQLiteDB;
 import gestaofuncionarios.model.Funcionario;
-import gestaofuncionarios.observer.Observable;
+import gestaofuncionarios.observer.funcionario.ObservableFuncionario;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -12,7 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-public final class FuncionarioDAOSQLite extends Observable implements FuncionarioDAO {
+public final class FuncionarioDAOSQLite extends ObservableFuncionario implements FuncionarioDAO {
 	private List<Funcionario> funcionarios = new ArrayList<>();
 
 	private final SQLiteDB BD = new SQLiteDB();

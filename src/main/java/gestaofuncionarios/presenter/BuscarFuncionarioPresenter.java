@@ -14,12 +14,12 @@ import javax.swing.table.DefaultTableModel;
 
 import gestaofuncionarios.dados.dao.FuncionarioDAO;
 import gestaofuncionarios.model.Funcionario;
-import gestaofuncionarios.observer.Observer;
+import gestaofuncionarios.observer.funcionario.ObserverFuncionario;
 import gestaofuncionarios.view.BuscarFuncionarioView;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class BuscarFuncionarioPresenter implements Observer {
+public class BuscarFuncionarioPresenter implements ObserverFuncionario {
 
     private final FuncionarioDAO dao;
     private BuscarFuncionarioView view;

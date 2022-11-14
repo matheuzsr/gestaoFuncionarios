@@ -4,7 +4,7 @@ import gestaofuncionarios.business.calculoEstatistico.AbstractCalculoEstatistico
 import gestaofuncionarios.dados.dao.EstatisticaSalarioDAO;
 import gestaofuncionarios.model.EstatisticaSalario;
 import gestaofuncionarios.model.Funcionario;
-import gestaofuncionarios.observer.Observer;
+import gestaofuncionarios.observer.funcionario.ObserverFuncionario;
 import gestaofuncionarios.utils.NumberUtils;
 import gestaofuncionarios.view.EstatisticaView;
 import java.awt.event.ActionEvent;
@@ -18,7 +18,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-public class EstatisticaPresenter implements Observer {
+public class EstatisticaPresenter implements ObserverFuncionario {
 
 	private EstatisticaView view;
 	private DefaultTableModel tabela;
