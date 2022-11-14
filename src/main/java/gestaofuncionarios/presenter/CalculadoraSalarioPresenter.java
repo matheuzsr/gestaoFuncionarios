@@ -49,6 +49,8 @@ public class CalculadoraSalarioPresenter {
 			} catch (Exception ex) {
 				JOptionPane.showMessageDialog(null, ex.getMessage());
 			}
+		}else {
+			JOptionPane.showConfirmDialog(view, "Por favor escolha uma data para realizar o calculo");
 		}
 	}
 

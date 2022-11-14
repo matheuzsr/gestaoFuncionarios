@@ -51,7 +51,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnEditar" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnSalvar" pref="75" max="32767" attributes="0"/>
+                          <Component id="btnSalvar" pref="103" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -103,7 +103,7 @@
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="32" max="32767" attributes="0"/>
+                  <EmptySpace pref="60" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -114,14 +114,14 @@
                       <Component id="txtNome" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblNome" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="13" max="32767" attributes="0"/>
+                  <EmptySpace pref="16" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblCargo" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtCargo" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblDistancia" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtDistanciaTrabalho" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtIdade" alignment="3" min="-2" max="-2" attributes="0"/>

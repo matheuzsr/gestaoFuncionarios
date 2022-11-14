@@ -94,6 +94,9 @@ public abstract class FuncionarioPresenterState {
 		if (presenter.getView().getTxtSalarioBase().getText().isEmpty()) {
 			JOptionPane.showConfirmDialog(presenter.getView(), "Salario Base não pode salario");
 			return false;
+		}else if( Double.parseDouble(presenter.getView().getTxtSalarioBase().getText().replace(",", ".")) < 0){
+			JOptionPane.showConfirmDialog(presenter.getView(), "Salario Base não pode ter um valor negativo");
+			return false;
 		}
 		
 		if (presenter.getView().getTxtIdade().getText().isEmpty()) {
