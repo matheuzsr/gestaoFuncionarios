@@ -214,11 +214,9 @@ public final class FuncionarioDAOSQLite extends ObservableFuncionario implements
 
 	@Override
 	protected void notificarObservers(List<Funcionario> funcionarios) {
-
 		observerList.forEach(observer -> {
 			observer.update(funcionarios);
 		});
-
 	}
 
 }

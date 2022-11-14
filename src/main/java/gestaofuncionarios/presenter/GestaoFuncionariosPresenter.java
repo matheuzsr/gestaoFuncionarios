@@ -4,6 +4,7 @@ import gestaofuncionarios.business.calculoEstatistico.AbstractCalculoEstatistico
 import gestaofuncionarios.business.calculoEstatistico.CalculoEstatisticoSalario;
 import gestaofuncionarios.dados.dao.EstatisticaSalarioDAO;
 import gestaofuncionarios.dados.dao.FuncionarioDAOSQLite;
+import gestaofuncionarios.dados.dao.HistoricoSalarioDAOSQLite;
 import gestaofuncionarios.model.Funcionario;
 import gestaofuncionarios.observer.funcionario.ObserverFuncionario;
 import gestaofuncionarios.view.GestaoFuncionariosView;
@@ -23,7 +24,12 @@ public class GestaoFuncionariosPresenter implements ObserverFuncionario {
     private FuncionarioDAOSQLite dao;
     private Dotenv dotenv;
 
-    public GestaoFuncionariosPresenter(FuncionarioDAOSQLite dao, EstatisticaSalarioDAO estatisticaSalarioDAO,
+    public GestaoFuncionariosPresenter(
+            FuncionarioDAOSQLite dao,
+            FuncionarioPresenter funcionarioPresenter,
+            BuscarFuncionarioPresenter buscarFuncionarioPresenter,
+            CalculadoraSalarioPresenter calculadoraSalarioPresenter,
+            EstatisticaPresenter estatisticaPresenter,
             Dotenv dotenv) {
         this.view = new GestaoFuncionariosView();
         this.dao = dao;
@@ -31,14 +37,21 @@ public class GestaoFuncionariosPresenter implements ObserverFuncionario {
 
         this.getTotalFuncionarios();
         this.atualizarTotalFuncionarios();
-        this.initListterns(estatisticaSalarioDAO);
+        this.initListterns(
+                funcionarioPresenter,
+                buscarFuncionarioPresenter,
+                calculadoraSalarioPresenter,
+                estatisticaPresenter);
     }
 
-    private void initListterns(EstatisticaSalarioDAO estatisticaSalarioDAO) {
+    private void initListterns(
+            FuncionarioPresenter funcionarioPresenter,
+            BuscarFuncionarioPresenter buscarFuncionarioPresenter,
+            CalculadoraSalarioPresenter calculadoraSalarioPresenter,
+            EstatisticaPresenter estatisticaPresenter) {
         this.view.getAddFuncionarioMenu().addActionListener((ActionEvent e) -> {
             try {
-                FuncionarioPresenter presenter = new FuncionarioPresenter(dao, null);
-                showPanel(presenter.getView(), false, false);
+                showPanel(funcionarioPresenter.getView(), false, false);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(view, ex.getMessage());
             }
@@ -46,10 +59,7 @@ public class GestaoFuncionariosPresenter implements ObserverFuncionario {
 
         this.view.getBuscarFuncionariosMenu().addActionListener((ActionEvent e) -> {
             try {
-                BuscarFuncionarioPresenter presenter = new BuscarFuncionarioPresenter(dao);
-                dao.addObserver(presenter);
-
-                showPanel(presenter.getView(), false, false);
+                showPanel(buscarFuncionarioPresenter.getView(), false, false);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(view, ex.getMessage());
             }
@@ -57,9 +67,7 @@ public class GestaoFuncionariosPresenter implements ObserverFuncionario {
 
         this.view.getCalcularSalarioMenu().addActionListener((ActionEvent e) -> {
             try {
-                CalculadoraSalarioPresenter presenter = new CalculadoraSalarioPresenter();
-
-                showPanel(presenter.getView(), false, false);
+                showPanel(calculadoraSalarioPresenter.getView(), false, false);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(view, ex.getMessage());
             }
@@ -67,12 +75,7 @@ public class GestaoFuncionariosPresenter implements ObserverFuncionario {
 
         this.view.getCalcularSalarioMenu1().addActionListener((ActionEvent e) -> {
             try {
-
-                AbstractCalculoEstatisticoSalario calculoEstatisticoSalario = new CalculoEstatisticoSalario(
-                        estatisticaSalarioDAO);
-                EstatisticaPresenter presenter = new EstatisticaPresenter(calculoEstatisticoSalario);
-
-                showPanel(presenter.getView(), false, false);
+                showPanel(estatisticaPresenter.getView(), false, false);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(view, ex.getMessage());
             }

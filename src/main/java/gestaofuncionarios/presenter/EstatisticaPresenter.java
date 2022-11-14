@@ -4,7 +4,9 @@ import gestaofuncionarios.business.calculoEstatistico.AbstractCalculoEstatistico
 import gestaofuncionarios.dados.dao.EstatisticaSalarioDAO;
 import gestaofuncionarios.model.EstatisticaSalario;
 import gestaofuncionarios.model.Funcionario;
+import gestaofuncionarios.model.HistoricoSalario;
 import gestaofuncionarios.observer.funcionario.ObserverFuncionario;
+import gestaofuncionarios.observer.historicoSalario.ObserverHistoricoSalario;
 import gestaofuncionarios.utils.NumberUtils;
 import gestaofuncionarios.view.EstatisticaView;
 import java.awt.event.ActionEvent;
@@ -18,13 +20,14 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-public class EstatisticaPresenter implements ObserverFuncionario {
+public class EstatisticaPresenter implements ObserverHistoricoSalario {
 
 	private EstatisticaView view;
 	private DefaultTableModel tabela;
 	private AbstractCalculoEstatisticoSalario calculoEstatisticoSalario;
 
 	public EstatisticaPresenter(AbstractCalculoEstatisticoSalario calculoEstatisticoSalario) {
+		view.setEnabled(false);
 		this.calculoEstatisticoSalario = calculoEstatisticoSalario;
 		this.view = new EstatisticaView();
 
@@ -34,6 +37,7 @@ public class EstatisticaPresenter implements ObserverFuncionario {
 		this.carregarTabela(calculoEstatisticoList);
 		
 		this.initListterns();
+		view.setEnabled(true);
 	}
 
 	private void initListterns() {
@@ -112,11 +116,11 @@ public class EstatisticaPresenter implements ObserverFuncionario {
 	}
 
 	@Override
-	public void update(List<Funcionario> funcionarioList) {
+	public void update(List<HistoricoSalario> historicoSalarioList) {
     this.limparTabelaFuncionarios();
     this.criarTabela();
      
-    if(!funcionarioList.isEmpty()) {
+    if(!historicoSalarioList.isEmpty()) {
       List<EstatisticaSalario> calculoEstatisticoList = this.getCalculoEstatisticoList();
       this.carregarTabela(calculoEstatisticoList);
     }

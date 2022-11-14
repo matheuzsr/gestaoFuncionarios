@@ -27,11 +27,12 @@ public class CalculadoraSalarioPresenter {
 	private DefaultTableModel tabelaCalculoSalario;
 	private HistoricoSalarioDAOSQLite historicioSalarioDAOSQLite;
 
-	public CalculadoraSalarioPresenter() {
+	public CalculadoraSalarioPresenter(HistoricoSalarioDAOSQLite historicoSalarioDAOSQLite) {
 		this.view = new CalculadoraSalarioView();
 		this.calcularSalrioFuncionario = new CalculaSalarioFuncionario();
 		funcionarioDAO = new FuncionarioDAOSQLite();
-		historicioSalarioDAOSQLite = new HistoricoSalarioDAOSQLite();
+		historicioSalarioDAOSQLite = historicoSalarioDAOSQLite;
+		
 		initConstruirTabela();
 		initActrionListener();
 	}

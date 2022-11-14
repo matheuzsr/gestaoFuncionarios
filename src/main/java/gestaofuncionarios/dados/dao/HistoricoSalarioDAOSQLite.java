@@ -8,8 +8,9 @@ import java.util.List;
 import gestaofuncionarios.dados.ConexaoSQLite.SQLiteDB;
 import gestaofuncionarios.dto.HistoricoCalcularSalarioDTO;
 import gestaofuncionarios.model.HistoricoSalario;
+import gestaofuncionarios.observer.historicoSalario.ObservableHistoricoSalario;
 
-public class HistoricoSalarioDAOSQLite implements HistoricoSalarioDAO {
+public class HistoricoSalarioDAOSQLite extends ObservableHistoricoSalario implements HistoricoSalarioDAO {
 
     private final SQLiteDB BD = new SQLiteDB();
 
@@ -34,8 +35,10 @@ public class HistoricoSalarioDAOSQLite implements HistoricoSalarioDAO {
             Double valorSalario = BD.getRs().getDouble("valor_salario");
             Double valorSalarioBase = BD.getRs().getDouble("salario_base");
             String nome = BD.getRs().getString("nome");
-            LocalDate data = LocalDate.parse(BD.getRs().getString("data_inclusao"), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            HistoricoCalcularSalarioDTO dto = new HistoricoCalcularSalarioDTO(nome, data, valorBonus, valorSalarioBase, valorSalario);
+            LocalDate data = LocalDate.parse(BD.getRs().getString("data_inclusao"),
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            HistoricoCalcularSalarioDTO dto = new HistoricoCalcularSalarioDTO(nome, data, valorBonus, valorSalarioBase,
+                    valorSalario);
             listHistoricoBonus.add(dto);
         }
 
@@ -43,7 +46,7 @@ public class HistoricoSalarioDAOSQLite implements HistoricoSalarioDAO {
 
         return listHistoricoBonus;
     }
-    
+
     @Override
     public List<HistoricoCalcularSalarioDTO> getHistoricoSalarioByData(LocalDate date) throws Exception {
         ArrayList<HistoricoCalcularSalarioDTO> listHistoricoBonus = new ArrayList<>();
@@ -66,8 +69,10 @@ public class HistoricoSalarioDAOSQLite implements HistoricoSalarioDAO {
             Double valorSalario = BD.getRs().getDouble("valor_salario");
             Double valorSalarioBase = BD.getRs().getDouble("salario_base");
             String nome = BD.getRs().getString("nome");
-            LocalDate data = LocalDate.parse(BD.getRs().getString("data_inclusao"), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            HistoricoCalcularSalarioDTO dto = new HistoricoCalcularSalarioDTO(nome, data, valorBonus, valorSalarioBase, valorSalario);
+            LocalDate data = LocalDate.parse(BD.getRs().getString("data_inclusao"),
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            HistoricoCalcularSalarioDTO dto = new HistoricoCalcularSalarioDTO(nome, data, valorBonus, valorSalarioBase,
+                    valorSalario);
             listHistoricoBonus.add(dto);
         }
 
@@ -75,7 +80,7 @@ public class HistoricoSalarioDAOSQLite implements HistoricoSalarioDAO {
 
         return listHistoricoBonus;
     }
-    
+
     @Override
     public void add(HistoricoSalario historicoSalario) throws Exception {
         StringBuilder str = new StringBuilder();
@@ -95,5 +100,10 @@ public class HistoricoSalarioDAOSQLite implements HistoricoSalarioDAO {
 
     }
 
-
+    @Override
+    protected void notificarObservers(List<HistoricoSalario> historicoSalarioList) {
+        observerList.forEach(observer -> {
+            observer.update(historicoSalarioList);
+        });
+    }
 }
