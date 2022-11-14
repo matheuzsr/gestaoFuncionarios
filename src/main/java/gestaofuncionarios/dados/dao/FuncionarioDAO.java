@@ -9,7 +9,7 @@ public interface FuncionarioDAO {
 
     public boolean add(Funcionario funcionario) throws Exception;
 
-    public boolean remove(int idFuncionario) throws Exception;
+    public boolean delete(int idFuncionario) throws Exception;
 
     public List<Funcionario> getFuncionariosByName(String nome) throws Exception;
 

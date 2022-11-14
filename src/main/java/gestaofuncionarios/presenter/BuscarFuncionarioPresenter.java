@@ -61,7 +61,6 @@ public class BuscarFuncionarioPresenter implements Observer {
             FuncionarioPresenter presenter = new FuncionarioPresenter(this.dao,
                     funcionario);
             GestaoFuncionariosPresenter.showPanel(presenter.getView(), false, false);
-            view.dispose();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(view, ex.getMessage());
         }

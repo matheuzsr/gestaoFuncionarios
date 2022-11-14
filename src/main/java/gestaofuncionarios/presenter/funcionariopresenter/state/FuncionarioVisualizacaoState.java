@@ -73,7 +73,7 @@ public class FuncionarioVisualizacaoState extends FuncionarioPresenterState {
         int showConfirmDialog = JOptionPane.showConfirmDialog(presenter.getView(), "Exluir");
 
         if (showConfirmDialog == 0) {
-            presenter.getDao().remove(idFuncionario);
+            presenter.getDao().delete(idFuncionario);
             JOptionPane.showMessageDialog(null, this.funcionario.getNome() + " excluido");
             presenter.getView().dispose();
         }

@@ -31,8 +31,8 @@ public class EstatisticaPresenter implements Observer {
 		this.criarTabela();
 
 		List<EstatisticaSalario> calculoEstatisticoList = this.getCalculoEstatisticoList();
-
 		this.carregarTabela(calculoEstatisticoList);
+		
 		this.initListterns();
 	}
 
@@ -105,10 +105,20 @@ public class EstatisticaPresenter implements Observer {
 	}
 
 	private void limparTabelaFuncionarios() {
+    for (int i = this.tabela.getRowCount() - 1; i > -1; i--) {
+      this.tabela.removeRow(i);
+    }
+
 	}
 
 	@Override
 	public void update(List<Funcionario> funcionarioList) {
-		limparTabelaFuncionarios();
+    this.limparTabelaFuncionarios();
+    this.criarTabela();
+     
+    if(!funcionarioList.isEmpty()) {
+      List<EstatisticaSalario> calculoEstatisticoList = this.getCalculoEstatisticoList();
+      this.carregarTabela(calculoEstatisticoList);
+    }
 	}
 }

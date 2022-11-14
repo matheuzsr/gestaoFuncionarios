@@ -22,9 +22,12 @@ public final class FuncionarioDAOSQLite extends Observable implements Funcionari
 		List<Funcionario> funcionarios = new ArrayList<>();
 
 		try {
+			StringBuilder str = new StringBuilder();
+			str.append("SELECT * FROM funcionario");
+			str.append(" WHERE deleted_at is null");
 
 			BD.conectar();
-			BD.consultar("SELECT * FROM funcionario");
+			BD.consultar(str.toString());
 
 			while (BD.getRs().next()) {
 				int id = BD.getRs().getInt("id");
@@ -61,12 +64,28 @@ public final class FuncionarioDAOSQLite extends Observable implements Funcionari
 		if (add) {
 			BD.conectar();
 
-			String sql = "INSERT INTO funcionario VALUES (?,'" + funcionario.getNome() + "','"
+			String sql = "INSERT INTO funcionario"
+					+"(nome, data_nascimento, cargo, salario_base, salario, faltas, distancia_trabalho, data_admissao)"
+					+" VALUES (?,'" + funcionario.getNome() + "','"
 					+ funcionario.getDataNascimento() + "','" + funcionario.getCargo() + "','"
 					+ funcionario.getSalarioBase() + "','" + funcionario.getSalario() + "','" + funcionario.getFaltas()
-					+ "','" + funcionario.getDistanciaDoTrabalho() + "','" + funcionario.getDataAdmissao() + "')";
+					+ "','" + funcionario.getDistanciaDoTrabalho() + "','" + funcionario.getDataAdmissao() + "','" + "null" + "')";
 
-			BD.atualizar(sql);
+			StringBuilder str = new StringBuilder();
+
+			str.append("INSERT INTO");
+			str.append(" funcionario(nome, data_nascimento, cargo, salario_base, faltas, distancia_trabalho, data_admissao)");
+			str.append(" VALUES ('");
+			str.append(funcionario.getNome()).append("'").append(",").append("'");
+			str.append(funcionario.getDataNascimento()).append("'").append(",").append("'");
+			str.append(funcionario.getCargo()).append("'").append(",").append("'");
+			str.append(funcionario.getSalarioBase()).append("'").append(",").append("'");
+			str.append(funcionario.getFaltas()).append("'").append(",").append("'");
+			str.append(funcionario.getDistanciaDoTrabalho()).append("'").append(",").append("'");
+			str.append(funcionario.getDataAdmissao()).append("'");
+			str.append(")");
+
+			BD.atualizar(str.toString());
 			BD.close();
 		}
 
@@ -75,26 +94,15 @@ public final class FuncionarioDAOSQLite extends Observable implements Funcionari
 	}
 
 	@Override
-	public boolean remove(int idFuncionario) throws Exception {
-		List<Funcionario> temp = new ArrayList<>();
-
-		BD.conectar();
-
-		String sql = "DELETE FROM funcionario WHERE id='" + idFuncionario + "'";
-		BD.atualizar(sql);
-		BD.close();
-		funcionarios = temp;
-
-		this.notificarObservers(this.getAll());
-
-		return true;
-	}
-
-	@Override
 	public List<Funcionario> getFuncionariosByName(String nome) throws Exception {
 		List<Funcionario> listaFuncionarios = new ArrayList<>();
+		StringBuilder str = new StringBuilder();
+		str.append("SELECT * FROM funcionario WHERE nome LIKE '%");
+		str.append(nome).append("%'");
+		str.append(" and deleted_at is null");
+
 		BD.conectar();
-		BD.consultar("SELECT * FROM funcionario WHERE nome LIKE '%" + nome + "%'");
+		BD.consultar(str.toString());
 
 		while (BD.getRs().next()) {
 			int id = BD.getRs().getInt("id");
@@ -123,8 +131,14 @@ public final class FuncionarioDAOSQLite extends Observable implements Funcionari
 	@Override
 	public Funcionario getById(int searchId) throws Exception {
 		Funcionario f = null;
+
+		StringBuilder str = new StringBuilder();
+		str.append("SELECT * FROM funcionario WHERE id='");
+		str.append(searchId).append("'");
+		str.append(" and deleted_at is null");
+
 		BD.conectar();
-		BD.consultar("SELECT * FROM funcionario WHERE id='" + searchId + "'");
+		BD.consultar(str.toString());
 
 		while (BD.getRs().next()) {
 			int id = BD.getRs().getInt("id");
@@ -149,6 +163,51 @@ public final class FuncionarioDAOSQLite extends Observable implements Funcionari
 	}
 
 	@Override
+	public void update(Funcionario funcionario) throws Exception {
+		StringBuilder str = new StringBuilder();
+
+		BD.conectar();
+
+		str.append(" UPDATE funcionario ");
+		str.append(" set ");
+		str.append(" nome = ").append("'").append(funcionario.getNome()).append("'").append(",");
+		str.append(" data_nascimento  = ").append("'").append(funcionario.getDataNascimento()).append("'").append(",");
+		str.append(" cargo  = ").append("'").append(funcionario.getCargo()).append("'").append(",");
+		str.append(" salario_base = ").append(funcionario.getSalarioBase()).append(",");
+		str.append(" data_admissao  = ").append("'").append(funcionario.getDataAdmissao()).append("'").append(",");
+		str.append(" faltas  = ").append(funcionario.getFaltas()).append(",");
+		str.append("distancia_trabalho = ").append(funcionario.getDistanciaDoTrabalho());
+		str.append(" Where id =").append(funcionario.getIdFuncionario());
+
+		BD.atualizar(str.toString());
+
+		BD.close();
+
+		this.notificarObservers(this.getAll());
+	}
+
+	@Override
+	public boolean delete(int idFuncionario) throws Exception {
+
+		StringBuilder str = new StringBuilder();
+
+		BD.conectar();
+
+		str.append(" UPDATE funcionario ");
+		str.append(" set ");
+		str.append(" deleted_at = ").append("'").append(LocalDate.now()).append("'");
+		str.append(" Where id =").append(idFuncionario);
+
+		BD.atualizar(str.toString());
+
+		BD.close();
+
+		this.notificarObservers(this.getAll());
+
+		return true;
+	}
+
+	@Override
 	public boolean contains(Funcionario funcionario) {
 		return this.funcionarios.contains(funcionario);
 	}
@@ -162,26 +221,4 @@ public final class FuncionarioDAOSQLite extends Observable implements Funcionari
 
 	}
 
-	@Override
-	public void update(Funcionario funcionario) throws Exception {
-		StringBuilder str = new StringBuilder();
-
-		BD.conectar();
-		
-		str.append(" UPDATE funcionario ");
-		str.append(" set ");
-		str.append(" nome = ").append("'").append(funcionario.getNome()).append("'").append(",");
-		str.append(" data_nascimento  = ").append("'").append(funcionario.getDataNascimento()).append("'").append(",");
-		str.append(" cargo  = ").append("'").append(funcionario.getCargo()).append("'").append(",");
-		str.append(" salario_base = ").append(funcionario.getSalarioBase()).append(",");
-		str.append(" data_admissao  = ").append("'").append(funcionario.getDataAdmissao()).append("'").append(",");
-		str.append(" funcionario_mes = ").append(funcionario.isFuncionarioMes() ? 0 : 1).append(",");
-		str.append(" faltas  = ").append(funcionario.getFaltas()).append(",");
-		str.append("distancia_trabalho = ").append(funcionario.getDistanciaDoTrabalho());
-		str.append(" Where id =").append(funcionario.getIdFuncionario());
-		
-		BD.atualizar(str.toString());
-		
-		BD.close();
-	}
 }
