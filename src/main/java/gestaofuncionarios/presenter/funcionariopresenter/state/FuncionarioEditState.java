@@ -50,16 +50,18 @@ public class FuncionarioEditState extends FuncionarioPresenterState {
 		try {
 			this.funcionarioEdit = presenter.getDao().getById(funcionarioEdit.getIdFuncionario());
 		} catch (Exception ex) {
-			Logger.getLogger(FuncionarioEditState.class.getName()).log(Level.SEVERE, null, ex);
+			JOptionPane.showConfirmDialog(null, ex.getMessage());
 		}
 	}
 
 	private void initaActionListener() {
 		presenter.getView().getBtnSalvar().addActionListener((ActionEvent ae) -> {
 			try {
-				salvar();
+				if(ValidarFuncionario()) {
+					salvar();
+				}
 			} catch (Exception ex) {
-				JOptionPane.showMessageDialog(presenter.getView(), ex.getMessage());
+				JOptionPane.showConfirmDialog(null, ex.getMessage());
 			}
 		});
 	}

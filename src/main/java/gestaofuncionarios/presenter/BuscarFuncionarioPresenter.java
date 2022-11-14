@@ -120,7 +120,6 @@ public class BuscarFuncionarioPresenter implements Observer {
 
     }
 
-    // TODO: colocar eles no change do select row table
     private void handleEnableButtons() {
         view.getBtnVisualizar().setEnabled(true);
         view.getBtnHistoryBonus().setEnabled(true);
@@ -171,7 +170,7 @@ public class BuscarFuncionarioPresenter implements Observer {
             try {
                 verBonus();
             } catch (Exception ex) {
-                Logger.getLogger(BuscarFuncionarioPresenter.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, ex.getStackTrace());
             }
         });
 

@@ -40,7 +40,7 @@ public class CalculoEstatisticoSalario extends AbstractCalculoEstatisticoSalario
             coeficienteVariacao.addAll(this.dao.getAllMeses("variance"));
 
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getStackTrace());
         }
 
         for (int i = 0; i < media.size(); i++) {

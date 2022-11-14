@@ -96,8 +96,6 @@ public class GestaoFuncionariosPresenter implements Observer {
     }
 
   public static void showPanel(JInternalFrame frame, Boolean maximize, Boolean closable) throws Exception {
-
-        // TODO: Voltar e Refatorar
         if (closable) {
             GestaoFuncionariosView.getDesktop().add(frame);
         } else {

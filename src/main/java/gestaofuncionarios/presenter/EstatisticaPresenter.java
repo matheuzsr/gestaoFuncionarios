@@ -20,97 +20,95 @@ import javax.swing.table.DefaultTableModel;
 
 public class EstatisticaPresenter implements Observer {
 
-  private EstatisticaView view;
-  private DefaultTableModel tabela;
-  private AbstractCalculoEstatisticoSalario calculoEstatisticoSalario;
+	private EstatisticaView view;
+	private DefaultTableModel tabela;
+	private AbstractCalculoEstatisticoSalario calculoEstatisticoSalario;
 
-  public EstatisticaPresenter(AbstractCalculoEstatisticoSalario calculoEstatisticoSalario) {
-    this.calculoEstatisticoSalario = calculoEstatisticoSalario;
-    this.view = new EstatisticaView();
+	public EstatisticaPresenter(AbstractCalculoEstatisticoSalario calculoEstatisticoSalario) {
+		this.calculoEstatisticoSalario = calculoEstatisticoSalario;
+		this.view = new EstatisticaView();
 
-    this.criarTabela();
+		this.criarTabela();
 
-    List<EstatisticaSalario> calculoEstatisticoList = this.getCalculoEstatisticoList();
+		List<EstatisticaSalario> calculoEstatisticoList = this.getCalculoEstatisticoList();
 
-    this.carregarTabela(calculoEstatisticoList);
-    this.initListterns();
-  }
+		this.carregarTabela(calculoEstatisticoList);
+		this.initListterns();
+	}
 
-  private void initListterns() {
-    view.getBtnFechar().addActionListener((ActionEvent e) -> {
-      view.dispose();
-    });
-  }
+	private void initListterns() {
+		view.getBtnFechar().addActionListener((ActionEvent e) -> {
+			view.dispose();
+		});
+	}
 
-  public EstatisticaView getView() {
-    return this.view;
-  }
+	public EstatisticaView getView() {
+		return this.view;
+	}
 
-  private void criarTabela() {
-    tabela = new DefaultTableModel(
-        new Object[][] {},
-        new String[] { "Resultado" }) {
-      @Override
-      public boolean isCellEditable(int row, int col) {
-        return false;
-      }
-    };
+	private void criarTabela() {
+		tabela = new DefaultTableModel(new Object[][] {}, new String[] { "Resultado" }) {
+			@Override
+			public boolean isCellEditable(int row, int col) {
+				return false;
+			}
+		};
 
-    tabela.addRow(new String[] { "Somatório" });
-    tabela.addRow(new String[] { "Média" });
-    tabela.addRow(new String[] { "Desvio padrão" });
-    tabela.addRow(new String[] { "Maior salário" });
-    tabela.addRow(new String[] { "Menor salário" });
-    tabela.addRow(new String[] { "Qtd salários no mês" });
-    tabela.addRow(new String[] { "Coef. variação" });
-  }
+		tabela.addRow(new String[] { "Somatório" });
+		tabela.addRow(new String[] { "Média" });
+		tabela.addRow(new String[] { "Desvio padrão" });
+		tabela.addRow(new String[] { "Maior salário" });
+		tabela.addRow(new String[] { "Menor salário" });
+		tabela.addRow(new String[] { "Qtd salários no mês" });
+		tabela.addRow(new String[] { "Coef. variação" });
+	}
 
-  private void carregarTabela(List<EstatisticaSalario> estatisticaList) {
+	private void carregarTabela(List<EstatisticaSalario> estatisticaList) {
 
-    for (int i = 0; i < estatisticaList.size(); i++) {
-      this.setMesTabela(i + 1, estatisticaList.get(i));
+		for (int i = 0; i < estatisticaList.size(); i++) {
+			this.setMesTabela(i + 1, estatisticaList.get(i));
 
-    }
+		}
 
-    view.getTblAtributos().setModel(tabela);
-    view.getTblAtributos().getColumnModel().getColumn(0).setMinWidth(140);
+		view.getTblAtributos().setModel(tabela);
+		view.getTblAtributos().getColumnModel().getColumn(0).setMinWidth(140);
 
-    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-    centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-    view.getTblAtributos().getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-  }
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+		view.getTblAtributos().getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+	}
 
-  private void setMesTabela(int position, EstatisticaSalario estatistica) {
-    int mes = estatistica.getMes();
-    int ano = estatistica.getAno();
+	private void setMesTabela(int position, EstatisticaSalario estatistica) {
+		int mes = estatistica.getMes();
+		int ano = estatistica.getAno();
 
-    tabela.addColumn(Integer.toString(mes).concat("/").concat(Integer.toString(ano)));
+		tabela.addColumn(Integer.toString(mes).concat("/").concat(Integer.toString(ano)));
 
-    tabela.setValueAt(NumberUtils.formatDecimalLocale(estatistica.getSomatorio()), 0, position);
-    tabela.setValueAt(NumberUtils.formatDecimalLocale(estatistica.getMedia()), 1, position);
-    tabela.setValueAt(NumberUtils.formatDecimalLocale(estatistica.getDesvioPadrao()), 2, position);
-    tabela.setValueAt(NumberUtils.formatDecimalLocale(estatistica.getMaiorSalario()), 3, position);
-    tabela.setValueAt(NumberUtils.formatDecimalLocale(estatistica.getMenorSalario()), 4, position);
-    tabela.setValueAt(NumberUtils.formatDecimalLocale(estatistica.getQtdSalariosMes()), 5, position);
-    tabela.setValueAt(NumberUtils.formatDecimalLocale(estatistica.getCoeficienteVariacao()), 6, position);
-  }
+		tabela.setValueAt(NumberUtils.formatDecimalLocale(estatistica.getSomatorio()), 0, position);
+		tabela.setValueAt(NumberUtils.formatDecimalLocale(estatistica.getMedia()), 1, position);
+		tabela.setValueAt(NumberUtils.formatDecimalLocale(estatistica.getDesvioPadrao()), 2, position);
+		tabela.setValueAt(NumberUtils.formatDecimalLocale(estatistica.getMaiorSalario()), 3, position);
+		tabela.setValueAt(NumberUtils.formatDecimalLocale(estatistica.getMenorSalario()), 4, position);
+		tabela.setValueAt(NumberUtils.formatDecimalLocale(estatistica.getQtdSalariosMes()), 5, position);
+		tabela.setValueAt(NumberUtils.formatDecimalLocale(estatistica.getCoeficienteVariacao()), 6, position);
+	}
 
-  private List<EstatisticaSalario> getCalculoEstatisticoList() {
-    List<EstatisticaSalario> estatisticas = new ArrayList<>();
-    try {
-      estatisticas.addAll(this.calculoEstatisticoSalario.calcular());
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+	private List<EstatisticaSalario> getCalculoEstatisticoList() {
+		List<EstatisticaSalario> estatisticas = new ArrayList<>();
+		try {
+			estatisticas.addAll(this.calculoEstatisticoSalario.calcular());
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getStackTrace());
+		}
 
-    return estatisticas;
-  }
+		return estatisticas;
+	}
 
-  private void limparTabelaFuncionarios() {
-  }
+	private void limparTabelaFuncionarios() {
+	}
 
-  @Override
-  public void update(List<Funcionario> funcionarioList) {
-    limparTabelaFuncionarios();
-  }
+	@Override
+	public void update(List<Funcionario> funcionarioList) {
+		limparTabelaFuncionarios();
+	}
 }
