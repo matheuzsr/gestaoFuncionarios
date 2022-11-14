@@ -37,8 +37,8 @@ public class EstatisticaView extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         btnFechar = new javax.swing.JButton();
 
+        this.setTitle("Estatísticas salário");
         jScrollPane1.setViewportView(tblAtributos);
-
         jLabel1.setText("Abaixo estão dispostos as estatísticas do cálculos dos salários resultantes");
 
         btnFechar.setText("Fechar");

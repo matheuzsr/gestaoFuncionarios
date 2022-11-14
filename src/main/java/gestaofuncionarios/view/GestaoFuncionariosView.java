@@ -6,6 +6,7 @@
 package gestaofuncionarios.view;
 
 import javax.swing.JDesktopPane;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 
@@ -20,6 +21,7 @@ public class GestaoFuncionariosView extends javax.swing.JFrame {
 
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     /**
