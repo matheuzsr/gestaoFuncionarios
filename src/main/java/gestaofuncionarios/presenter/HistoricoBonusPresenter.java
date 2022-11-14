@@ -66,7 +66,7 @@ public class HistoricoBonusPresenter {
 
 	private void carregarTabela(Collection c) {
 		tabelaBonus.setNumRows(0);
-		DecimalFormat df = new DecimalFormat("#.##");
+		DecimalFormat df = new DecimalFormat("0.00");
 
 		Iterator<?> it = c.iterator();
 		while (it.hasNext()) {
