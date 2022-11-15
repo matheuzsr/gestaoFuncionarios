@@ -4,9 +4,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import gestaofuncionarios.business.calculaBonusFuncionario.handlers.AssiduidadeBonus;
-import gestaofuncionarios.business.calculaBonusFuncionario.handlers.TempoServicoHandler;
+import gestaofuncionarios.business.calculaBonusFuncionario.handlers.TipoBonusAssiduidadeHandler;
+import gestaofuncionarios.business.calculaBonusFuncionario.handlers.TipoBonusFuncionarioMesHandler;
 import gestaofuncionarios.business.calculaBonusFuncionario.handlers.TipoBonusHandler;
+import gestaofuncionarios.business.calculaBonusFuncionario.handlers.TipoBonusTempoServicoHandler;
 import gestaofuncionarios.dados.dao.BonusDAOSQLite;
 import gestaofuncionarios.dados.dao.HistoricoBonusDAOSQLite;
 import gestaofuncionarios.dto.TipoBonusRecebidoDTO;
@@ -48,12 +49,14 @@ public class CalculaBonusProcessor {
     }
     
    private TipoBonusHandler initFilaHandle() throws Exception {
-	   AssiduidadeBonus assiduidadeBonus  =new AssiduidadeBonus();
-       TempoServicoHandler tempoServicoHandler = new TempoServicoHandler();
+	   TipoBonusAssiduidadeHandler assiduidadeBonus  =new TipoBonusAssiduidadeHandler();
+       TipoBonusTempoServicoHandler tempoServicoHandler = new TipoBonusTempoServicoHandler();
+       TipoBonusFuncionarioMesHandler funcionarioMes = new TipoBonusFuncionarioMesHandler();
        
-       assiduidadeBonus.setNext(tempoServicoHandler);
-    
-       return assiduidadeBonus; 
+       funcionarioMes.setNext(assiduidadeBonus);
+
+       
+       return funcionarioMes; 
    	}
     
     
