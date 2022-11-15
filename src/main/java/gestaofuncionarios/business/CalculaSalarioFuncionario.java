@@ -22,8 +22,10 @@ public class CalculaSalarioFuncionario {
    
     public void calcularSalario(List<Funcionario> listFuncionario, LocalDate date, Boolean isAtualizar) throws Exception{
         for (Funcionario funcionario : listFuncionario) {
-          funcionario = this.calculoBonusProcessor.run(funcionario, date, isAtualizar);
-          insertHistoricoSalario(funcionario.getIdFuncionario(),funcionario.getTotalBonus(),funcionario.getSalario(),date);
+           if(!funcionario.getDataAdmissao().isAfter(date) ) {
+               funcionario = this.calculoBonusProcessor.run(funcionario, date);
+               insertHistoricoSalario(funcionario.getIdFuncionario(),funcionario.getTotalBonus(),funcionario.getSalario(),date);
+           }
         }
     }
     public void insertHistoricoSalario(int idFuncionario, Double ValorTotalBonus, Double ValorTotalSalario, LocalDate date) throws Exception {
