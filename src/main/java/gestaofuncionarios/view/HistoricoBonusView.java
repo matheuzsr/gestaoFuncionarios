@@ -73,7 +73,7 @@ public class HistoricoBonusView extends javax.swing.JInternalFrame {
         btnPesquisar = new javax.swing.JButton();
         btnLimpar = new javax.swing.JButton();
 
-        lblNome.setText("Tipo de Bonûs");
+        lblNome.setText("Tipo de Bonus");
 
         btnFechar.setText("Fechar");
 
