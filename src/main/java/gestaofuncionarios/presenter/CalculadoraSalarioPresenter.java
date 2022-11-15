@@ -51,7 +51,7 @@ public class CalculadoraSalarioPresenter {
 				JOptionPane.showMessageDialog(null, ex.getMessage());
 			}
 		}else {
-	           JOptionPane.showMessageDialog(view, "Por favor informe uma data para calcular o salario");
+			JOptionPane.showConfirmDialog(view, "Por favor escolha uma data para realizar o calculo");
 		}
 	}
 

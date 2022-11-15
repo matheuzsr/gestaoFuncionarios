@@ -104,7 +104,7 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="lblNome">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Tipo de Bon&#xfb;s"/>
+            <Property name="text" type="java.lang.String" value="Tipo de Bonus"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtNome">
