@@ -16,49 +16,59 @@ import gestaofuncionarios.model.HistoricoBonus;
 
 public class CalculaBonusProcessor {
 
-    private HistoricoBonusDAOSQLite historicoBonusDAO;
-    private BonusDAOSQLite bonusDAO;
+	private HistoricoBonusDAOSQLite historicoBonusDAO;
+	private BonusDAOSQLite bonusDAO;
 
-    public CalculaBonusProcessor(HistoricoBonusDAOSQLite historicoBonusDAO, BonusDAOSQLite bonusDAO) {
-        this.historicoBonusDAO = historicoBonusDAO;
-        this.bonusDAO = bonusDAO;
-    }
+	public CalculaBonusProcessor(HistoricoBonusDAOSQLite historicoBonusDAO, BonusDAOSQLite bonusDAO) {
+		this.historicoBonusDAO = historicoBonusDAO;
+		this.bonusDAO = bonusDAO;
+	}
 
-    public Funcionario run(Funcionario funcionario, LocalDate localDate ) throws Exception {
-        Double valorTotalBonus = 0.0;
-        List<TipoBonusRecebidoDTO> tipoBonusRecebidos = new ArrayList<>();
-        TipoBonusHandler tipoBOnus = initFilaHandle();
-        
-        tipoBonusRecebidos = tipoBOnus.handleRequest(valorTotalBonus, funcionario,tipoBonusRecebidos);
-        for(TipoBonusRecebidoDTO tipoBonus : tipoBonusRecebidos ) {
-            insertHistoricoBonus(funcionario.getIdFuncionario(), tipoBonus.getTipoBonus(), localDate, tipoBonus.getValor());	
-            valorTotalBonus += tipoBonus.getValor();
-        }
-        
-        funcionario.setSalario(funcionario.getSalarioBase() + valorTotalBonus);
-        return funcionario;
-    }
+	public Funcionario run(Funcionario funcionario, LocalDate localDate) throws Exception {
+		Double valorTotalBonus = 0.0;
+		List<TipoBonusRecebidoDTO> tipoBonusRecebidos = new ArrayList<>();
+		TipoBonusHandler tipoBOnus = initFilaHandle();
 
-    private void insertHistoricoBonus(int idFuncionario, String tipoBonus, LocalDate localDate, Double valorBonus)
-            throws Exception {
-        historicoBonusDAO.add(new HistoricoBonus(idFuncionario, getIdBonusByTipo(tipoBonus), localDate, valorBonus));
-    }
+		tipoBonusRecebidos = tipoBOnus.handleRequest(valorTotalBonus, funcionario, tipoBonusRecebidos);
+		for (TipoBonusRecebidoDTO tipoBonus : tipoBonusRecebidos) {
+			HistoricoBonus result = historicoBonusDAO.getHistoricoBonusByData(localDate,getIdBonusByTipo(tipoBonus.getTipoBonus()), funcionario.getIdFuncionario());
+			if (result != null) {
+				result.setValorBonusRecebido(tipoBonus.getValor());
+				updateHistoricoBonus(result);
+			} else {
+				insertHistoricoBonus(funcionario.getIdFuncionario(), tipoBonus.getTipoBonus(), localDate,
+						tipoBonus.getValor());
+			}
 
-    private int getIdBonusByTipo(String tipoBouns) throws Exception {
-        return bonusDAO.getIdByNome(tipoBouns);
-    }
-    
-   private TipoBonusHandler initFilaHandle() throws Exception {
-	   TipoBonusAssiduidadeHandler assiduidadeBonus  =new TipoBonusAssiduidadeHandler();
-       TipoBonusTempoServicoHandler tempoServicoHandler = new TipoBonusTempoServicoHandler();
-       TipoBonusFuncionarioMesHandler funcionarioMes = new TipoBonusFuncionarioMesHandler();
-       
-       assiduidadeBonus.setNext(tempoServicoHandler);
-       tempoServicoHandler.setNext(funcionarioMes);
-       
-       
-       return assiduidadeBonus; 
-   	}
-    
-    
+			valorTotalBonus += tipoBonus.getValor();
+		}
+
+		funcionario.setSalario(funcionario.getSalarioBase() + valorTotalBonus);
+		return funcionario;
+	}
+
+	private void insertHistoricoBonus(int idFuncionario, String tipoBonus, LocalDate localDate, Double valorBonus)
+			throws Exception {
+		historicoBonusDAO.add(new HistoricoBonus(idFuncionario, getIdBonusByTipo(tipoBonus), localDate, valorBonus));
+	}
+
+	private void updateHistoricoBonus(HistoricoBonus historicoBonus) throws Exception {
+		historicoBonusDAO.update(historicoBonus);
+	}
+
+	private int getIdBonusByTipo(String tipoBouns) throws Exception {
+		return bonusDAO.getIdByNome(tipoBouns);
+	}
+
+	private TipoBonusHandler initFilaHandle() throws Exception {
+		TipoBonusAssiduidadeHandler assiduidadeBonus = new TipoBonusAssiduidadeHandler();
+		TipoBonusTempoServicoHandler tempoServicoHandler = new TipoBonusTempoServicoHandler();
+		TipoBonusFuncionarioMesHandler funcionarioMes = new TipoBonusFuncionarioMesHandler();
+
+		assiduidadeBonus.setNext(tempoServicoHandler);
+		tempoServicoHandler.setNext(funcionarioMes);
+
+		return assiduidadeBonus;
+	}
+
 }

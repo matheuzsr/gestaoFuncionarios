@@ -77,7 +77,7 @@ public abstract class FuncionarioPresenterState {
 			f.setDataAdmissao(dataAdmissao);
 		}
 
-		f.setFuncionarioMes(presenter.getView().getcBoxFuncionarioMes().isEnabled());
+		f.setFuncionarioMes(presenter.getView().getcBoxFuncionarioMes().isSelected());
 
 		return f;
 	}

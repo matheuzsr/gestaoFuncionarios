@@ -11,7 +11,7 @@ public class TipoBonusFuncionarioMesHandler extends TipoBonusHandler {
 
     @Override
     public Double calcular(Funcionario funcionario) throws Exception {
-       return funcionario.isFuncionarioMes() ? funcionario.getSalario() * 1.5 : 0.0;
+       return ( funcionario.isFuncionarioMes() ?  funcionario.getSalarioBase() * 1.5 :  0.0 ) ;
     }
 
 }
