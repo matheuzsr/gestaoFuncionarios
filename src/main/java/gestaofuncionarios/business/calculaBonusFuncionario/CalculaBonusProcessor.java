@@ -28,7 +28,9 @@ public class CalculaBonusProcessor {
         Double valorTotalBonus = 0.0;
         List<TipoBonusHandler> handlersList = new ArrayList<>(Arrays.asList(
                 new AssiduidadeBonus(),
-                new TempoServicoHandler()));
+                new TempoServicoHandler(),
+                new FuncionarioMes())
+                );
 
         for (TipoBonusHandler handler : handlersList) {
             Double valorBonus = handler.calcular(funcionario);

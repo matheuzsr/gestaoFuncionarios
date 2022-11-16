@@ -77,45 +77,49 @@ public abstract class FuncionarioPresenterState {
 			f.setDataAdmissao(dataAdmissao);
 		}
 
+		f.setFuncionarioMes(presenter.getView().getcBoxFuncionarioMes().isEnabled());
+
 		return f;
 	}
 
-	public boolean ValidarFuncionario() {
+	public boolean validarFuncionario() {
 		if (presenter.getView().getTxtNome().getText().isEmpty()) {
-			JOptionPane.showConfirmDialog(presenter.getView(), "Nome não pode ser vazio");
-			return false;
-		};
-		
-		if (presenter.getView().getTxtCargo().getText().isEmpty()) {
-			JOptionPane.showConfirmDialog(presenter.getView(), "Cargo não pode ser vazio");
-			return false;
-		};
-		
-		if (presenter.getView().getTxtSalarioBase().getText().isEmpty()) {
-			JOptionPane.showConfirmDialog(presenter.getView(), "Salario Base não pode salario");
-			return false;
-		}else if( Double.parseDouble(presenter.getView().getTxtSalarioBase().getText().replace(",", ".")) < 0){
-			JOptionPane.showConfirmDialog(presenter.getView(), "Salario Base não pode ter um valor negativo");
+			JOptionPane.showMessageDialog(presenter.getView(), "Nome não pode ser vazio");
 			return false;
 		}
-		
+		;
+
+		if (presenter.getView().getTxtCargo().getText().isEmpty()) {
+			JOptionPane.showMessageDialog(presenter.getView(), "Cargo não pode ser vazio");
+			return false;
+		}
+		;
+
+		if (presenter.getView().getTxtSalarioBase().getText().isEmpty()) {
+			JOptionPane.showMessageDialog(presenter.getView(), "Salario Base não pode salario");
+			return false;
+		} else if (Double.parseDouble(presenter.getView().getTxtSalarioBase().getText().replace(",", ".")) < 0) {
+			JOptionPane.showMessageDialog(presenter.getView(), "Salario Base não pode ter um valor negativo");
+			return false;
+		}
+
 		if (presenter.getView().getTxtIdade().getText().isEmpty()) {
-			JOptionPane.showConfirmDialog(presenter.getView(), "idade não pode ser vazio");
+			JOptionPane.showMessageDialog(presenter.getView(), "Idade não pode ser vazio");
 			return false;
 		}
 
 		if (presenter.getView().getTxtFaltas().getText().isEmpty()) {
-			JOptionPane.showConfirmDialog(presenter.getView(), "Numero de Faltas não pode ser vazio");
+			JOptionPane.showMessageDialog(presenter.getView(), "Numero de Faltas não pode ser vazio");
 			return false;
 		}
 
 		if (presenter.getView().getTxtDistanciaTrabalho().getText().isEmpty()) {
-			JOptionPane.showConfirmDialog(presenter.getView(), "Distancia do Trabalho não pode ser vazio");
+			JOptionPane.showMessageDialog(presenter.getView(), "Distancia do Trabalho não pode ser vazio");
 			return false;
 		}
 
 		if (presenter.getView().getSeletorDataAdmissao().getDate() == null) {
-			JOptionPane.showConfirmDialog(presenter.getView(), "Data de admissão não pode ser vazio");
+			JOptionPane.showMessageDialog(presenter.getView(), "Data de admissão não pode ser vazio");
 			return false;
 		}
 

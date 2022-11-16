@@ -96,6 +96,7 @@
                                                   <Component id="seletorDataAdmissao" pref="172" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
+                                          <Component id="cBoxFuncionarioMes" alignment="1" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -114,7 +115,7 @@
                       <Component id="txtNome" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblNome" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="16" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblCargo" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtCargo" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -135,9 +136,11 @@
                           <Component id="txtSalarioBase" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel2" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="seletorDataAdmissao" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="seletorDataAdmissao" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="cBoxFuncionarioMes" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnFechar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnExcluir" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -218,6 +221,15 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Salvar"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="cBoxFuncionarioMes">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Funcionario do m&#xea;s"/>
+            <Property name="horizontalTextPosition" type="int" value="2"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cBoxFuncionarioMesActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
