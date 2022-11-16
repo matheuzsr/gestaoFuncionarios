@@ -33,7 +33,7 @@ public class CalculadoraSalarioPresenter {
 		funcionarioDAO = new FuncionarioDAOSQLite();
 		historicioSalarioDAOSQLite = new HistoricoSalarioDAOSQLite();
 		initConstruirTabela();
-		initActrionListener();
+		initActionListeners();
 	}
 
 	public CalculadoraSalarioView getView() {
@@ -49,7 +49,7 @@ public class CalculadoraSalarioPresenter {
 			} catch (Exception ex) {
 				JOptionPane.showMessageDialog(null, ex.getMessage());
 			}
-		}else {
+		} else {
 			JOptionPane.showConfirmDialog(view, "Por favor escolha uma data para realizar o calculo");
 		}
 	}
@@ -73,7 +73,7 @@ public class CalculadoraSalarioPresenter {
 		}
 	}
 
-	public void initActrionListener() {
+	public void initActionListeners() {
 		this.view.getBtnFechar().addActionListener((ActionEvent ae) -> {
 			view.dispose();
 		});
@@ -89,6 +89,8 @@ public class CalculadoraSalarioPresenter {
 		this.view.getBtnListarTodos().addActionListener((ActionEvent ae) -> {
 			listarTodos();
 		});
+		this.view.getSeletorDataCalculo().setDate(DateUtils.asDate(LocalDate.now()));
+
 	}
 
 	private void initConstruirTabela() {

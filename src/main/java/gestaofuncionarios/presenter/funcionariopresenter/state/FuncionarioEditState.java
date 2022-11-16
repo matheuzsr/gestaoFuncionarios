@@ -20,7 +20,6 @@ public class FuncionarioEditState extends FuncionarioPresenterState {
 		initaActionListener();
 		getByIdFuncionario();
 		configurarTela();
-
 	}
 
 	private void configurarTela() {
@@ -36,6 +35,7 @@ public class FuncionarioEditState extends FuncionarioPresenterState {
 		presenter.getView().getTxtSalarioBase().setEditable(true);
 		presenter.getView().getTxtDistanciaTrabalho().setEditable(true);
 		presenter.getView().getSeletorDataAdmissao().setEnabled(true);
+		presenter.getView().getcBoxFuncionarioMes().setEnabled(true);
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class FuncionarioEditState extends FuncionarioPresenterState {
 	private void initaActionListener() {
 		presenter.getView().getBtnSalvar().addActionListener((ActionEvent ae) -> {
 			try {
-				if(ValidarFuncionario()) {
+				if (validarFuncionario()) {
 					salvar();
 				}
 			} catch (Exception ex) {
