@@ -53,10 +53,11 @@ public class CalculaBonusProcessor {
        TipoBonusTempoServicoHandler tempoServicoHandler = new TipoBonusTempoServicoHandler();
        TipoBonusFuncionarioMesHandler funcionarioMes = new TipoBonusFuncionarioMesHandler();
        
-       funcionarioMes.setNext(assiduidadeBonus);
-
+       assiduidadeBonus.setNext(tempoServicoHandler);
+       tempoServicoHandler.setNext(funcionarioMes);
        
-       return funcionarioMes; 
+       
+       return assiduidadeBonus; 
    	}
     
     
