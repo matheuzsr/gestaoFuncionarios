@@ -31,6 +31,8 @@ public class FuncionarioVisualizacaoState extends FuncionarioPresenterState {
         presenter.getView().getSeletorDataAdmissao().setDate(DateUtils.asDate(this.funcionario.getDataAdmissao()));
         presenter.getView().getTxtDistanciaTrabalho()
                 .setText(String.valueOf(this.funcionario.getDistanciaDoTrabalho()));
+        presenter.getView().getcBoxFuncionarioMes()
+                .setSelected(this.funcionario.isFuncionarioMes());
 
         presenter.getView().getTxtCargo().setEditable(false);
         presenter.getView().getTxtNome().setEditable(false);
@@ -40,6 +42,7 @@ public class FuncionarioVisualizacaoState extends FuncionarioPresenterState {
         presenter.getView().getTxtSalarioBase().setEditable(false);
         presenter.getView().getTxtDistanciaTrabalho().setEditable(false);
         presenter.getView().getSeletorDataAdmissao().setEnabled(false);
+        presenter.getView().getcBoxFuncionarioMes().setEnabled(false);
 
         presenter.getView().getBtnSalvar().setVisible(false);
     }

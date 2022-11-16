@@ -37,7 +37,7 @@ public class HistoricoBonusPresenter {
 			getHistoricoById(idFuncionario);
 		}
 
-		initActrionListener();
+		initActionListeners();
 	}
 
 	private void initConstruirTabela() {
@@ -93,7 +93,7 @@ public class HistoricoBonusPresenter {
 		return view;
 	}
 
-	private void initActrionListener() {
+	private void initActionListeners() {
 		view.getBtnPesquisar().addActionListener((ActionEvent ae) -> {
 			try {
 				getSearchHistorico();

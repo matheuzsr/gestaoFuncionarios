@@ -28,8 +28,8 @@ public class FuncionariosAddState extends FuncionarioPresenterState {
 		presenter.getView().getBtnSalvar().setVisible(true);
 		presenter.getView().getBtnSalvar().addActionListener((ActionEvent ae) -> {
 			try {
-				
-				if (ValidarFuncionario()) {
+
+				if (validarFuncionario()) {
 					salvar();
 				}
 

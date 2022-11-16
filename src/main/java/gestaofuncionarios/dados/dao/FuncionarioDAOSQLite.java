@@ -7,8 +7,6 @@ import gestaofuncionarios.observer.Observable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -47,6 +45,8 @@ public final class FuncionarioDAOSQLite extends Observable implements Funcionari
 							DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
 				}
+				f.setFuncionarioMes(BD.getRs().getInt("funcionario_mes") > 0);
+
 				funcionarios.add(f);
 			}
 
@@ -65,16 +65,18 @@ public final class FuncionarioDAOSQLite extends Observable implements Funcionari
 			BD.conectar();
 
 			String sql = "INSERT INTO funcionario"
-					+"(nome, data_nascimento, cargo, salario_base, salario, faltas, distancia_trabalho, data_admissao)"
-					+" VALUES (?,'" + funcionario.getNome() + "','"
+					+ "(nome, data_nascimento, cargo, salario_base, salario, faltas, distancia_trabalho, data_admissao)"
+					+ " VALUES (?,'" + funcionario.getNome() + "','"
 					+ funcionario.getDataNascimento() + "','" + funcionario.getCargo() + "','"
 					+ funcionario.getSalarioBase() + "','" + funcionario.getSalario() + "','" + funcionario.getFaltas()
-					+ "','" + funcionario.getDistanciaDoTrabalho() + "','" + funcionario.getDataAdmissao() + "','" + "null" + "')";
+					+ "','" + funcionario.getDistanciaDoTrabalho() + "','" + funcionario.getDataAdmissao() + "','" + "null"
+					+ "')";
 
 			StringBuilder str = new StringBuilder();
 
 			str.append("INSERT INTO");
-			str.append(" funcionario(nome, data_nascimento, cargo, salario_base, faltas, distancia_trabalho, data_admissao)");
+			str.append(
+					" funcionario(nome, data_nascimento, cargo, salario_base, faltas, distancia_trabalho, data_admissao, funcionario_mes)");
 			str.append(" VALUES ('");
 			str.append(funcionario.getNome()).append("'").append(",").append("'");
 			str.append(funcionario.getDataNascimento()).append("'").append(",").append("'");
@@ -82,7 +84,8 @@ public final class FuncionarioDAOSQLite extends Observable implements Funcionari
 			str.append(funcionario.getSalarioBase()).append("'").append(",").append("'");
 			str.append(funcionario.getFaltas()).append("'").append(",").append("'");
 			str.append(funcionario.getDistanciaDoTrabalho()).append("'").append(",").append("'");
-			str.append(funcionario.getDataAdmissao()).append("'");
+			str.append(funcionario.getDataAdmissao()).append("'").append(",").append("'");
+			str.append(funcionario.isFuncionarioMes() ? 1 : 0).append("'");
 			str.append(")");
 
 			BD.atualizar(str.toString());
@@ -90,6 +93,7 @@ public final class FuncionarioDAOSQLite extends Observable implements Funcionari
 		}
 
 		this.notificarObservers(this.getAll());
+
 		return add;
 	}
 
@@ -121,10 +125,12 @@ public final class FuncionarioDAOSQLite extends Observable implements Funcionari
 			f.setFaltas(BD.getRs().getInt("faltas"));
 			f.setDistanciaDoTrabalho(BD.getRs().getInt("distancia_trabalho"));
 			f.setDataAdmissao(dataAdmissao);
+			f.setFuncionarioMes(BD.getRs().getBoolean("funcionario_mes"));
 
 			listaFuncionarios.add(f);
 		}
 		BD.close();
+
 		return listaFuncionarios;
 	}
 
@@ -157,8 +163,11 @@ public final class FuncionarioDAOSQLite extends Observable implements Funcionari
 			f.setFaltas(BD.getRs().getInt("faltas"));
 			f.setDistanciaDoTrabalho(BD.getRs().getInt("distancia_trabalho"));
 			f.setDataAdmissao(dataAdmissao);
+			f.setFuncionarioMes((BD.getRs().getInt("funcionario_mes") > 0));
 		}
+
 		BD.close();
+
 		return f;
 	}
 
@@ -176,11 +185,11 @@ public final class FuncionarioDAOSQLite extends Observable implements Funcionari
 		str.append(" salario_base = ").append(funcionario.getSalarioBase()).append(",");
 		str.append(" data_admissao  = ").append("'").append(funcionario.getDataAdmissao()).append("'").append(",");
 		str.append(" faltas  = ").append(funcionario.getFaltas()).append(",");
-		str.append("distancia_trabalho = ").append(funcionario.getDistanciaDoTrabalho());
+		str.append("distancia_trabalho = ").append(funcionario.getDistanciaDoTrabalho()).append(",");
+		str.append("funcionario_mes = ").append(funcionario.isFuncionarioMes() ? 1 : 0);
 		str.append(" Where id =").append(funcionario.getIdFuncionario());
 
 		BD.atualizar(str.toString());
-
 		BD.close();
 
 		this.notificarObservers(this.getAll());
@@ -199,9 +208,7 @@ public final class FuncionarioDAOSQLite extends Observable implements Funcionari
 		str.append(" Where id =").append(idFuncionario);
 
 		BD.atualizar(str.toString());
-
 		BD.close();
-
 		this.notificarObservers(this.getAll());
 
 		return true;

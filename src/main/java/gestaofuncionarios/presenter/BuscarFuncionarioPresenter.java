@@ -117,8 +117,8 @@ public class BuscarFuncionarioPresenter implements Observer {
 
         int id = (int) view.getTblAtributos().getValueAt(row, 0);
 
-            HistoricoBonusPresenter hb = new HistoricoBonusPresenter(id);
-            GestaoFuncionariosPresenter.showPanel(hb.getView(), false, false);
+        HistoricoBonusPresenter hb = new HistoricoBonusPresenter(id);
+        GestaoFuncionariosPresenter.showPanel(hb.getView(), false, false);
     }
 
     private void handleEnableButtons() {
