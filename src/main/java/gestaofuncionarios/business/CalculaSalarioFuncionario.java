@@ -24,12 +24,24 @@ public class CalculaSalarioFuncionario {
         for (Funcionario funcionario : listFuncionario) {
            if(!funcionario.getDataAdmissao().isAfter(date) ) {
                funcionario = this.calculoBonusProcessor.run(funcionario, date);
-               insertHistoricoSalario(funcionario.getIdFuncionario(),funcionario.getTotalBonus(),funcionario.getSalario(),date);
+               HistoricoSalario result = historicioSalarioDAO.getHistoricoSalarioByData(date, funcionario.getIdFuncionario());
+               if(result != null) {
+            	   result.setValorTotalBonus(funcionario.getTotalBonus());
+            	   result.setValorTotalSalario(funcionario.getSalario());
+            	   updateHistoricoSalario(result);
+               }else {
+            	   insertHistoricoSalario(funcionario.getIdFuncionario(),funcionario.getTotalBonus(),funcionario.getSalario(),date);   
+               }
+                    
            }
         }
     }
     public void insertHistoricoSalario(int idFuncionario, Double ValorTotalBonus, Double ValorTotalSalario, LocalDate date) throws Exception {
     	historicioSalarioDAO.add(new HistoricoSalario(idFuncionario, ValorTotalBonus, ValorTotalSalario, date));
+    }	
+    
+    public void updateHistoricoSalario(HistoricoSalario historicoSalrio) throws Exception {
+    	historicioSalarioDAO.update(historicoSalrio);
     }	
     
 }

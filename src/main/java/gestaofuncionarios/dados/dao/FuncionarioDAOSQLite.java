@@ -185,8 +185,8 @@ public final class FuncionarioDAOSQLite extends Observable implements Funcionari
 		str.append(" salario_base = ").append(funcionario.getSalarioBase()).append(",");
 		str.append(" data_admissao  = ").append("'").append(funcionario.getDataAdmissao()).append("'").append(",");
 		str.append(" faltas  = ").append(funcionario.getFaltas()).append(",");
-		str.append("distancia_trabalho = ").append(funcionario.getDistanciaDoTrabalho()).append(",");
-		str.append("funcionario_mes = ").append(funcionario.isFuncionarioMes() ? 1 : 0);
+		str.append(" distancia_trabalho = ").append(funcionario.getDistanciaDoTrabalho()).append(",");
+		str.append(" funcionario_mes = ").append(funcionario.isFuncionarioMes() ? 1 : 0);
 		str.append(" Where id =").append(funcionario.getIdFuncionario());
 
 		BD.atualizar(str.toString());

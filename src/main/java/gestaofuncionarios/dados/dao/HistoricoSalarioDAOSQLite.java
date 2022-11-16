@@ -7,6 +7,7 @@ import java.util.List;
 
 import gestaofuncionarios.dados.ConexaoSQLite.SQLiteDB;
 import gestaofuncionarios.dto.HistoricoCalcularSalarioDTO;
+import gestaofuncionarios.model.HistoricoBonus;
 import gestaofuncionarios.model.HistoricoSalario;
 
 public class HistoricoSalarioDAOSQLite implements HistoricoSalarioDAO {
@@ -95,5 +96,63 @@ public class HistoricoSalarioDAOSQLite implements HistoricoSalarioDAO {
 
     }
 
+    
+	@Override
+	public HistoricoSalario getHistoricoSalarioByData(LocalDate data, int idFuncionario) throws Exception {
+		HistoricoSalario historicoSalario = null;
+		StringBuilder str = new StringBuilder();
 
+		str.append(" SELECT distinct  ");
+		str.append(" hs.id as id, ");
+		str.append(" hs.data_inclusao as data_inclusao, ");
+		str.append(" hs.valor_salario as valor_salario , ");
+	    str.append(" hs.valor_bonus as valor_bonus , ");
+	    str.append(" hs.id_Funcionario as id_Funcionario ");
+		str.append(" FROM historico_salario hs ");
+		str.append(" WHERE 1=1 ");
+		str.append(" and hs.data_inclusao = ").append("'").append(data).append("'");
+		str.append(" and hs.id_Funcionario = ").append(idFuncionario);
+
+		BD.conectar();
+		BD.consultar(str.toString());
+
+		while (BD.getRs().next()) {
+			Integer id = BD.getRs().getInt("id");
+			Integer idFuncionarioRecebido = BD.getRs().getInt("id_funcionario");
+			Double valorTotalBonus = BD.getRs().getDouble("valor_bonus");
+			Double valorSalario = BD.getRs().getDouble("valor_salario");
+			LocalDate data_inclusao = LocalDate.parse(BD.getRs().getString("data_inclusao"),
+					DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			if (id != null) {
+				historicoSalario = new HistoricoSalario(idFuncionarioRecebido,valorTotalBonus,valorSalario ,data_inclusao);
+				historicoSalario.setIdHistoricoBonus(id);
+			}
+		}
+
+		BD.close();
+
+		return historicoSalario;
+	}
+
+	@Override
+	public void update(HistoricoSalario historicoSalario) throws Exception {
+
+		StringBuilder str = new StringBuilder();
+
+		BD.conectar();
+
+		str.append(" UPDATE historico_salario ");
+		str.append(" set ");
+		str.append(" valor_bonus = ").append(historicoSalario.getValorTotalBonus()).append(",");
+		str.append(" valor_salario = ").append(historicoSalario.getValorTotalSalario());
+		str.append(" where 1=1 ");
+		str.append(" and id = ").append(historicoSalario.getIdHistoricoBonus());
+		str.append(" and id_funcionario = ").append(historicoSalario.getIdFuncionario());
+	
+
+		BD.atualizar(str.toString());
+		BD.close();
+	}
+
+    
 }
