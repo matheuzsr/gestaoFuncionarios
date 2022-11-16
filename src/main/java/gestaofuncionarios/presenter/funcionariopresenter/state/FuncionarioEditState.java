@@ -42,7 +42,15 @@ public class FuncionarioEditState extends FuncionarioPresenterState {
 	public void salvar() throws Exception {
 		funcionarioEdit = lerDados();
 		funcionarioEdit.setIdFuncionario(idFuncionario);
-		presenter.getDao().update(funcionarioEdit);
+
+		if (presenter.getDao().update(funcionarioEdit)) {
+			JOptionPane.showMessageDialog(presenter.getView(),
+					"Dados de " + funcionarioEdit.getNome() + " atualizados com sucesso!");
+			this.fechar();
+		} else {
+			JOptionPane.showMessageDialog(presenter.getView(), "Erro ao salvar no banco de dados!");
+		}
+
 		presenter.getView().dispose();
 	}
 

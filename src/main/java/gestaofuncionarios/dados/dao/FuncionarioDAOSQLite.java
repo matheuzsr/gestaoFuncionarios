@@ -172,7 +172,7 @@ public final class FuncionarioDAOSQLite extends Observable implements Funcionari
 	}
 
 	@Override
-	public void update(Funcionario funcionario) throws Exception {
+	public boolean update(Funcionario funcionario) throws Exception {
 		StringBuilder str = new StringBuilder();
 
 		BD.conectar();
@@ -193,6 +193,8 @@ public final class FuncionarioDAOSQLite extends Observable implements Funcionari
 		BD.close();
 
 		this.notificarObservers(this.getAll());
+
+		return true;
 	}
 
 	@Override

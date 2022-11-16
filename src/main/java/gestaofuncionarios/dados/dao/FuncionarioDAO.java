@@ -19,5 +19,5 @@ public interface FuncionarioDAO {
 
     public Collection<Funcionario> getAll() throws Exception;
     
-    public void update(Funcionario funcionario) throws Exception;
+    public boolean update(Funcionario funcionario) throws Exception;
 }
