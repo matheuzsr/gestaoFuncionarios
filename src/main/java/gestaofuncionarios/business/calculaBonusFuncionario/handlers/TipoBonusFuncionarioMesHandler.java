@@ -3,14 +3,15 @@ package gestaofuncionarios.business.calculaBonusFuncionario.handlers;
 import gestaofuncionarios.dados.dao.BonusDAOSQLite;
 import gestaofuncionarios.model.Funcionario;
 
-public class FuncionarioMes extends TipoBonusHandler {
+public class TipoBonusFuncionarioMesHandler extends TipoBonusHandler {
 
-    public FuncionarioMes() {
+    public TipoBonusFuncionarioMesHandler() {
         super("funcionario_mes", new BonusDAOSQLite());
     }
 
     @Override
     public Double calcular(Funcionario funcionario) throws Exception {
-       return funcionario.isFuncionarioMes() ? 500.00 : 0.0;
+       return funcionario.isFuncionarioMes() ? funcionario.getSalario() * 1.5 : 0.0;
     }
+
 }

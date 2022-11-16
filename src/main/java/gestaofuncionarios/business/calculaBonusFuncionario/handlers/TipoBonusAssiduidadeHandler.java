@@ -3,9 +3,9 @@ package gestaofuncionarios.business.calculaBonusFuncionario.handlers;
 import gestaofuncionarios.dados.dao.BonusDAOSQLite;
 import gestaofuncionarios.model.Funcionario;
 
-public class AssiduidadeBonus extends TipoBonusHandler {
+public class TipoBonusAssiduidadeHandler extends TipoBonusHandler {
 
-    public AssiduidadeBonus() {
+    public TipoBonusAssiduidadeHandler() {
         super("bonus_assiduidade", new BonusDAOSQLite());
     }
 

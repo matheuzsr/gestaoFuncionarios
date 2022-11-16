@@ -46,6 +46,7 @@ public class CalculadoraSalarioPresenter {
 			try {
 				this.calcularSalrioFuncionario.calcularSalario(funcionarioDAO.getAll(), dataEscolhida, false);
 				carregarTabela(historicioSalarioDAOSQLite.getHistoricoSalarioByData(dataEscolhida));
+				this.view.getSeletorDataBusca().setDate(null);
 			} catch (Exception ex) {
 				JOptionPane.showMessageDialog(null, ex.getMessage());
 			}
@@ -101,7 +102,7 @@ public class CalculadoraSalarioPresenter {
 	private void carregarTabela(Collection c) {
 		tabelaCalculoSalario.setNumRows(0);
 
-		DecimalFormat df = new DecimalFormat("#.##");
+		DecimalFormat df = new DecimalFormat("0.00");
 
 		Iterator<?> it = c.iterator();
 		while (it.hasNext()) {

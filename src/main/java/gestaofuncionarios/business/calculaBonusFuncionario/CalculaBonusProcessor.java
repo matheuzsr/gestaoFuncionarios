@@ -2,15 +2,15 @@ package gestaofuncionarios.business.calculaBonusFuncionario;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import gestaofuncionarios.business.calculaBonusFuncionario.handlers.AssiduidadeBonus;
+import gestaofuncionarios.business.calculaBonusFuncionario.handlers.TipoBonusAssiduidadeHandler;
+import gestaofuncionarios.business.calculaBonusFuncionario.handlers.TipoBonusFuncionarioMesHandler;
 import gestaofuncionarios.business.calculaBonusFuncionario.handlers.TipoBonusHandler;
-import gestaofuncionarios.business.calculaBonusFuncionario.handlers.FuncionarioMes;
-import gestaofuncionarios.business.calculaBonusFuncionario.handlers.TempoServicoHandler;
+import gestaofuncionarios.business.calculaBonusFuncionario.handlers.TipoBonusTempoServicoHandler;
 import gestaofuncionarios.dados.dao.BonusDAOSQLite;
 import gestaofuncionarios.dados.dao.HistoricoBonusDAOSQLite;
+import gestaofuncionarios.dto.TipoBonusRecebidoDTO;
 import gestaofuncionarios.model.Funcionario;
 import gestaofuncionarios.model.HistoricoBonus;
 
@@ -24,25 +24,17 @@ public class CalculaBonusProcessor {
         this.bonusDAO = bonusDAO;
     }
 
-    public Funcionario run(Funcionario funcionario, LocalDate localDate, Boolean isAtualizar) throws Exception {
+    public Funcionario run(Funcionario funcionario, LocalDate localDate ) throws Exception {
         Double valorTotalBonus = 0.0;
-        List<TipoBonusHandler> handlersList = new ArrayList<>(Arrays.asList(
-                new AssiduidadeBonus(),
-                new TempoServicoHandler(),
-                new FuncionarioMes())
-                );
-
-        for (TipoBonusHandler handler : handlersList) {
-            Double valorBonus = handler.calcular(funcionario);
-            valorTotalBonus += valorBonus;
-            if (isAtualizar) {
-                insertHistoricoBonus(funcionario.getIdFuncionario(), handler.getTipo(), localDate,
-                        handler.calcular(funcionario));
-            } else {
-                insertHistoricoBonus(funcionario.getIdFuncionario(), handler.getTipo(), localDate,
-                        handler.calcular(funcionario));
-            }
+        List<TipoBonusRecebidoDTO> tipoBonusRecebidos = new ArrayList<>();
+        TipoBonusHandler tipoBOnus = initFilaHandle();
+        
+        tipoBonusRecebidos = tipoBOnus.handleRequest(valorTotalBonus, funcionario,tipoBonusRecebidos);
+        for(TipoBonusRecebidoDTO tipoBonus : tipoBonusRecebidos ) {
+            insertHistoricoBonus(funcionario.getIdFuncionario(), tipoBonus.getTipoBonus(), localDate, tipoBonus.getValor());	
+            valorTotalBonus += tipoBonus.getValor();
         }
+        
         funcionario.setSalario(funcionario.getSalarioBase() + valorTotalBonus);
         return funcionario;
     }
@@ -55,5 +47,18 @@ public class CalculaBonusProcessor {
     private int getIdBonusByTipo(String tipoBouns) throws Exception {
         return bonusDAO.getIdByNome(tipoBouns);
     }
-
+    
+   private TipoBonusHandler initFilaHandle() throws Exception {
+	   TipoBonusAssiduidadeHandler assiduidadeBonus  =new TipoBonusAssiduidadeHandler();
+       TipoBonusTempoServicoHandler tempoServicoHandler = new TipoBonusTempoServicoHandler();
+       TipoBonusFuncionarioMesHandler funcionarioMes = new TipoBonusFuncionarioMesHandler();
+       
+       assiduidadeBonus.setNext(tempoServicoHandler);
+       tempoServicoHandler.setNext(funcionarioMes);
+       
+       
+       return assiduidadeBonus; 
+   	}
+    
+    
 }

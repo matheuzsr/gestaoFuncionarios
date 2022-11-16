@@ -3,9 +3,9 @@ package gestaofuncionarios.business.calculaBonusFuncionario.handlers;
 import gestaofuncionarios.dados.dao.BonusDAOSQLite;
 import gestaofuncionarios.model.Funcionario;
 
-public class TempoServicoHandler extends TipoBonusHandler {
+public class TipoBonusTempoServicoHandler extends TipoBonusHandler {
 
-    public TempoServicoHandler() {
+    public TipoBonusTempoServicoHandler() {
         super("tempo_servico", new BonusDAOSQLite());
     }
 
